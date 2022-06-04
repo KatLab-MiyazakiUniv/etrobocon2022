@@ -1,5 +1,5 @@
 #!/bin/sh
-# etrobocon2021ディレクトリ下でもmakeできるようにする
+# etrobocon2022ディレクトリ下でもmakeできるようにする
 
 cd $ETROBO_ROOT
-make app=etrobocon2021 $@
+make app=etrobocon2022 $@

@@ -1,8 +1,7 @@
-# 以下のページとetrobocon2019を参考にいくつか変更
-# https://github.com/google/googletest/blob/master/googletest/README.md
+# 以下のページとetrobocon2021を参考にいくつか変更
 
 cmake_minimum_required(VERSION 2.8.2)
-set(PROJECT_NAME_STR etrobocon2021)
+set(PROJECT_NAME_STR etrobocon2022)
 project(${PROJECT_NAME_STR})
 
 # make sure that we have support for C++11
@@ -76,7 +75,7 @@ file(GLOB SRC_FILES
     ${PROJECT_SOURCE_DIR}/module/*/*.cpp
     ${PROJECT_SOURCE_DIR}/test/dummy/*.cpp
 )
-add_library(etrobocon2021_impl ${SRC_FILES})
+add_library(etrobocon2022_impl ${SRC_FILES})
 
 #-------------------
 # Test
@@ -84,6 +83,6 @@ add_library(etrobocon2021_impl ${SRC_FILES})
 enable_testing()
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/test/*.cpp)
 
-add_executable(etrobocon2021_test ${TEST_SRC_FILES} ${SRC_FILES})
-target_link_libraries(etrobocon2021_test gtest_main)
-add_test(test1 etrobocon2021_test)
+add_executable(etrobocon2022_test ${TEST_SRC_FILES} ${SRC_FILES})
+target_link_libraries(etrobocon2022_test gtest_main)
+add_test(test1 etrobocon2022_test)
