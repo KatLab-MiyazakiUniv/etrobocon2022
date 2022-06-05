@@ -1,4 +1,5 @@
 # 以下のページとetrobocon2021を参考にいくつか変更
+# https://github.com/google/googletest/blob/main/googletest/README.md
 
 cmake_minimum_required(VERSION 2.8.2)
 set(PROJECT_NAME_STR etrobocon2022)
