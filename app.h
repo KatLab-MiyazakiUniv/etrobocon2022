@@ -1,3 +1,9 @@
+/**
+ * @file app.h
+ * @brief タスクを管理するクラス
+ * @author miyashita64
+ */
+
 #ifdef __cplusplus
 extern "C"
 {
