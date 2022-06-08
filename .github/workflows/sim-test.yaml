@@ -1,0 +1,424 @@
+name: Simulator Test
+
+on: [pull_request]
+
+jobs:
+  build-check-for-sim:
+    runs-on: ubuntu-20.04
+    if: ${{ !contains(github.event.pull_request.labels.*.name, '05-skip_sim') }}
+    env:
+      IMAGE: etrobocon2022-build-check
+      APP_NAME: etrobocon2022
+
+    steps:
+      # ${{ github.workspace }} を使用するために必要
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # ログイン
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Docker image を GitHub Container Registry から Pull して、
+      # 実際に etrobo 環境でのビルドが実行できるかどうか確認する
+      # https://docs.github.com/ja/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+      - name: ETRobocon build test
+        run: |
+          docker run -e APP_NAME=${{ env.APP_NAME }} \
+                     -v ${{ github.workspace }}:/tmp/${{ env.APP_NAME }}:rw \
+                     ghcr.io/katlab-miyazakiuniv/${{ env.IMAGE }}:latest
+
+  simulator-test:
+    runs-on: self-hosted
+    needs: build-check-for-sim
+    env:
+      ETROBO_ROOT: /home/etrobocon2021/etrobo
+      SIM_LOG_FILE: sim-log.txt
+      MP4_SERVER_NAME: etrobocon2022.moyashi.dev
+      MAX_SIM_TIME: 4
+      APP_NAME: etrobocon2022
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # シミュレータテストのための下準備
+    - name: Set up simulator
+      shell: bash
+      run: |
+        # もし、etrobocon2021 ディレクトリが既に存在する場合は削除
+        etrobo_cmd=''
+        etrobo_cmd+='if [ -d ${ETROBO_HRP3_WOKSPACE}/${{ env.APP_NAME }} ]; then rm -rf ${ETROBO_HRP3_WORKSPACE}/${{ env.APP_NAME }}; fi; '
+
+        # etrobo環境に、etrobocon2021リポジトリへのシンボリックリンクを作成
+        etrobo_cmd+='ln -s ${{ github.workspace }} ${ETROBO_HRP3_WORKSPACE}/${{ env.APP_NAME }}; '
+
+        # etrobo環境で上述のコマンドを実行
+        echo ${etrobo_cmd} | ${HOME}/startetrobo shell
+
+    # シミュレータを研究室のPCで実行する
+    - name: Test on simulator
+      shell: bash
+      run: |
+        # 初期コメントの生成
+        MSG_RESULT=""
+        MSG_RESULT+="## 結果\n"
+        MSG_RESULT+="|No|コース|走行タイム [s]|ボーナスタイム [s]|リザルトタイム [s]|ブロック配置|動画|\n"
+        MSG_RESULT+="|--|-----|-------------|----------------|-----------------|-----------|----|\n"
+
+        MSG_DETAIL=""
+        MSG_DETAIL+="<details>\n"
+        MSG_DETAIL+="<summary>詳細を表示</summary>\n"
+        MSG_DETAIL+="\n"
+        MSG_DETAIL+="|No|スタートゲート通過|ゲート1通過|ゲート2通過|走行タイム [s]|ブロックサークル有効移動[s]"
+        MSG_DETAIL+="|パワースポット有効移動[s]|センターブロック有効移動[s]|ビンゴ[s]|パワースポットビンゴ[s]"
+        MSG_DETAIL+="|ボーナスタイム[s]|リザルトタイム[s]|ブロック配置|MP4|CSV|LOG|settings.json|\n"
+        MSG_DETAIL+="|--|----------------|----------|----------|--------------|------------------------"
+        MSG_DETAIL+="|-----------------------|-------------------------|--------|---------------------"
+        MSG_DETAIL+="|----------------|---------------|-----------|---|---|---|-------------|\n"
+
+        MSG_DETAIL_TAIL="</details>\n\n"
+
+        MSG_SUMMARY_HEAD=""
+        MSG_SUMMARY_HEAD+="### 集計結果\n"
+
+        MSG_SUMMARY_DETAIL_HEAD=""
+        MSG_SUMMARY_DETAIL_HEAD+="<details>\n"
+        MSG_SUMMARY_DETAIL_HEAD+="<summary>詳細を表示</summary>\n\n"
+        MSG_SUMMARY_DETAIL_TAIL="</details>\n\n"
+        MSG_SUMMARY_DETAIL_HEAD+="|項目|結果|母数|\n"
+        MSG_SUMMARY_DETAIL_HEAD+="|---|----|---|\n"
+
+        MSG_TAIL=":arrows_counterclockwise: Now testing... (1/${MAX_SIM_TIME})"
+
+        # プルリクの Issue 番号の取得 (on: pull_request のイベントによってトリガーされた場合のみ)
+        ISSUE_NUMBER=$(jq --raw-output .pull_request.number "${GITHUB_EVENT_PATH}")
+
+        # このプルリクに新たなコミットがPushされていることを検知した場合、テストをスキップする
+        IS_SKIP=$(curl \
+                    -H "Accept: application/vnd.github.v3+json" \
+                    ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/actions/runs?status=queued\&per_page=99 | \
+                  jq '.workflow_runs[] | select(.pull_requests != null) | .pull_requests[].number' | \
+                  grep -coE ${ISSUE_NUMBER} || :)
+
+        # 直前に終了したジョブ?がある場合、反映されていない可能性があるため最大30秒程度待つ
+        if [ "${IS_SKIP}" != "0" ]; then
+          for ((i=0; i < 15; i++)); do
+            IS_SKIP=$(curl \
+                        -H "Accept: application/vnd.github.v3+json" \
+                        ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/actions/runs?status=queued\&per_page=99 | \
+                      jq '.workflow_runs[] | select(.pull_requests != null) | .pull_requests[].number' | \
+                      grep -coE ${ISSUE_NUMBER} || :) 
+            sleep 2
+          done
+        fi
+
+        # メッセージの作成
+        if [ "${IS_SKIP}" != "0" ]; then
+          MSG_TAIL=":fast_forward: Skipped this test"
+        fi
+        # プルリクコメントの投稿とコメントIDの取得
+        COMMENT_ID=$(curl \
+                      -X POST \
+                      -H "Accept: application/vnd.github.v3+json" \
+                      -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                      ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/issues/${ISSUE_NUMBER}/comments \
+                      -d "{\"body\":\"${MSG_TAIL}\"}" | jq -r '.id')
+
+        # シミュレータテストのスキップ
+        if [ "${IS_SKIP}" != "0" ]; then
+          echo "[LOG] Skipped this test"
+          echo "[DEBUG] IS_SKIP=${IS_SKIP}"
+          exit 0
+        fi
+
+        # テスト結果公開用ディレクトリの生成
+        TEST_RESULT_DIR_ROOT=${HOME}/Videos
+        TEST_RESULT_DIR=results/$(date '+%Y-%m-%d/%H-%M-%S')
+        mkdir -p ${TEST_RESULT_DIR_ROOT}/${TEST_RESULT_DIR}
+
+        # シミュレータバージョン等の出力
+        SIMSTATUS_FILE=${TEST_RESULT_DIR}/${GITHUB_SHA}-sim-status.json
+        echo "sim status > ${TEST_RESULT_DIR_ROOT}/${SIMSTATUS_FILE}" | ${HOME}/startetrobo shell
+        SIM_VERSION=$(jq -r '.info.version' ${TEST_RESULT_DIR_ROOT}/${SIMSTATUS_FILE})
+        MSG_SIM_VERSION="シミュレータのバージョン: ${SIM_VERSION}\n"
+
+        # 集計用変数
+        L_COUNTER=0
+        L_GOAL_COUNTER=0
+        L_GOAL_TIME_SUM=0
+        L_BONUS_TIME_SUM=0
+        L_RESULT_TIME_SUM=0  # NOTE: 無くても良いが有ったほうが楽
+
+        R_COUNTER=0
+        R_GOAL_COUNTER=0
+        R_GOAL_TIME_SUM=0
+        R_BONUS_TIME_SUM=0
+        R_RESULT_TIME_SUM=0  # NOTE: 無くても良いが有ったほうが楽
+
+        BEST_RESULT_TIME=120
+
+        ###  シミュレーションを複数回実行する。　　　　　　　　　　　　　　　　　　　###
+        ###  他のシミュレーションテストのリクエストが発生した場合、　　　　　　　　　###
+        ###  実行中のシミュレーションが終了次第、シミュレーションテストを終了する。　###
+        for ((i=1; i<=${MAX_SIM_TIME}; i++)); do
+          # キャプチャ画像用一時ディレクトリの生成
+          TMP_CAPTURE_DIR=$(mktemp -d)
+          echo ${TMP_CAPTURE_DIR}
+
+          # 初期ブロック配置をランダムに生成
+          BLOCK_COORDINATE_L='09'$(echo "from random import *; print(''.join(sample('EMBKDRGP',8)))" | python3)
+          BLOCK_COORDINATE_R='09'$(echo "from random import *; print(''.join(sample('HJCLAQFS',8)))" | python3)
+
+          # シミュレータの設定ファイルを生成
+          SETTINGS_FILE=${TEST_RESULT_DIR}/${GITHUB_SHA}-${i}.json
+          cat ${GITHUB_WORKSPACE}/sim-settings/default.json | \
+            jq ".captureDir=\"${TMP_CAPTURE_DIR}\"" | \
+            jq ".captureRate=\"2\"" | \
+            jq ".initLBlockLayout=\"${BLOCK_COORDINATE_L}\"" | \
+            jq ".initRBlockLayout=\"${BLOCK_COORDINATE_R}\"" > ${TEST_RESULT_DIR_ROOT}/${SETTINGS_FILE}
+
+          # シミュレータに設定ファイルを反映させる
+          curl -X POST \
+              -H "Content-Type: application/json" \
+              -d @${TEST_RESULT_DIR_ROOT}/${SETTINGS_FILE} \
+              http://localhost:54000
+
+          # 走行コースの設定
+          A=('r' 'l')
+          COURSE_LOWER=${A[$(( i % 2))]}
+          COURSE_UPPER=$(echo ${COURSE_LOWER} | tr lr LR)
+
+          # シミュレーションの実行
+          LOG_FILE=${TEST_RESULT_DIR}/${GITHUB_SHA}-${i}.log
+          echo "echo [LOG] Start \$(date '+%Y-%m-%d %H:%M %S (%z %Z)'); \
+                make ${COURSE_LOWER} app=${APP_NAME} sim up; \
+                echo [LOG] End \$(date '+%Y-%m-%d %H:%M %S (%z %Z)'); " | \
+            ${HOME}/startetrobo shell | \
+            tee ${TEST_RESULT_DIR_ROOT}/${LOG_FILE}
+
+          # CSVファイルのコピー
+          CSV_FILE=${TEST_RESULT_DIR}/${GITHUB_SHA}-${i}.csv
+          cp ${TMP_CAPTURE_DIR}/${COURSE_UPPER}.csv \
+            ${TEST_RESULT_DIR_ROOT}/${CSV_FILE}
+
+          # スタート前に撮影されたキャプチャ画像を削除する。
+          # 一番最後のフレームが消えることになるが、
+          # ゴール後 1 フレーム以上のキャプチャ画像が生成されるため、
+          # 問題は無いと判断。
+          CSV_TAIL_NUM=$(cat ${TEST_RESULT_DIR_ROOT}/${CSV_FILE} | \
+                            tail -n1 | \
+                            sed -r 's/.*(L|R)_([0-9]{8})\.png.*/\2/g')
+          PNG_TAIL_NUM=$(ls ${TMP_CAPTURE_DIR}/*.png | \
+                            tail -n1 | \
+                            sed -r 's/.*(L|R)_([0-9]{8})\.png/\2/g')
+          echo "echo ${TMP_CAPTURE_DIR}/${COURSE_UPPER}_{${CSV_TAIL_NUM}..${PNG_TAIL_NUM}}.png" | bash | xargs -L1 rm -f
+
+          # キャプチャ画像をMP4に変換
+          MP4_FILE=${TEST_RESULT_DIR}/${GITHUB_SHA}-${i}.mp4
+          ffmpeg -y \
+                -framerate 30 \
+                -i ${TMP_CAPTURE_DIR}/$(echo ${COURSE_LOWER} | tr lr LR)_%08d.png \
+                -vcodec libx264 -pix_fmt yuv420p \
+                -r 30 ${TEST_RESULT_DIR_ROOT}/${MP4_FILE}
+
+          # CSV ファイルを JSON ファイルに変換する
+          # (Windows環境で生成されたCSVを変換する場合、OSの差異による改行文字の違いに注意)
+          jq --compact-output -s -R 'split("\n")|map(split(","))|map({
+              "Time": .[0], 
+              "Counter": .[1], 
+              "Filename": .[2], 
+              "TIME": .[3], 
+              "MEASUREMENT_TIME": .[4], 
+              "RUN_TIME": .[5], 
+              "GATE1": .[6], 
+              "GATE2": .[7], 
+              "GOAL": .[8], 
+              "GARAGE_STOP": .[9], 
+              "GARAGE_TIME": .[10], 
+              "SLALOM": .[11], 
+              "PETBOTTLE": .[12], 
+              "BLOCK_IN_GARAGE": .[13], 
+              "BLOCK_YUKOIDO": .[14], 
+              "CARD_NUMBER_CIRCLE": .[15], 
+              "BLOCK_NUMBER_CIRCLE": .[16], 
+              "BLOCK_BINGO": .[17], 
+              "ENTRY_BONUS": .[18], 
+              "BLOCK_YUKOIDOP": .[19], 
+              "BLOCK_YUKOIDOC": .[20], 
+              "BLOCK_BINGOP": .[21], 
+              "MeasurementMode": .[22]
+            })' ${TEST_RESULT_DIR_ROOT}/${CSV_FILE} > ${TEST_RESULT_DIR_ROOT}/${CSV_FILE}.json
+
+          # ビンゴエリアの結果を一時保存するためのJSONファイルを生成
+          TMP_JSON_FILE=$(mktemp --suffix=.json)
+          echo ${TMP_JSON_FILE}
+
+          # ビンゴエリアの最終結果を抽出し、一時ファイルに保存
+          cat ${TEST_RESULT_DIR_ROOT}/${CSV_FILE}.json | \
+            jq '.[] | select(.MeasurementMode=="END")' | \
+            jq -s '.' | \
+            jq 'max_by(.TIME)' > ${TMP_JSON_FILE}
+
+          # ビンゴエリアの最終結果を集計する
+          BLOCK_YUKOIDO=$(jq -r '.BLOCK_YUKOIDO' ${TMP_JSON_FILE})
+          POWER_SPOT_YUKOIDO=$(jq -r '.BLOCK_YUKOIDOP' ${TMP_JSON_FILE})
+          CENTER_BLOCK_YUKOIDO=$(jq -r '.BLOCK_YUKOIDOC' ${TMP_JSON_FILE})
+          BLOCK_BINGO=$(jq -r '.BLOCK_BINGO' ${TMP_JSON_FILE})
+          POWERS_POT_BINGO=$(jq -r '.BLOCK_BINGOP' ${TMP_JSON_FILE})
+
+          # ボーナスタイムの計算
+          BLOCK_YUKOIDO_BONUS_TIME=$(echo ${BLOCK_YUKOIDO} | awk '{print $1 / 2}')
+          POWER_SPOT_YUKOIDO_BONUS_TIME=${POWER_SPOT_YUKOIDO}
+          CENTER_BLOCK_YUKOIDO_BONUS_TIME=$(echo ${CENTER_BLOCK_YUKOIDO} | awk '{print $1 * 2}')
+          BLOCK_BINGO_BONUS_TIME=${BLOCK_BINGO}
+          POWER_SPOT_BINGO_BONUS_TIME=$(echo ${POWERS_POT_BINGO} | awk '{print $1 * 2}')
+          BONUS_TIME=$(echo ${BLOCK_YUKOIDO_BONUS_TIME} \
+                            ${POWER_SPOT_YUKOIDO_BONUS_TIME} \
+                            ${CENTER_BLOCK_YUKOIDO_BONUS_TIME} \
+                            ${BLOCK_BINGO_BONUS_TIME} \
+                            ${POWER_SPOT_BINGO_BONUS_TIME} \
+                            | awk '{print $1 + $2 + $3 + $4 + $5}')
+
+          # 各ゲートを通過したかどうかの確認
+          PASSED_START_GATE=$(cat ${TEST_RESULT_DIR_ROOT}/${LOG_FILE} | \
+                              grep -coE '\[ launcher: ((left)|(right)): passed Start Gate \]' || :)
+          PASSED_GATE_1=$(cat ${TEST_RESULT_DIR_ROOT}/${LOG_FILE} | \
+                              grep -coE '\[ launcher: ((left)|(right)): passed Gate 1 \]' || :)
+          PASSED_GATE_2=$(cat ${TEST_RESULT_DIR_ROOT}/${LOG_FILE} | \
+                              grep -coE '\[ launcher: ((left)|(right)): passed Gate 2 \]' || :)
+          PASSED_GALE_GATE=$(cat ${TEST_RESULT_DIR_ROOT}/${LOG_FILE} | \
+                              grep -coE '\[ launcher: ((left)|(right)): GOAL!  Goal Time: ([0-9]*\.?[0-9]*) \]' || :)
+
+          # 走行時間の取得 (ゴールゲートの通過)、リザルトタイムの算出
+          if [ "${PASSED_GALE_GATE}" == '0' ]; then
+            GOAL_TIME='None'
+            RESULT_TIME='None'
+          else
+            GOAL_TIME="$(cat ${TEST_RESULT_DIR_ROOT}/${LOG_FILE} | \
+                          grep -oE '\[ launcher: ((left)|(right)): GOAL!  Goal Time: ([0-9]*\.?[0-9]*) \]' | \
+                          grep -oE '[0-9]*\.?[0-9]*')"
+            
+            # リザルトタイムの計算
+            RESULT_TIME=$(echo ${GOAL_TIME} ${BONUS_TIME} | awk '{print $1 - $2}')
+
+            # ベストタイムの更新
+            if [ "$(echo "${RESULT_TIME} < ${BEST_RESULT_TIME}" | bc)" -eq 1 ]; then
+              BEST_RESULT_TIME=${RESULT_TIME}
+            fi
+
+            # 集計用変数の更新
+            if [ "${COURSE_UPPER}" == "L" ]; then
+              L_GOAL_TIME_SUM=$(echo ${L_GOAL_TIME_SUM} ${GOAL_TIME} | awk '{print $1 + $2}')
+              L_BONUS_TIME_SUM=$(echo ${L_BONUS_TIME_SUM} ${BONUS_TIME} | awk '{print $1 + $2}')
+              L_RESULT_TIME_SUM=$(echo ${L_RESULT_TIME_SUM} ${RESULT_TIME} | awk '{print $1 + $2}')
+              echo $(( L_GOAL_COUNTER++ ))
+            elif [ "${COURSE_UPPER}" == "R" ]; then
+              R_GOAL_TIME_SUM=$(echo ${R_GOAL_TIME_SUM} ${GOAL_TIME} | awk '{print $1 + $2}')
+              R_BONUS_TIME_SUM=$(echo ${R_BONUS_TIME_SUM} ${BONUS_TIME} | awk '{print $1 + $2}')
+              R_RESULT_TIME_SUM=$(echo ${R_RESULT_TIME_SUM} ${RESULT_TIME} | awk '{print $1 + $2}')
+              echo $(( R_GOAL_COUNTER++ ))
+            fi
+          fi
+
+          # 走行回数カウンターの更新
+          if [ "${COURSE_UPPER}" == "L" ]; then
+            echo $(( L_COUNTER++ ))
+          elif [ "${COURSE_UPPER}" == "R" ]; then
+            echo $(( R_COUNTER++ ))
+          fi
+
+          # コメント用集計結果の計算
+          L_GOAL_RATE=$(echo ${L_GOAL_COUNTER} ${L_COUNTER} | awk '{if($2>0){print $1 / $2 * 100}else{print 0}}')
+          R_GOAL_RATE=$(echo ${R_GOAL_COUNTER} ${R_COUNTER} | awk '{if($2>0){print $1 / $2 * 100}else{print 0}}')
+          LR_GOAL_RATE=$(echo ${L_GOAL_COUNTER} ${R_GOAL_COUNTER} ${i} | awk '{if($3>0){print ($1 + $2) / $3 * 100}else{print 0}}')
+          L_GOAL_TIME_AVG=$(echo ${L_GOAL_TIME_SUM} ${L_GOAL_COUNTER} | awk '{if($2>0){print $1 / $2}else{print 0}}')
+          R_GOAL_TIME_AVG=$(echo ${R_GOAL_TIME_SUM} ${R_GOAL_COUNTER} | awk '{if($2>0){print $1 / $2}else{print 0}}')
+          LR_GOAL_TIME_AVG=$(echo ${L_GOAL_TIME_SUM} ${R_GOAL_TIME_SUM} ${L_GOAL_COUNTER} ${R_GOAL_COUNTER} | \
+                              awk '{if(($3+$4)>0){print ($1 + $2) / ($3 + $4)}else{print 0}}')
+          L_BONUS_TIME_AVG=$(echo ${L_BONUS_TIME_SUM} ${L_GOAL_COUNTER} | awk '{if($2>0){print $1 / $2}else{print 0}}')
+          R_BONUS_TIME_AVG=$(echo ${R_BONUS_TIME_SUM} ${R_GOAL_COUNTER} | awk '{if($2>0){print $1 / $2}else{print 0}}')
+          LR_BONUS_TIME_AVG=$(echo ${L_BONUS_TIME_SUM} ${R_BONUS_TIME_SUM} ${L_GOAL_COUNTER} ${R_GOAL_COUNTER} | \
+                              awk '{if(($3+$4)>0){print ($1 + $2) / ($3 + $4)}else{print 0}}')
+          L_RESULT_TIME_AVG=$(echo ${L_RESULT_TIME_SUM} ${L_GOAL_COUNTER} | awk '{if($2>0){print $1 / $2}else{print 0}}')
+          R_RESULT_TIME_AVG=$(echo ${R_RESULT_TIME_SUM} ${R_GOAL_COUNTER} | awk '{if($2>0){print $1 / $2}else{print 0}}')
+          LR_RESULT_TIME_AVG=$(echo ${L_RESULT_TIME_SUM} ${R_RESULT_TIME_SUM} ${L_GOAL_COUNTER} ${R_GOAL_COUNTER} | \
+                              awk '{if(($3+$4)>0){print ($1 + $2) / ($3 + $4)}else{print 0}}')
+
+          # コメントの作成
+          MSG_RESULT+="|${i}|${COURSE_UPPER}|${GOAL_TIME}|${BONUS_TIME}|${RESULT_TIME}|"
+          MSG_DETAIL+="|${i}|${PASSED_START_GATE}|${PASSED_GATE_1}|${PASSED_GATE_2}|${GOAL_TIME}"
+          MSG_DETAIL+="|${BLOCK_YUKOIDO_BONUS_TIME}|${POWER_SPOT_YUKOIDO_BONUS_TIME}"
+          MSG_DETAIL+="|${CENTER_BLOCK_YUKOIDO_BONUS_TIME}|${BLOCK_BINGO_BONUS_TIME}"
+          MSG_DETAIL+="|${POWER_SPOT_BINGO_BONUS_TIME}|${BONUS_TIME}|${RESULT_TIME}|"
+          if [ "${COURSE_UPPER}" == "L" ]; then
+            MSG_RESULT+="${BLOCK_COORDINATE_L}|"
+            MSG_DETAIL+="${BLOCK_COORDINATE_L}|"
+          elif [ "${COURSE_UPPER}" == "R" ]; then
+            MSG_RESULT+="${BLOCK_COORDINATE_R}|"
+            MSG_DETAIL+="${BLOCK_COORDINATE_R}|"
+          fi
+          MSG_RESULT+="[:arrow_forward: 動画](https://${MP4_SERVER_NAME}/01/${MP4_FILE})|\n"
+          MSG_DETAIL+="[MP4](https://${MP4_SERVER_NAME}/01/${MP4_FILE})|"
+          MSG_DETAIL+="[CSV](https://${MP4_SERVER_NAME}/01/${CSV_FILE})|"
+          MSG_DETAIL+="[LOG](https://${MP4_SERVER_NAME}/01/${LOG_FILE})|"
+          MSG_DETAIL+="[JSON](https://${MP4_SERVER_NAME}/01/${SETTINGS_FILE})|\n"
+          
+
+          MSG_SUMMARY=""
+          MSG_SUMMARY+="全体ゴール率: ${LR_GOAL_RATE} [%] (n = ${i})\n"
+          MSG_SUMMARY+="全体平均リザルトタイム: ${LR_RESULT_TIME_AVG} [s] (n = $((L_GOAL_COUNTER + R_GOAL_COUNTER)))\n"
+          MSG_SUMMARY+="最速リザルトタイム: ${BEST_RESULT_TIME} [s]\n"
+
+          MSG_SUMMARY_DETAIL=""
+          MSG_SUMMARY_DETAIL+="|Lゴール率[%]|${L_GOAL_RATE}|${L_COUNTER}|\n"
+          MSG_SUMMARY_DETAIL+="|Rゴール率[%]|${R_GOAL_RATE}|${R_COUNTER}|\n"
+          MSG_SUMMARY_DETAIL+="|全体ゴール率[%]|${LR_GOAL_RATE}|$((L_COUNTER + R_COUNTER))|\n"
+          MSG_SUMMARY_DETAIL+="| | | |\n"
+          MSG_SUMMARY_DETAIL+="|L平均ゴールタイム[s]|${L_GOAL_TIME_AVG}|${L_GOAL_COUNTER}|\n"
+          MSG_SUMMARY_DETAIL+="|R平均ゴールタイム[s]|${R_GOAL_TIME_AVG}|${R_GOAL_COUNTER}|\n"
+          MSG_SUMMARY_DETAIL+="|全体平均ゴールタイム[s]|${LR_GOAL_TIME_AVG}|$((L_GOAL_COUNTER + R_GOAL_COUNTER))|\n"
+          MSG_SUMMARY_DETAIL+="| | | |\n"
+          MSG_SUMMARY_DETAIL+="|L平均ボーナスタイム[s]|${L_BONUS_TIME_AVG}|${L_GOAL_COUNTER}|\n"
+          MSG_SUMMARY_DETAIL+="|R平均ボーナスタイム[s]|${R_BONUS_TIME_AVG}|${R_GOAL_COUNTER}|\n"
+          MSG_SUMMARY_DETAIL+="|全体平均ボーナスタイム[s]|${LR_BONUS_TIME_AVG}|$((L_GOAL_COUNTER + R_GOAL_COUNTER))|\n"
+          MSG_SUMMARY_DETAIL+="| | | |\n"
+          MSG_SUMMARY_DETAIL+="|L平均リザルトタイム[s]|${L_RESULT_TIME_AVG}|${L_GOAL_COUNTER}|\n"
+          MSG_SUMMARY_DETAIL+="|R平均リザルトタイム[s]|${R_RESULT_TIME_AVG}|${R_GOAL_COUNTER}|\n"
+          MSG_SUMMARY_DETAIL+="|平均リザルトタイム[s]|${LR_RESULT_TIME_AVG}|$((L_GOAL_COUNTER + R_GOAL_COUNTER))|\n"
+
+          MSG_TAIL=":arrows_counterclockwise: Now testing... ($((i + 1))/${MAX_SIM_TIME})"
+
+          # 待ち状態になっているジョブ？が無いか確認する
+          QUEUED_JOB_NUM=$(curl -H "Accept: application/vnd.github.v3+json" \
+                                ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/actions/runs?status=queued\&per_page=99 | \
+                              jq ".workflow_runs[] | select( .name == \"${GITHUB_WORKFLOW}\" ) | .id" | \
+                              wc -l)
+
+          # ループ終了時の片づけ
+          if [[ "${i}" == "${MAX_SIM_TIME}" || "${QUEUED_JOB_NUM}" != "0" ]]; then
+            MSG_TAIL=":white_check_mark: Test complete !!!"
+            i=${MAX_SIM_TIME}
+          fi
+
+          # プルリクコメントのアップデート
+          MSG=''
+          MSG+="${MSG_RESULT}${MSG_DETAIL}${MSG_DETAIL_TAIL}${MSG_SUMMARY_HEAD}${MSG_SUMMARY}"
+          MSG+="${MSG_SUMMARY_DETAIL_HEAD}${MSG_SUMMARY_DETAIL}${MSG_SUMMARY_DETAIL_TAIL}${MSG_SIM_VERSION}${MSG_TAIL}"
+          curl \
+            -X PATCH \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/issues/comments/${COMMENT_ID} \
+            -d "{\"body\":\"${MSG}\"}" | \
+          jq -r '.html_url'
+
+          # いらないファイル・ディレクトリの削除
+          rm -rf ${TMP_CAPTURE_DIR} ${TMP_JSON_FILE}
+        done
+
+        # シンボリックリンクの削除（etrobo環境で実行）
+        echo 'unlink ${ETROBO_HRP3_WORKSPACE}/${{ env.APP_NAME }}' | ${HOME}/startetrobo shell
