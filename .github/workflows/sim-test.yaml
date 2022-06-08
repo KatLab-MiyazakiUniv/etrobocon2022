@@ -111,7 +111,10 @@ jobs:
                         -H "Accept: application/vnd.github.v3+json" \
                         ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/actions/runs?status=queued\&per_page=99 | \
                       jq '.workflow_runs[] | select(.pull_requests != null) | .pull_requests[].number' | \
-                      grep -coE ${ISSUE_NUMBER} || :) 
+                      grep -coE ${ISSUE_NUMBER} || :)
+            if [ "${IS_SKIP}" == "0" ]; then
+              break
+            fi
             sleep 2
           done
         fi
