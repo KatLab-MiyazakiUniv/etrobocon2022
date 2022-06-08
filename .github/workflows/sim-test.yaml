@@ -63,7 +63,6 @@ jobs:
     - name: Test on simulator
       shell: bash
       id: simulator_test_execution
-      continue-on-error: true
       run: |
         # 初期コメントの生成
         MSG_RESULT=""
@@ -432,7 +431,7 @@ jobs:
         echo 'unlink ${ETROBO_HRP3_WORKSPACE}/${{ env.APP_NAME }}' | ${HOME}/startetrobo shell
 
     - name: Error handling
-      if: ${{ steps.simulator_test_execution.outcome == 'failure' }}
+      if: failure()
       run: |
         echo "Error handling"
         MSG="${{ env.MSG }}"
