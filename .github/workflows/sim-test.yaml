@@ -442,5 +442,5 @@ jobs:
           -H "Accept: application/vnd.github.v3+json" \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/issues/comments/${{ env.COMMENT_ID }} \
-          -d "{\"body\":\"${MSG}\"}${MSG_TAIL}" | \
+          -d "{\"body\":\"${MSG}${MSG_TAIL}\"}" | \
         jq -r '.html_url'
