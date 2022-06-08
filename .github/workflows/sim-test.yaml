@@ -435,7 +435,7 @@ jobs:
       if: ${{ steps.simulator_test_execution.outcome == 'failure' }}
       run: |
         echo "Error handling"
-        MSG="{{ env.MSG }}"
+        MSG="${{ env.MSG }}"
         MSG_TAIL=":warning: Unexpected error has occurred."
         curl \
           -X PATCH \
