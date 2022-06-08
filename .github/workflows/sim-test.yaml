@@ -431,16 +431,16 @@ jobs:
         # シンボリックリンクの削除（etrobo環境で実行）
         echo 'unlink ${ETROBO_HRP3_WORKSPACE}/${{ env.APP_NAME }}' | ${HOME}/startetrobo shell
 
-- name: Error handling
-  if: ${{ steps.simulator_test_execution.outcome == 'failure' }}
-  run: |
-    echo "Error handling"
-    MSG="{{ env.MSG }}"
-    MSG_TAIL=":warning: Unexpected error has occurred."
-    curl \
-      -X PATCH \
-      -H "Accept: application/vnd.github.v3+json" \
-      -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-      ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/issues/comments/${{ env.COMMENT_ID }} \
-      -d "{\"body\":\"${MSG}\"}${MSG_TAIL}" | \
-    jq -r '.html_url'
+    - name: Error handling
+      if: ${{ steps.simulator_test_execution.outcome == 'failure' }}
+      run: |
+        echo "Error handling"
+        MSG="{{ env.MSG }}"
+        MSG_TAIL=":warning: Unexpected error has occurred."
+        curl \
+          -X PATCH \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/issues/comments/${{ env.COMMENT_ID }} \
+          -d "{\"body\":\"${MSG}\"}${MSG_TAIL}" | \
+        jq -r '.html_url'
