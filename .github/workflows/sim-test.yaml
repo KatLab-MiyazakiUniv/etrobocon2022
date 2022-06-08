@@ -47,6 +47,8 @@ jobs:
 
     # シミュレータテストのための下準備
     - name: Set up simulator
+      id: simulator_test_execution
+      continue-on-error: true
       shell: bash
       run: |
         # もし、etrobocon2021 ディレクトリが既に存在する場合は削除
@@ -130,6 +132,7 @@ jobs:
                       -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                       ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/issues/${ISSUE_NUMBER}/comments \
                       -d "{\"body\":\"${MSG_TAIL}\"}" | jq -r '.id')
+        echo "COMMENT_ID=${COMMENT_ID}" >> ${GITHUB_ENV}
 
         # シミュレータテストのスキップ
         if [ "${IS_SKIP}" != "0" ]; then
@@ -410,7 +413,9 @@ jobs:
           # プルリクコメントのアップデート
           MSG=''
           MSG+="${MSG_RESULT}${MSG_DETAIL}${MSG_DETAIL_TAIL}${MSG_SUMMARY_HEAD}${MSG_SUMMARY}"
-          MSG+="${MSG_SUMMARY_DETAIL_HEAD}${MSG_SUMMARY_DETAIL}${MSG_SUMMARY_DETAIL_TAIL}${MSG_SIM_VERSION}${MSG_TAIL}"
+          MSG+="${MSG_SUMMARY_DETAIL_HEAD}${MSG_SUMMARY_DETAIL}${MSG_SUMMARY_DETAIL_TAIL}${MSG_SIM_VERSION}"
+          echo "MSG=${MSG}" >> ${GITHUB_ENV}  # エラー発生時の処理stepから参照できるようにする
+          MSG+="${MSG_TAIL}"
           curl \
             -X PATCH \
             -H "Accept: application/vnd.github.v3+json" \
@@ -425,3 +430,17 @@ jobs:
 
         # シンボリックリンクの削除（etrobo環境で実行）
         echo 'unlink ${ETROBO_HRP3_WORKSPACE}/${{ env.APP_NAME }}' | ${HOME}/startetrobo shell
+
+- name: Error handling
+  if: ${{ steps.simulator_test_execution.outcome == 'failure' }}
+  run: |
+    echo "Error handling"
+    MSG="{{ env.MSG }}"
+    MSG_TAIL=":warning: Unexpected error has occurred."
+    curl \
+      -X PATCH \
+      -H "Accept: application/vnd.github.v3+json" \
+      -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+      ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/issues/comments/${{ env.COMMENT_ID }} \
+      -d "{\"body\":\"${MSG}\"}${MSG_TAIL}" | \
+    jq -r '.html_url'
