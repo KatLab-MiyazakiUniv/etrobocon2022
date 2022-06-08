@@ -47,8 +47,6 @@ jobs:
 
     # シミュレータテストのための下準備
     - name: Set up simulator
-      id: simulator_test_execution
-      continue-on-error: true
       shell: bash
       run: |
         # もし、etrobocon2021 ディレクトリが既に存在する場合は削除
@@ -64,6 +62,8 @@ jobs:
     # シミュレータを研究室のPCで実行する
     - name: Test on simulator
       shell: bash
+      id: simulator_test_execution
+      continue-on-error: true
       run: |
         # 初期コメントの生成
         MSG_RESULT=""
