@@ -20,4 +20,4 @@ RUN git config --global user.name docker && \
 ENV APP_NAME etrobocon2022
 ENV COURSE l
 ENV ADDITIONAL ""
-ENTRYPOINT ["/bin/bash", "-c", "echo 'ln -s /tmp/${APP_NAME} ${ETROBO_ROOT}/workspace/${APP_NAME}; make ${COURSE} img=${APP_NAME} ${ADDITIONAL}' | ~/startetrobo shell"]
+ENTRYPOINT ["/bin/bash", "-c", "echo 'ln -s /tmp/${APP_NAME} ${ETROBO_ROOT}/workspace/${APP_NAME}; make ${COURSE} app=${APP_NAME} ${ADDITIONAL}' | ~/startetrobo shell"]
