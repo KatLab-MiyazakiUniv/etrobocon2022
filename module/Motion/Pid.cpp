@@ -9,7 +9,7 @@
 PidGain::PidGain(double _kp, double _ki, double _kd) : kp(_kp), ki(_ki), kd(_kd) {}
 
 Pid::Pid(double _kp, double _ki, double _kd, double _targetValue)
-  : gain(_kp, _ki, _kd), preDeviation(0.0), integral(0.0), targetValue(_targetValue)
+    : gain(_kp, _ki, _kd), preDeviation(0.0), integral(0.0), targetValue(_targetValue)
 {
 }
 
@@ -23,7 +23,8 @@ void Pid::setPidGain(double _kp, double _ki, double _kd)
 double Pid::calculatePid(double presentValue, double delta)
 {
   // 0除算を避けるために0の場合はデフォルト周期0.01とする
-  if(delta == 0) delta = 0.01;
+  if (delta == 0)
+    delta = 0.01;
   //現在の偏差を求める
   double presentDeviation = targetValue - presentValue;
   //積分の処理を行う
