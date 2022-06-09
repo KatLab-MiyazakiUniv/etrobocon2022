@@ -49,11 +49,13 @@ jobs:
     - name: Set up simulator
       shell: bash
       run: |
-        # もし、etrobocon2021 ディレクトリが既に存在する場合は削除
         etrobo_cmd=''
-        etrobo_cmd+='if [ -d ${ETROBO_HRP3_WOKSPACE}/${{ env.APP_NAME }} ]; then rm -rf ${ETROBO_HRP3_WORKSPACE}/${{ env.APP_NAME }}; fi; '
+        # もし、etrobocon2022 ディレクトリが既に存在する場合は削除
+        etrobo_cmd+='if [ -d ${ETROBO_HRP3_WORKSPACE}/${{ env.APP_NAME }} ]; then rm -rf ${ETROBO_HRP3_WORKSPACE}/${{ env.APP_NAME }}; fi; '
+        # もし、etrobocon2022 リポジトリへのシンボリックリンクが存在する場合は削除
+        etrobo_cmd+='if [ -L ${ETROBO_HRP3_WORKSPACE}/${{ env.APP_NAME }} ]; then unlink ${ETROBO_HRP3_WORKSPACE}/${{ env.APP_NAME }}; fi; '
 
-        # etrobo環境に、etrobocon2021リポジトリへのシンボリックリンクを作成
+        # etrobo環境に、etrobocon2022リポジトリへのシンボリックリンクを作成
         etrobo_cmd+='ln -s ${{ github.workspace }} ${ETROBO_HRP3_WORKSPACE}/${{ env.APP_NAME }}; '
 
         # etrobo環境で上述のコマンドを実行
@@ -174,17 +176,12 @@ jobs:
           TMP_CAPTURE_DIR=$(mktemp -d)
           echo ${TMP_CAPTURE_DIR}
 
-          # 初期ブロック配置をランダムに生成
-          BLOCK_COORDINATE_L='09'$(echo "from random import *; print(''.join(sample('EMBKDRGP',8)))" | python3)
-          BLOCK_COORDINATE_R='09'$(echo "from random import *; print(''.join(sample('HJCLAQFS',8)))" | python3)
-
           # シミュレータの設定ファイルを生成
           SETTINGS_FILE=${TEST_RESULT_DIR}/${GITHUB_SHA}-${i}.json
           cat ${GITHUB_WORKSPACE}/sim-settings/default.json | \
             jq ".captureDir=\"${TMP_CAPTURE_DIR}\"" | \
-            jq ".captureRate=\"2\"" | \
-            jq ".initLBlockLayout=\"${BLOCK_COORDINATE_L}\"" | \
-            jq ".initRBlockLayout=\"${BLOCK_COORDINATE_R}\"" > ${TEST_RESULT_DIR_ROOT}/${SETTINGS_FILE}
+            jq ".captureRate=\"2\"" > ${TEST_RESULT_DIR_ROOT}/${SETTINGS_FILE}
+
 
           # シミュレータに設定ファイルを反映させる
           curl -X POST \
