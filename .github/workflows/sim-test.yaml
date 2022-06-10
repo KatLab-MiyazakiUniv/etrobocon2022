@@ -149,7 +149,9 @@ jobs:
 
         # シミュレータバージョン等の出力
         SIMSTATUS_FILE=${TEST_RESULT_DIR}/${GITHUB_SHA}-sim-status.json
+        echo "export DISPLAY=:0; sim" | ${HOME}/startetrobo shell
         echo "sim status > ${TEST_RESULT_DIR_ROOT}/${SIMSTATUS_FILE}" | ${HOME}/startetrobo shell
+        echo "export DISPLAY=:0; sim stop" | ${HOME}/startetrobo shell
         SIM_VERSION=$(jq -r '.info.version' ${TEST_RESULT_DIR_ROOT}/${SIMSTATUS_FILE})
         MSG_SIM_VERSION="シミュレータのバージョン: ${SIM_VERSION}\n"
 
@@ -197,7 +199,9 @@ jobs:
           # シミュレーションの実行
           LOG_FILE=${TEST_RESULT_DIR}/${GITHUB_SHA}-${i}.log
           echo "echo [LOG] Start \$(date '+%Y-%m-%d %H:%M %S (%z %Z)'); \
+                export DISPLAY=:0; \
                 make ${COURSE_LOWER} app=${APP_NAME} sim up; \
+                sim stop; \
                 echo [LOG] End \$(date '+%Y-%m-%d %H:%M %S (%z %Z)'); " | \
             ${HOME}/startetrobo shell | \
             tee ${TEST_RESULT_DIR_ROOT}/${LOG_FILE}
