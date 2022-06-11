@@ -12,7 +12,7 @@ namespace etrobocon2022_test
 {
     TEST(calculateMileageTest, calculateMilage)
     {
-        double radius = 45;
+        double radius = 50;
         double rightAngle = 10;
         double leftAngle = 20;
         double rightWheel = 2 * rightAngle * radius * M_PI / 360;
@@ -24,7 +24,7 @@ namespace etrobocon2022_test
 
     TEST(calculateMileageTest, calculateMilage_minus)
     {
-        double radius = 45;
+        double radius = 50;
         double rightAngle = -10;
         double leftAngle = -20;
         double rightWheel = 2 * rightAngle * radius * M_PI / 360;
@@ -36,7 +36,7 @@ namespace etrobocon2022_test
 
     TEST(calculateMileageTest, calculateMilage_zero)
     {
-        double radius = 45;
+        double radius = 50;
         double rightAngle = 0;
         double leftAngle = 0;
         double rightWheel = 2 * rightAngle * radius * M_PI / 360;

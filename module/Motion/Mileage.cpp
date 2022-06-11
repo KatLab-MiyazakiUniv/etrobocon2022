@@ -22,4 +22,4 @@ double Mileage::calculateMileage(int rightAngle, int leftAngle)
     return (rightWheel + leftWheel) / 2.0;
 }
 
-const double Mileage::RADIUS = 45.0;
+const double Mileage::RADIUS = 50.0;
