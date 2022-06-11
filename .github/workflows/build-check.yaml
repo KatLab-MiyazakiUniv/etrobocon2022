@@ -1,0 +1,66 @@
+name: Build Check
+on: push
+
+env:
+  IMAGE: etrobocon2022-build-check
+  APP_NAME: etrobocon2022
+
+jobs:
+  build-check:
+    runs-on: ubuntu-20.04
+    steps:
+
+      # ${{ github.workspace }} を使用するために必要
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      # ログイン
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # https://github.com/ETrobocon/etrobo/ の master ブランチの最新のコミットIDと、
+      # Dockerfile のハッシュ値を結合して Docker image のタグを生成する。
+      # https://docs.github.com/ja/rest/reference/repos#list-organization-repositories
+      - name: Create Docker image tag
+        run: |
+          TAG=`curl \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/ETrobocon/etrobo/commits/master?per_page=1 | \
+            jq '.sha' | \
+            sed -e 's/"//g'`
+          TAG=${TAG}.`md5sum ${{ github.workspace }}/Dockerfile | cut -d ' ' -f 1`
+          echo TAG=$TAG >> $GITHUB_ENV
+
+      # 上記で生成したタグが GitHub Container Registry に存在するかを確認する
+      # 存在しない場合、新たに Docker image をビルドするためのフラグ(IS_REBUILD_DOCKER_IMAGE)を立てる
+      - name: Check latest Docker image tag
+        run: |
+          IS_REBUILD_DOCKER_IMAGE='false'
+          docker pull ghcr.io/katlab-miyazakiuniv/${{ env.IMAGE }}:${{ env.TAG }} || IS_REBUILD_DOCKER_IMAGE='true'
+          echo IS_REBUILD_DOCKER_IMAGE=$IS_REBUILD_DOCKER_IMAGE >> $GITHUB_ENV
+
+      # 指定されたタグの Docker image が無い場合、
+      # 新たに Docker image をビルドし、GitHub Container Registry に Push する
+      # https://github.com/docker/build-push-action
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        if: ${{ env.IS_REBUILD_DOCKER_IMAGE == 'true' }}
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/katlab-miyazakiuniv/${{ env.IMAGE }}:${{ env.TAG }}
+            ghcr.io/katlab-miyazakiuniv/${{ env.IMAGE }}:latest
+
+      # Docker image を GitHub Container Registry から Pull して、
+      # 実際に etrobo 環境でのビルドが実行できるかどうか確認する
+      # https://docs.github.com/ja/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+      - name: ETRobocon build test
+        run: |
+          docker run -e APP_NAME=${{ env.APP_NAME }} \
+                     -v ${{ github.workspace }}:/tmp/${{ env.APP_NAME }}:rw \
+                     ghcr.io/katlab-miyazakiuniv/${{ env.IMAGE }}:${{ env.TAG }}
