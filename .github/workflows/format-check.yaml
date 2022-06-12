@@ -1,0 +1,19 @@
+name: Clang Format
+
+on: [push]
+
+jobs:
+  format-check:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install clang-format
+      run: sudo apt-get -y install clang-format
+
+    - name: Format 
+      run: find ./test ./module -type f -name "*.cpp" -o -name "*.h" | xargs clang-format -i *.h *.cpp
+    
+    - name: Check difference
+      run: git diff --exit-code
