@@ -48,9 +48,3 @@ bool Measurer::isPressed()
 {
     return touchSensor.isPressed();
 }
-
-//コース情報の取得
-int Measurer::getCourseInfo(ETROBOC_COURSE_INFO_ID info)
-{
-    return ETRoboc_getCourseInfo(info);
-}
