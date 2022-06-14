@@ -13,5 +13,6 @@ void EtRobocon2022::start()
         controller.setLeftMotorPwm(100);
         controller.setRightMotorPwm(100);
         controller.setArmMotorPwm(10);
+        printf("a\n");
     }
 }
