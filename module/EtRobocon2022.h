@@ -6,7 +6,7 @@
 
 #ifndef ETROBOCON2022_H
 #define ETROBOCON2022_H
-
+#include "Controller.h"
 class EtRobocon2022
 {
 public:
