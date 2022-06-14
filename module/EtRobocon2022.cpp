@@ -5,7 +5,6 @@
  */
 
 #include "EtRobocon2022.h"
-
 void EtRobocon2022::start()
 {
     Controller controller;
