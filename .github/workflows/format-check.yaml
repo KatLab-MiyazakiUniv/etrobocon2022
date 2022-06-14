@@ -13,7 +13,4 @@ jobs:
       run: sudo apt-get -y install clang-format
 
     - name: Format 
-      run: find ./test ./module -type f -name "*.cpp" -o -name "*.h" | xargs clang-format -i *.h *.cpp
-    
-    - name: Check difference
-      run: git diff --exit-code
+      run: find ./test ./module -type f -name "*.cpp" -o -name "*.h" | xargs clang-format --dry-run --Werror *.h *.cpp
