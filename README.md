@@ -13,7 +13,7 @@
 - [GoogleTest](https://github.com/google/googletest)
 - Git/GitHub/GitHub Actions
 
-環境構築の詳細は、wikiを見てください。
+環境構築の詳細は、[wiki](https://github.com/KatLab-MiyazakiUniv/etrobocon2022/wiki)を見てください。
 
 ## Authors
 KatLabメンバー, 宮崎大学片山徹郎研究室
