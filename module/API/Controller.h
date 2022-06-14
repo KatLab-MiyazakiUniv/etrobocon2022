@@ -7,7 +7,6 @@
 #define CONTROLLER_H
 
 #include "ev3api.h"
-#include "etroboc_ext.h"
 #include "Motor.h"
 #include "Clock.h"
 
