@@ -1,7 +1,7 @@
 /**
  * @file Controller.cpp
  * @brief モーター制御
- * @author yutotanaka24,kodama0720
+ * @author sakakibara
  */
 #include "Controller.h"
 

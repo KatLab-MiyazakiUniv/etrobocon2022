@@ -1,7 +1,7 @@
 /**
  * @file Motor.h
  * @brief モータクラス（ダミー）
- * @author kodama0720, yutotanaka24
+ * @author sakakibara
  */
 
 #ifndef MOTOR_H

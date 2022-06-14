@@ -1,7 +1,7 @@
 /**
  * @file ev3api_motor.h
  * @brief モータ関連の列挙体（ダミー）
- * @author kodama0720, yutotanaka24
+ * @author sakakibara
  */
 #pragma once
 

@@ -1,7 +1,7 @@
 /**
  * @file EtRobocon2022.h
  * @brief 全体を制御するクラス
- * @author Takahiro55555
+ * @author sakakibara
  */
 
 #ifndef ETROBOCON2022_H

@@ -1,7 +1,7 @@
 /**
  * @file Port.h
  * @brief ポート関連の列挙体等（ダミー）
- * @author kodama0720, yutotanaka24
+ * @author sakakibara
  */
 #ifndef PORT_H
 #define PORT_H
@@ -38,9 +38,9 @@ enum ePortM
  */
 enum ePower
 {
-    POWER_OFF = 0,          /**< 電源供給なし */
-    POWER_LOWSPEED_9V = 1,  /**< 9V電源供給 */
-    POWER_LOWSPEED = 2      /**< I2Cデバイス */
+    POWER_OFF = 0,         /**< 電源供給なし */
+    POWER_LOWSPEED_9V = 1, /**< 9V電源供給 */
+    POWER_LOWSPEED = 2     /**< I2Cデバイス */
 };
 
 /** センサポート数 */

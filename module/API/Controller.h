@@ -1,7 +1,7 @@
 /**
  * @file Controller.h
  * @brief モーター制御
- * @author yutotanaka24,kodama0720
+ * @author sakakibara
  */
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
