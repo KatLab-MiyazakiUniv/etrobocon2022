@@ -47,10 +47,10 @@ public:
    */
   void sleep(int milliSec = 10);
 
-  /**
-   * シミュレータへ競技の終了を通知する
-   */
-  void notifyCompletedToSimulator();
+  // /**
+  //  * シミュレータへ競技の終了を通知する
+  //  */
+  // void notifyCompletedToSimulator();
 
   void resetMotorCount();
 
