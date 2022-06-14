@@ -4,10 +4,10 @@ APPL_COBJS +=
 
 # Shellスクリプトで、moduleディレクトリ中のソースコード名をオブジェクトファイル名に変換している
 APPL_CXXOBJS += $(shell echo \
-                    `ls ${HOME}/etrobo/workspace/etrobocon2022/module/*.cpp | \
+                    `ls ${HOME}/work/RasPike/sdk/workspace/etrobocon2022/module/*.cpp | \
                      sed -r 's/(\/.*)*\/(.*\.)cpp/\2o/g'`)
 APPL_CXXOBJS += $(shell echo \
-                    `ls ${HOME}/etrobo/workspace/etrobocon2022/module/*/*.cpp | \
+                    `ls ${HOME}/work/RasPike/sdk/workspace/etrobocon2022/module/*/*.cpp | \
                      sed -r 's/(\/.*)*\/(.*\.)cpp/\2o/g'`)
 
 SRCLANG := c++
