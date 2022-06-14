@@ -1,7 +1,7 @@
 /**
  * @file EtRobocon2022Test.cpp
  * @brief EtRobocon2022クラスのテストケース
- * @author Takahiro55555
+ * @author sakakibara
  */
 
 #include "../module/EtRobocon2022.h" // このヘッダファイルのcppファイルをテスト
