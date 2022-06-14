@@ -1,6 +1,6 @@
 /**
  * @file Measurer.h
- * @brief 計測に用いる関数をまとめたクラス
+ * @brief 計測に用いる関数をまとめたラッパークラス
  * @author KakinokiKanta
  */
 

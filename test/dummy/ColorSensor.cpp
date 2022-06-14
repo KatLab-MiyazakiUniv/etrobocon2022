@@ -28,4 +28,5 @@ void ColorSensor::getRawColor(rgb_raw_t &rgb)
     {
         rgb = {111, 19, 19}; // red
     }
+    //他の色のダミーも後々追加する予定
 }

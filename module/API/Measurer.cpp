@@ -1,6 +1,6 @@
 /**
  * @file Measurer.cpp
- * @brief 計測に用いる関数
+ * @brief 計測に用いる関数をまとめたラッパークラス
  * @author KakinokiKanta
  */
 
