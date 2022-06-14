@@ -10,6 +10,7 @@ extern "C"
 #endif
 
 #include "ev3api.h"
+#include "EtRobocon2022.h"
 
 #define MAIN_PRIORITY TMIN_APP_TPRI + 1
 

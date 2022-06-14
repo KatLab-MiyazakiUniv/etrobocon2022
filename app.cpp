@@ -6,7 +6,6 @@
 
 #include "app.h"
 #include "EtRobocon2022.h"
-
 void main_task(intptr_t unused)
 {
   EtRobocon2022::start();
