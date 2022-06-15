@@ -1,7 +1,7 @@
 /**
  * @file app.cpp
  * @brief タスクを管理するクラス
- * @author miyasita64,sakakibara
+ * @author miyasita64
  */
 
 #include "app.h"
@@ -9,5 +9,5 @@
 void main_task(intptr_t unused)
 {
   EtRobocon2022::start();
-  // ext_tsk();
+  ext_tsk();
 }
