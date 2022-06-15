@@ -62,7 +62,7 @@ namespace etrobocon2022_test
 
   TEST(PidTest, calculatePidZero)
   {
-    static const double DELTA = 0.01;
+    constexpr double DELTA = 0.01;
     double expected_p = 0.0;
     double expected_i = 0.0;
     double expected_d = 0.0;
@@ -80,7 +80,7 @@ namespace etrobocon2022_test
 
   TEST(calculatePidTest, calculatePidMinus)
   {
-    static const double DELTA = 0.01;
+    constexpr double DELTA = 0.01;
     double expected_p = -0.3;
     double expected_i = -0.02;
     double expected_d = -0.175;
@@ -98,7 +98,7 @@ namespace etrobocon2022_test
 
   TEST(PidTest, calculatePidChangeDelta)
   {
-    static const double DELTA = 0.03;
+    constexpr double DELTA = 0.03;
     double expected_p = 0.6;
     double expected_i = 0.02;
     double expected_d = 0.03;
@@ -117,7 +117,7 @@ namespace etrobocon2022_test
 
   TEST(PidTest, calculatePidChangeDeltaMinus)
   {
-    static const double DELTA = -0.03;
+    constexpr double DELTA = -0.03;
     double expected_p = 0.6;
     double expected_i = 0.02;
     double expected_d = 0.03;
@@ -137,8 +137,8 @@ namespace etrobocon2022_test
   //周期に0を渡したときに、デフォルト周期0.01として計算されるかをテストする
   TEST(PidTest, calculatePidChangeDeltaZero)
   {
-    static const double DELTA = 0;             //実際に渡す周期
-    static const double EXPECTED_DELTA = 0.01; //期待される周期
+    constexpr double DELTA = 0;             //実際に渡す周期
+    constexpr double EXPECTED_DELTA = 0.01; //期待される周期
     double expected_p = 0.6;
     double expected_i = 0.02;
     double expected_d = 0.03;
@@ -158,7 +158,7 @@ namespace etrobocon2022_test
   // setしてcalculatePidを呼び出す(Setterのテスト)
   TEST(calculatePidTest, caluclatePidSetter)
   {
-    static const double DELTA = 0.01;
+    constexpr double DELTA = 0.01;
     double expected_p = 0.6;
     double expected_i = 0.05;
     double expected_d = 0.01;
