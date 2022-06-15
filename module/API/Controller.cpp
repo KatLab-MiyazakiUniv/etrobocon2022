@@ -1,6 +1,6 @@
 /**
  * @file Controller.cpp
- * @brief モーター制御
+ * @brief モーター制御に用いる関数をまとめたラッパークラス
  * @author sakakibara
  */
 #include "Controller.h"
@@ -56,9 +56,3 @@ void Controller::sleep(int milliSec)
 {
   clock.sleep(milliSec);
 }
-
-// //シミュレータへ競技の終了を通知する
-// void Controller::notifyCompletedToSimulator()
-// {
-//   ETRoboc_notifyCompletedToSimulator();
-// }

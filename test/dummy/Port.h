@@ -7,11 +7,6 @@
 #define PORT_H
 
 /**
- * @file Port.h
- * @brief モータ/センサポート関連定義
- */
-
-/**
  * センサポート番号
  */
 enum ePortS

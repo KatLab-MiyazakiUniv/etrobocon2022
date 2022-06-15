@@ -1,6 +1,6 @@
 /**
  * @file Controller.h
- * @brief モーター制御
+ * @brief モーター制御に用いる関数をまとめたラッパークラス
  * @author sakakibara
  */
 #ifndef CONTROLLER_H
