@@ -1,13 +1,13 @@
-mkfile_path := $(dir $(lastword $(MAKEFILE_LIST)))
+mkfile_path := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 APPL_COBJS +=
 
 # Shellスクリプトで、moduleディレクトリ中のソースコード名をオブジェクトファイル名に変換している
 APPL_CXXOBJS += $(shell echo \
-                    `ls ${HOME}/etrobo/workspace/etrobocon2022/module/*.cpp | \
+                    `ls ${mkfile_path}module/*.cpp | \
                      sed -r 's/(\/.*)*\/(.*\.)cpp/\2o/g'`)
 APPL_CXXOBJS += $(shell echo \
-                    `ls ${HOME}/etrobo/workspace/etrobocon2022/module/*/*.cpp | \
+                    `ls ${mkfile_path}module/*/*.cpp | \
                      sed -r 's/(\/.*)*\/(.*\.)cpp/\2o/g'`)
 
 SRCLANG := c++
