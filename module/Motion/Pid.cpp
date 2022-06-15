@@ -20,22 +20,22 @@ void Pid::setPidGain(double _kp, double _ki, double _kd)
   gain.kd = _kd;
 }
 
-double Pid::calculatePid(double presentValue, double delta)
+double Pid::calculatePid(double nowValue, double delta)
 {
   // 0除算を避けるために0の場合はデフォルト周期0.01とする
   if (delta == 0)
     delta = 0.01;
   //現在の偏差を求める
-  double presentDeviation = targetValue - presentValue;
+  double nowDeviation = targetValue - nowValue;
   //積分の処理を行う
-  integral += presentDeviation * delta;
+  integral += nowDeviation * delta;
   //微分の処理を行う
-  double difference = (presentDeviation - preDeviation) / delta;
+  double difference = (nowDeviation - preDeviation) / delta;
   //前回の偏差を更新する
-  preDeviation = presentDeviation;
+  preDeviation = nowDeviation;
 
   // P制御の計算を行う
-  double p = gain.kp * presentDeviation;
+  double p = gain.kp * nowDeviation;
   // I制御の計算を行う
   double i = gain.ki * integral;
   // D制御の計算を行う
