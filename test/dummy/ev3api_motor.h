@@ -23,7 +23,7 @@ typedef enum
 typedef enum
 {
     NONE_MOTOR = 0,    //モータ未接続
-    MEDIUM_MOTOR,      //サーボモータM
+    MEDIUM_MOTOR,      //サーボモータM 
     LARGE_MOTOR,       //サーボモータL
     UNREGULATED_MOTOR, //未調整モータ
     TNUM_MOTOR_TYPE    //モータタイプの数
