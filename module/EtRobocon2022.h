@@ -6,10 +6,9 @@
 
 #ifndef ETROBOCON2022_H
 #define ETROBOCON2022_H
-class EtRobocon2022
-{
-public:
-    static void start();
+class EtRobocon2022 {
+ public:
+  static void start();
 };
 
 #endif

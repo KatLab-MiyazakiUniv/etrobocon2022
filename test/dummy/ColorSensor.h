@@ -10,39 +10,36 @@
 #include "Port.h"
 #include <stdlib.h>
 
-typedef struct
-{
-    int r, g, b;
+typedef struct {
+  int r, g, b;
 } rgb_raw_t;
 
-namespace ev3api
-{
+namespace ev3api {
 
-    //カラーセンサクラス
-    class ColorSensor
-    {
-    public:
-        int brightness = 0;
+  //カラーセンサクラス
+  class ColorSensor {
+   public:
+    int brightness = 0;
 
-        /**
-         * コンストラクタ
-         * @param port カラーセンサポート番号
-         * @return -
-         */
-        explicit ColorSensor(ePortS port);
+    /**
+     * コンストラクタ
+     * @param port カラーセンサポート番号
+     * @return -
+     */
+    explicit ColorSensor(ePortS port);
 
-        /**
-         * 明るさを取得
-         * @return 反射光の強さ(0-100)
-         */
-        int getBrightness(); //明るさを取得
+    /**
+     * 明るさを取得
+     * @return 反射光の強さ(0-100)
+     */
+    int getBrightness();  //明るさを取得
 
-        /**
-         * RGB値を取得
-         * @return RGBを保持するクラス
-         */
-        void getRawColor(rgb_raw_t &rgb);
-    };
-} // namespace ev3api
+    /**
+     * RGB値を取得
+     * @return RGBを保持するクラス
+     */
+    void getRawColor(rgb_raw_t& rgb);
+  };
+}  // namespace ev3api
 
 #endif

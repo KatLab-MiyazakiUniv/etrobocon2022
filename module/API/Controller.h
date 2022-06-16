@@ -10,9 +10,8 @@
 #include "Motor.h"
 #include "Clock.h"
 
-class Controller
-{
-public:
+class Controller {
+ public:
   static const int MOTOR_PWM_MAX = 100;
   static const int MOTOR_PWM_MIN = -100;
 
@@ -54,7 +53,7 @@ public:
 
   void resetMotorCount();
 
-private:
+ private:
   ev3api::Motor rightWheel;
   ev3api::Motor leftWheel;
   ev3api::Motor armMotor;

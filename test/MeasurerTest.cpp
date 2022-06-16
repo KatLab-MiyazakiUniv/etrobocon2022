@@ -15,6 +15,6 @@ namespace etrobocon2022_test {
     int expected2 = 111;
     int actual = measurer.getRawColor().r;
 
-    ASSERT_TRUE( actual == expected1 || actual == expected2 );
+    ASSERT_TRUE(actual == expected1 || actual == expected2);
   }
 }  // namespace etrobocon2022_test

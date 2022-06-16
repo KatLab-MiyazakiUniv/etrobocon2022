@@ -12,56 +12,55 @@
 #include "Motor.h"
 #include "TouchSensor.h"
 
-class Measurer
-{
-public:
-    /**
-     * コンストラクタ
-     */
-    Measurer();
+class Measurer {
+ public:
+  /**
+   * コンストラクタ
+   */
+  Measurer();
 
-    /**
-     * 明るさを取得
-     * @return 反射光の強さ(0-100)
-     */
-    int getBrightness();
+  /**
+   * 明るさを取得
+   * @return 反射光の強さ(0-100)
+   */
+  int getBrightness();
 
-    /**
-     * RGB値を取得
-     * @return RGB値
-     */
-    rgb_raw_t getRawColor();
+  /**
+   * RGB値を取得
+   * @return RGB値
+   */
+  rgb_raw_t getRawColor();
 
-    /**
-     * 左モータ角位置取得
-     * @return 左モータ角位置[deg]
-     */
-    int getLeftCount();
+  /**
+   * 左モータ角位置取得
+   * @return 左モータ角位置[deg]
+   */
+  int getLeftCount();
 
-    /**
-     * 右モータ角位置取得
-     * @return 右モータ角位置[deg]
-     */
-    int getRightCount();
+  /**
+   * 右モータ角位置取得
+   * @return 右モータ角位置[deg]
+   */
+  int getRightCount();
 
-    /**
-     * アームモータ角位置取得
-     * @return アームモータ角位置[deg]
-     */
-    int getArmMotorCount();
+  /**
+   * アームモータ角位置取得
+   * @return アームモータ角位置[deg]
+   */
+  int getArmMotorCount();
 
-    /**
-     * タッチセンサ状態取得
-     * @return true:押されている状態, false:押されていない状態
-     */
-    bool isPressed();
+  /**
+   * タッチセンサ状態取得
+   * @return true:押されている状態, false:押されていない状態
+   */
+  bool isPressed();
 
-private:
-    ev3api::ColorSensor colorSensor;
-    ev3api::Motor leftWheel;
-    ev3api::Motor rightWheel;
-    ev3api::Motor armMotor;
-    ev3api::TouchSensor touchSensor;
+ private:
+  ev3api::ColorSensor colorSensor;
+  ev3api::Motor leftWheel;
+  ev3api::Motor rightWheel;
+  ev3api::Motor armMotor;
+  ev3api::TouchSensor touchSensor;
 };
 
 #endif

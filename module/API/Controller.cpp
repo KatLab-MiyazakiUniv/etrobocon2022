@@ -9,12 +9,9 @@ Controller::Controller() : rightWheel(PORT_B), leftWheel(PORT_C), armMotor(PORT_
 
 int Controller::limitPwmValue(const int value)
 {
-  if (value > MOTOR_PWM_MAX)
-  {
+  if(value > MOTOR_PWM_MAX) {
     return MOTOR_PWM_MAX;
-  }
-  else if (value < MOTOR_PWM_MIN)
-  {
+  } else if(value < MOTOR_PWM_MIN) {
     return MOTOR_PWM_MIN;
   }
   return value;
