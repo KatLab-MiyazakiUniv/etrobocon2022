@@ -1,7 +1,7 @@
 /**
  * @file app.h
  * @brief タスクを管理するクラス
- * @author miyasita64
+ * @author miyashita64
  */
 
 #ifdef __cplusplus

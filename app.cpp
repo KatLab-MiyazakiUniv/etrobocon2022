@@ -1,7 +1,7 @@
 /**
  * @file app.cpp
  * @brief タスクを管理するクラス
- * @author miyasita64
+ * @author miyashita64
  */
 
 #include "app.h"
