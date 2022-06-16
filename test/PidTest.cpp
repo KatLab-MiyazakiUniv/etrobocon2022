@@ -50,14 +50,14 @@ namespace etrobocon2022_test
     double expected_d = 0.03;
     double targetValue = 70;
     Pid actualPid(expected_p, expected_i, expected_d, targetValue);
-    double nowValue = 20;
+    double currentValue = 20;
     double preDeviation = 0;
-    double nowDeviation = (targetValue - nowValue);
-    double p = nowDeviation * expected_p;
-    double i = nowDeviation * DELTA * expected_i;
-    double d = (nowDeviation - preDeviation) * expected_d / DELTA;
+    double currentDeviation = (targetValue - currentValue);
+    double p = currentDeviation * expected_p;
+    double i = currentDeviation * DELTA * expected_i;
+    double d = (currentDeviation - preDeviation) * expected_d / DELTA;
     double expected = p + i + d;
-    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(nowValue));
+    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(currentValue));
   }
 
   TEST(PidTest, calculatePidZero)
@@ -68,14 +68,14 @@ namespace etrobocon2022_test
     double expected_d = 0.0;
     double targetValue = 0;
     Pid actualPid(expected_p, expected_i, expected_d, targetValue);
-    double nowValue = 40;
+    double currentValue = 40;
     double preDeviation = 0;
-    double nowDeviation = (targetValue - nowValue);
-    double p = nowDeviation * expected_p;
-    double i = nowDeviation * DELTA * expected_i;
-    double d = (nowDeviation - preDeviation) * expected_d / DELTA;
+    double currentDeviation = (targetValue - currentValue);
+    double p = currentDeviation * expected_p;
+    double i = currentDeviation * DELTA * expected_i;
+    double d = (currentDeviation - preDeviation) * expected_d / DELTA;
     double expected = p + i + d;
-    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(nowValue));
+    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(currentValue));
   }
 
   TEST(calculatePidTest, calculatePidMinus)
@@ -86,14 +86,14 @@ namespace etrobocon2022_test
     double expected_d = -0.175;
     double targetValue = 100;
     Pid actualPid(expected_p, expected_i, expected_d, targetValue);
-    double nowValue = 0;
+    double currentValue = 0;
     double preDeviation = 0;
-    double nowDeviation = (targetValue - nowValue);
-    double p = nowDeviation * expected_p;
-    double i = nowDeviation * DELTA * expected_i;
-    double d = (nowDeviation - preDeviation) * expected_d / DELTA;
+    double currentDeviation = (targetValue - currentValue);
+    double p = currentDeviation * expected_p;
+    double i = currentDeviation * DELTA * expected_i;
+    double d = (currentDeviation - preDeviation) * expected_d / DELTA;
     double expected = p + i + d;
-    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(nowValue));
+    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(currentValue));
   }
 
   TEST(PidTest, calculatePidChangeDelta)
@@ -104,15 +104,15 @@ namespace etrobocon2022_test
     double expected_d = 0.03;
     double targetValue = 70;
     Pid actualPid(expected_p, expected_i, expected_d, targetValue);
-    double nowValue = 55;
+    double currentValue = 55;
     double preDeviation = 0;
-    double nowDeviation = (targetValue - nowValue);
-    double p = nowDeviation * expected_p;
-    double i = nowDeviation * DELTA * expected_i;
-    double d = (nowDeviation - preDeviation) * expected_d / DELTA;
+    double currentDeviation = (targetValue - currentValue);
+    double p = currentDeviation * expected_p;
+    double i = currentDeviation * DELTA * expected_i;
+    double d = (currentDeviation - preDeviation) * expected_d / DELTA;
     double expected = p + i + d;
     //第2引数に周期を渡し、周期に応じた計算結果を返すことができるかを確認(デフォルトでは0.01が渡される)
-    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(nowValue, DELTA));
+    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(currentValue, DELTA));
   }
 
   TEST(PidTest, calculatePidChangeDeltaMinus)
@@ -123,15 +123,15 @@ namespace etrobocon2022_test
     double expected_d = 0.03;
     double targetValue = 70;
     Pid actualPid(expected_p, expected_i, expected_d, targetValue);
-    double nowValue = 55;
+    double currentValue = 55;
     double preDeviation = 0;
-    double nowDeviation = (targetValue - nowValue);
-    double p = nowDeviation * expected_p;
-    double i = nowDeviation * DELTA * expected_i;
-    double d = (nowDeviation - preDeviation) * expected_d / DELTA;
+    double currentDeviation = (targetValue - currentValue);
+    double p = currentDeviation * expected_p;
+    double i = currentDeviation * DELTA * expected_i;
+    double d = (currentDeviation - preDeviation) * expected_d / DELTA;
     double expected = p + i + d;
     //第2引数に周期を渡し、周期に応じた計算結果を返すことができるかを確認(デフォルトでは0.01が渡される)
-    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(nowValue, DELTA));
+    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(currentValue, DELTA));
   }
 
   //周期に0を渡したときに、デフォルト周期0.01として計算されるかをテストする
@@ -144,15 +144,15 @@ namespace etrobocon2022_test
     double expected_d = 0.03;
     double targetValue = 70;
     Pid actualPid(expected_p, expected_i, expected_d, targetValue);
-    double nowValue = 55;
+    double currentValue = 55;
     double preDeviation = 0;
-    double nowDeviation = (targetValue - nowValue);
-    double p = nowDeviation * expected_p;
-    double i = nowDeviation * EXPECTED_DELTA * expected_i;
-    double d = (nowDeviation - preDeviation) * expected_d / EXPECTED_DELTA;
+    double currentDeviation = (targetValue - currentValue);
+    double p = currentDeviation * expected_p;
+    double i = currentDeviation * EXPECTED_DELTA * expected_i;
+    double d = (currentDeviation - preDeviation) * expected_d / EXPECTED_DELTA;
     double expected = p + i + d;
     //第2引数に周期を渡し、周期に応じた計算結果を返すことができるかを確認(デフォルトでは0.01が渡される)
-    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(nowValue, DELTA));
+    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(currentValue, DELTA));
   }
 
   // setしてcalculatePidを呼び出す(Setterのテスト)
@@ -164,29 +164,29 @@ namespace etrobocon2022_test
     double expected_d = 0.01;
     double targetValue = 70;
     Pid actualPid(expected_p, expected_i, expected_d, targetValue);
-    double nowValue = 60;
+    double currentValue = 60;
     double preDeviation = 0;
-    double nowDiviation = (targetValue - nowValue);                //現在の偏差
-    double p = nowDiviation * expected_p;                          // P制御
-    double i = nowDiviation * DELTA * expected_i;                  // I制御(誤差の累積は0)
-    double d = (nowDiviation - preDeviation) * expected_d / DELTA; // D制御(前回の誤差は0)
+    double currentDiviation = (targetValue - currentValue);            //現在の偏差
+    double p = currentDiviation * expected_p;                          // P制御
+    double i = currentDiviation * DELTA * expected_i;                  // I制御(誤差の累積は0)
+    double d = (currentDiviation - preDeviation) * expected_d / DELTA; // D制御(前回の誤差は0)
     double expected = p + i + d;
-    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(nowValue));
+    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(currentValue));
 
-    double integral = nowDiviation * DELTA; //誤差の累積
-    preDeviation += nowDiviation;           //前回の誤差の更新
+    double integral = currentDiviation * DELTA; //誤差の累積
+    preDeviation += currentDiviation;           //前回の誤差の更新
     expected_p = 0.1;
     expected_i = 0.2;
     expected_d = 0.3;
     actualPid.setPidGain(expected_p, expected_i, expected_d); // PIDゲインの更新
-    nowValue = 100;
-    nowDiviation = (targetValue - nowValue);
-    integral += nowDiviation * DELTA;
-    p = nowDiviation * expected_p;
+    currentValue = 100;
+    currentDiviation = (targetValue - currentValue);
+    integral += currentDiviation * DELTA;
+    p = currentDiviation * expected_p;
     i = integral * expected_i;
-    d = (nowDiviation - preDeviation) / DELTA * expected_d;
+    d = (currentDiviation - preDeviation) / DELTA * expected_d;
     expected = p + i + d;
-    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(nowValue));
+    EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(currentValue));
   }
 
 } // namespace etrobocon2022_test
