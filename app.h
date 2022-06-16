@@ -5,8 +5,7 @@
  */
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "ev3api.h"
@@ -18,8 +17,8 @@ extern "C"
 #endif /* STACK_SIZE */
 
 #ifndef TOPPERS_MACRO_ONLY
-    extern void main_task(intptr_t exinf); // メインタスク
-#endif                                     /* TOPPERS_MACRO_ONLY */
+extern void main_task(intptr_t exinf);  // メインタスク
+#endif                                  /* TOPPERS_MACRO_ONLY */
 
 #ifdef __cplusplus
 }
