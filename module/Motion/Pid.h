@@ -44,13 +44,13 @@ public:
   void setPidGain(double _kp, double _ki, double _kd);
 
   /**
-   * @fn double calculatePid(double presentValue, double delta = 0.01);
+   * @fn double calculatePid(double currentValue, double delta = 0.01);
    * @brief PIDを計算する
-   * @param presentValue 現在値
+   * @param currentValue 現在値
    * @param delta 周期[ms](デフォルト値0.01[10ms]、省略可)
    * @return PIDの計算結果(操作量)
    */
-  double calculatePid(double presentValue, double delta = 0.01);
+  double calculatePid(double currentValue, double delta = 0.01);
 
 private:
   PidGain gain;
