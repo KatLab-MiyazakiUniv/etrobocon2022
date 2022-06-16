@@ -1,7 +1,7 @@
 /**
  * @file ev3api.h
  * @brief Cのヘッダファイルのインクルード（ダミー）
- * @author sakakibara
+ * @author sap2368
  */
 #pragma once
 

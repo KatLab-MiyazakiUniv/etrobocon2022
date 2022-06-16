@@ -1,7 +1,7 @@
 /**
  * @file Motor.h
  * @brief モータクラス（ダミー）
- * @author sakakibara
+ * @author sap2368
  */
 
 #ifndef MOTOR_H

@@ -1,7 +1,7 @@
 /**
  * @file Clock.h
  * @brief クロッククラス（ダミー）
- * @author sakakibara
+ * @author sap2368
  */
 #ifndef CLOCK_H
 #define CLOCK_H

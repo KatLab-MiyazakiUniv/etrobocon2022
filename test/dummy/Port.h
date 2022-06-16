@@ -1,7 +1,7 @@
 /**
  * @file Port.h
  * @brief ポート関連の列挙体等（ダミー）
- * @author sakakibara
+ * @author sap2368
  */
 #ifndef PORT_H
 #define PORT_H
