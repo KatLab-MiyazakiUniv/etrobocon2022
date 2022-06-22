@@ -5,4 +5,8 @@
  */
 
 #include "EtRobocon2022.h"
-void EtRobocon2022::start() {}
+#include "GameMotionParser.h"
+void EtRobocon2022::start()
+{
+  GameMotionParser::parseGameMotionFile();
+}
