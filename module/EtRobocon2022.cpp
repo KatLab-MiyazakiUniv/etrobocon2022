@@ -5,4 +5,8 @@
  */
 
 #include "EtRobocon2022.h"
-void EtRobocon2022::start() {}
+void EtRobocon2022::start()
+{
+  StraightRunner straight;
+  straight.runStraightToDistance(1000, 30);
+}

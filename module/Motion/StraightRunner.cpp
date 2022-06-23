@@ -66,7 +66,7 @@ void StraightRunner::runStraightToDistance(double targetDistance, int pwm)
   // モータの停止
   controller.stopMotor();
 }
-
+/*
 // 白黒以外の色を検出するまで直進する
 void StraightRunner::runStraightToColor(int pwm)
 {
@@ -246,3 +246,4 @@ void StraightRunner::runStraightToColor(int pwm, COLOR destColor)
   // モータの停止
   controller.stopMotor();
 }
+*/

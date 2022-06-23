@@ -53,3 +53,12 @@ void Controller::sleep(int milliSec)
 {
   clock.sleep(milliSec);
 }
+
+void Controller::resetMotorCount()
+{
+  while((measurer.getLeftCount() != 0) || (measurer.getRightCount() != 0)) {
+    leftWheel.reset();
+    rightWheel.reset();
+    sleep();
+  }
+}
