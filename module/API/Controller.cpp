@@ -49,7 +49,7 @@ void Controller::stopArmMotor()
 }
 
 //スリープ
-void Controller::sleep(int milliSec)
+void Controller::sleep(int microSec)
 {
-  clock.sleep(milliSec);
+  clock.sleep(microSec);
 }
