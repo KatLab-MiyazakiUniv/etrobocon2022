@@ -8,12 +8,11 @@
 #define PID_H
 
 // PIDゲインを保持する構造体
-struct PidGain
-{
-public:
-  double kp; // Pゲイン
-  double ki; // Iゲイン
-  double kd; // Dゲイン
+struct PidGain {
+ public:
+  double kp;  // Pゲイン
+  double ki;  // Iゲイン
+  double kd;  // Dゲイン
 
   /** コンストラクタ
    * @param _kp Pゲイン
@@ -23,9 +22,8 @@ public:
   PidGain(double _kp, double _ki, double _kd);
 };
 
-class Pid
-{
-public:
+class Pid {
+ public:
   /** コンストラクタ
    * @param _kp Pゲイン
    * @param _ki Iゲイン
@@ -52,11 +50,11 @@ public:
    */
   double calculatePid(double currentValue, double delta = 0.01);
 
-private:
+ private:
   PidGain gain;
-  double preDeviation; //前回の偏差
-  double integral;     //偏差の累積
-  double targetValue;  //目標値
+  double preDeviation;  //前回の偏差
+  double integral;      //偏差の累積
+  double targetValue;   //目標値
 };
 
 #endif
