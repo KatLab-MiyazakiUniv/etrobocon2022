@@ -16,8 +16,7 @@ class GameMotionParser {
   static int parseGameMotionFile();
 
  private:
-  static constexpr char* sourceFileName
-      = "/home/taki/etrobo/workspace/etrobocon2022/module/Motion/GameMotion/data/GameMotions.csv";
+  static constexpr char* sourceFileName = "data/GameMotions.csv";
 };
 
 #endif
