@@ -17,38 +17,38 @@ int Controller::limitPwmValue(const int value)
   return value;
 }
 
-// PWM値を右モータにセット
+// 右モータにPWM値をセット
 void Controller::setRightMotorPwm(const int pwm)
 {
   rightWheel.setPWM(limitPwmValue(pwm));
 }
 
-// PWM値を左モータにセット
+// 左モータにPWM値をセット
 void Controller::setLeftMotorPwm(const int pwm)
 {
   leftWheel.setPWM(limitPwmValue(pwm));
 }
 
-//タイヤのモータを停止する
+// タイヤのモータを停止する
 void Controller::stopMotor()
 {
   leftWheel.stop();
   rightWheel.stop();
 }
 
-// PWM値をアームのモータにセット
+// アームのモータにPWM値をセット
 void Controller::setArmMotorPwm(const int pwm)
 {
   armMotor.setPWM(limitPwmValue(pwm));
 }
 
-//アームのモータを停止
+// アームのモータを停止する
 void Controller::stopArmMotor()
 {
   armMotor.stop();
 }
 
-//スリープ
+// 自タスクスリープ（デフォルトは10ミリ秒）
 void Controller::sleep(int microSec)
 {
   clock.sleep(microSec);
