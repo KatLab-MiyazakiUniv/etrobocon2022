@@ -9,7 +9,6 @@
 #include "Controller.h"
 #include "Measurer.h"
 #include "Rotation.h"
-#include "StraightRunner.h"
 
 class EtRobocon2022 {
  public:

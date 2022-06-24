@@ -6,10 +6,10 @@
 
 #include "EtRobocon2022.h"
 #include "Controller.h"
+#include "stdio.h"
 
 void EtRobocon2022::start()
 {
-  Rotation rotation;
   Controller controller;
   while(1){
     controller.setRightMotorPwm(50);
