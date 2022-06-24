@@ -11,15 +11,8 @@ void EtRobocon2022::start()
 {
   Rotation rotation;
   Controller controller;
-  rotation.rotateLeft(90, 50);
-  controller.sleep(100);
-  rotation.rotateRight(90, 50);
-  controller.sleep(100);
-  rotation.turnForwardRightPivot(90, 50);
-  controller.sleep(100);
-  rotation.turnBackRightPivot(90, 50);
-  controller.sleep(100);
-  rotation.turnForwardLeftPivot(90, 50);
-  controller.sleep(100);
-  rotation.turnBackLeftPivot(90, 50);
+  while(1){
+    controller.setRightMotorPwm(50);
+    controller.setLeftMotorPwm(50);
+  }
 }
