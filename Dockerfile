@@ -8,7 +8,7 @@ RUN apt-get update &&\
     apt-get install -y wget git cmake g++
 
 RUN wget https://raw.githubusercontent.com/ETrobocon/etrobo/master/scripts/startetrobo -O ~/startetrobo && \
-    sed -i -r 's/^(\s*)sudo/\1/g' ~/startetrobo && \
+    sed -i -r 's/(\s*)sudo((\s+-[a-zA-Z0-9\-]+)*)?\s+/\1/g' ~/startetrobo && \
     chmod +x ~/startetrobo
 
 # etrobo 環境のセットアップ
