@@ -7,7 +7,7 @@
 #include "Measurer.h"
 
 Measurer::Measurer()
-  : colorSensor(PORT_3),
+  : colorSensor(PORT_2),
     leftWheel(PORT_C),
     rightWheel(PORT_B),
     armMotor(PORT_A),
