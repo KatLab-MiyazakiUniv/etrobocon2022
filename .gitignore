@@ -6,7 +6,7 @@ logs/
 .cancel-sim-test
 
 # 動作命令ファイル
-GameMotions.txt
+transfer_data/
 
 # Created by https://www.toptal.com/developers/gitignore/api/c++,macos,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=c++,macos,windows
