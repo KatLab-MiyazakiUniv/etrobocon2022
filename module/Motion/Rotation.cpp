@@ -16,6 +16,13 @@ Rotation::Rotation()
 //左回転
 void Rotation::rotateLeft(int angle, int pwm)
 {
+  // pwm値が0の場合はwarningを出して終了する
+  if(pwm == 0) {
+    printf("\x1b[36m"); /* 文字色をシアンに */
+    printf("warning: The pwm value passed to LineTracer::run is 0\n");
+    printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
+    return;
+  }
   const double _TREAD = TREAD - 8;  // 回頭距離の調整
   int leftSign = -1;
   int rightSign = 1;
@@ -63,6 +70,13 @@ void Rotation::rotateLeft(int angle, int pwm)
 //右回転
 void Rotation::rotateRight(int angle, int pwm)
 {
+  // pwm値が0の場合はwarningを出して終了する
+  if(pwm == 0) {
+    printf("\x1b[36m"); /* 文字色をシアンに */
+    printf("warning: The pwm value passed to LineTracer::run is 0\n");
+    printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
+    return;
+  }
   const double _TREAD = TREAD - 8;  // 回頭距離の調整
   int leftSign = 1;
   int rightSign = -1;
@@ -110,6 +124,13 @@ void Rotation::rotateRight(int angle, int pwm)
 //設定された角度とPWM値で右タイヤを軸に前方へピボットターンする
 void Rotation::turnForwardRightPivot(int angle, int pwm)
 {
+  // pwm値が0の場合はwarningを出して終了する
+  if(pwm == 0) {
+    printf("\x1b[36m"); /* 文字色をシアンに */
+    printf("warning: The pwm value passed to LineTracer::run is 0\n");
+    printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
+    return;
+  }
   int leftPwm = pwm;
   int rightPwm = -1;
 
@@ -138,6 +159,13 @@ void Rotation::turnForwardRightPivot(int angle, int pwm)
 //設定された角度とPWM値で右タイヤを軸に後方へピボットターンする
 void Rotation::turnBackRightPivot(int angle, int pwm)
 {
+  // pwm値が0の場合はwarningを出して終了する
+  if(pwm == 0) {
+    printf("\x1b[36m"); /* 文字色をシアンに */
+    printf("warning: The pwm value passed to LineTracer::run is 0\n");
+    printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
+    return;
+  }
   angle = abs(angle);
   int leftPwm = pwm;
   int rightPwm = 3;
@@ -166,6 +194,13 @@ void Rotation::turnBackRightPivot(int angle, int pwm)
 //設定された角度とPWM値で左タイヤを軸に前方へピボットターンする
 void Rotation::turnForwardLeftPivot(int angle, int pwm)
 {
+  // pwm値が0の場合はwarningを出して終了する
+  if(pwm == 0) {
+    printf("\x1b[36m"); /* 文字色をシアンに */
+    printf("warning: The pwm value passed to LineTracer::run is 0\n");
+    printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
+    return;
+  }
   int leftPwm = -1;
   int rightPwm = pwm;
   controller.resetMotorCount();
@@ -192,6 +227,13 @@ void Rotation::turnForwardLeftPivot(int angle, int pwm)
 //設定された角度とPWM値で左タイヤを軸に後方へピボットターンする
 void Rotation::turnBackLeftPivot(int angle, int pwm)
 {
+  // pwm値が0の場合はwarningを出して終了する
+  if(pwm == 0) {
+    printf("\x1b[36m"); /* 文字色をシアンに */
+    printf("warning: The pwm value passed to LineTracer::run is 0\n");
+    printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
+    return;
+  }
   angle = abs(angle);
   int leftPwm = 3;
   int rightPwm = pwm;

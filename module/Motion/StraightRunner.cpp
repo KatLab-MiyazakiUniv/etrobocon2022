@@ -11,6 +11,14 @@ StraightRunner::StraightRunner() {}
 // 設定された距離を直進する
 void StraightRunner::runStraightToDistance(double targetDistance, int pwm)
 {
+  // pwm値が0の場合はwarningを出して終了する
+  if(pwm == 0) {
+    printf("\x1b[36m"); /* 文字色をシアンに */
+    printf("warning: The pwm value passed to LineTracer::run is 0\n");
+    printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
+    return;
+  }
+
   // 直進前の走行距離
   int initialRightMotorCount = measurer.getRightCount();
   int initialLeftMotorCount = measurer.getLeftCount();
@@ -19,9 +27,6 @@ void StraightRunner::runStraightToDistance(double targetDistance, int pwm)
   int currentRightMotorCount = 0;
   int currentLeftMotorCount = 0;
   double currentDistance = 0;
-  int error = 0;                // 左右の回転数の誤差
-  Pid pid(1.2, 0.3, 0.001, 0);  // 左右の回転数を合わせるためのPID
-  int adjustment = 0;           // 左右の誤差の補正値
   // ループ回数
   int count = 0;
   // 現在のpwm値
@@ -53,14 +58,6 @@ void StraightRunner::runStraightToDistance(double targetDistance, int pwm)
       }
       count++;
     }
-    // 左右のモーターカウントを合わせるための補正値計算
-    error = (currentLeftMotorCount - initialLeftMotorCount)
-            - (currentRightMotorCount - initialRightMotorCount);
-    adjustment = static_cast<int>(pid.calculatePid(error));
-
-    // モータのPWM値をセット
-    controller.setLeftMotorPwm(currentPwm + adjustment);
-    controller.setRightMotorPwm(currentPwm - adjustment);
 
     // モータのPWM値をセット
     controller.setLeftMotorPwm(currentPwmInt);
