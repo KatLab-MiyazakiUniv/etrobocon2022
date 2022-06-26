@@ -29,7 +29,8 @@ class StraightRunner {
  private:
   // SECTION_DISTANCE毎にACCELE_PWMだけPWM値を上げる
   static constexpr int SECTION_DISTANCE = 10;  // 調整距離[mm]
-  static constexpr int ACCELE_PWM = 10;        // 追加のPWM値
+  static constexpr double ACCELE_PWM = 0.1;    // 追加のPWM値
+  static constexpr double MIN_PWM = 20;  // 静止時から走行体がモーターを動かせないPWM
 
   Measurer measurer;
   Controller controller;
