@@ -19,8 +19,6 @@ namespace ev3api {
   //カラーセンサクラス
   class ColorSensor {
    public:
-    int brightness = 0;
-
     /**
      * コンストラクタ
      * @param port カラーセンサポート番号
@@ -39,6 +37,9 @@ namespace ev3api {
      * @return RGBを保持するクラス
      */
     void getRawColor(rgb_raw_t& rgb);
+
+   private:
+    int brightnessCount;
   };
 }  // namespace ev3api
 

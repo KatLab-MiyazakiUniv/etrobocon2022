@@ -8,12 +8,17 @@
 using namespace ev3api;
 
 //コンストラクタ
-ColorSensor::ColorSensor(ePortS port) {}
+ColorSensor::ColorSensor(ePortS port) : brightnessCount(0) {}
 
 //明るさを取得
 int ColorSensor::getBrightness()
 {
-  return brightness;
+  int blackValue = 3;   // 黒の上で明るさを取得したときの値
+  int whiteValue = 93;  // 白の上で明るさを取得したときの値
+
+  //白と黒を交互に返す
+  brightnessCount++;
+  return brightnessCount % 2 == 0 ? blackValue : whiteValue;
 }
 
 // RGB値を取得
