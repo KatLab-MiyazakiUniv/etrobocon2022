@@ -6,18 +6,21 @@
 
 #include "GameMotionParser.h"
 
-int GameMotionParser::parseGameMotionFile()
+int GameMotionParser::readGameMotionFile()
 {
   const int BUF_SIZE = 128;
   char row[BUF_SIZE];
 
+  // ファイル読み込み
   FILE* fp = fopen(GameMotionParser::sourceFileName, "r");
 
+  // ファイル読み込み失敗
   if(fp == NULL) {
     printf("%s file not open!\n", GameMotionParser::sourceFileName);
     return -1;
   }
 
+  // ファイル用見込み成功
   printf("%s file opened!\n", GameMotionParser::sourceFileName);
   while(fgets(row, BUF_SIZE, fp) != NULL) {
     printf("%s", row);

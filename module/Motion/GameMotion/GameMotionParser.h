@@ -9,9 +9,13 @@
 
 #include <stdio.h>
 
+/**
+ ** @brief カメラシステムから送信されたファイルを読み込む
+ ** @return 読み込みの成否を返す(0:成功, -1:失敗)
+ **/
 class GameMotionParser {
  public:
-  static int parseGameMotionFile();
+  static int readGameMotionFile();
 
  private:
   static constexpr char* sourceFileName = "etrobocon2022/transfer_data/GameMotions.txt";
