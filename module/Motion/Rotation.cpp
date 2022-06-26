@@ -5,11 +5,12 @@
  */
 
 #include "Rotation.h"
+#include "stdio.h"
 
 using namespace std;
 
 Rotation::Rotation()
-  : RADIUS(45.0), TREAD(140), ROTATE_MIN_PWM(40), PIVOT_FRONT_MIN_PWM(40), PIVOT_BACK_MIN_PWM(40)
+  : RADIUS(45.0), TREAD(140), ROTATE_MIN_PWM(50), PIVOT_FRONT_MIN_PWM(50), PIVOT_BACK_MIN_PWM(50)
 {
 }
 

@@ -1,10 +1,11 @@
 /**
  * @file StraightRunner.cpp
  * @brief 直進クラス
- * @author hiroto0927, miyashita64
+ * @author sugaken0528
  */
 
 #include "StraightRunner.h"
+#include "stdio.h"
 
 StraightRunner::StraightRunner() {}
 

@@ -1,7 +1,7 @@
 /**
  * @file StraightRunner.h
  * @brief 直進クラス
- * @author hiroto0927, miyashita64
+ * @author sugaken0528
  */
 
 #ifndef STRAIGHTER_H
@@ -29,8 +29,8 @@ class StraightRunner {
  private:
   // SECTION_DISTANCE毎にACCELE_PWMだけPWM値を上げる
   static constexpr int SECTION_DISTANCE = 10;  // 調整距離[mm]
-  static constexpr double ACCELE_PWM = 0.1;    // 追加のPWM値
-  static constexpr double MIN_PWM = 20;  // 静止時から走行体がモーターを動かせないPWM
+  static constexpr double ACCELE_PWM = 1;      // 追加のPWM値
+  static constexpr double MIN_PWM = 30;  // 静止時から走行体がモーターを動かせないPWM値
 
   Measurer measurer;
   Controller controller;
