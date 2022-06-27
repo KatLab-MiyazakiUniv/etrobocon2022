@@ -7,7 +7,7 @@
 #include "ColorJudge.h"
 #include <gtest/gtest.h>
 
-namespace etrobocon2021_test {
+namespace etrobocon2022_test {
   TEST(getColorTest, getColorTrueBlack)
   {
     rgb_raw_t rgb = { 0, 0, 0 };
@@ -191,4 +191,4 @@ namespace etrobocon2021_test {
 
     EXPECT_EQ(expected, ColorJudge::getColor(rgb));
   }
-}  // namespace etrobocon2021_test
+}  // namespace etrobocon2022_test

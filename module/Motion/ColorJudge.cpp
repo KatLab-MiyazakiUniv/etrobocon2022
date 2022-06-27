@@ -49,6 +49,7 @@ COLOR ColorJudge::getColor(rgb_raw_t const& _rgb)
 }
 
 // RGBをHSVに変換する
+// 参考: https://tomari.org/main/java/color/ccal.html
 Hsv ColorJudge::convertRgbToHsv(rgb_raw_t const& _rgb)
 {
   Hsv hsv{ 0, 0, 0 };
