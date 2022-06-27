@@ -10,7 +10,6 @@
 #include "ev3api.h"
 #include "ColorSensor.h"
 #include "Motor.h"
-#include "TouchSensor.h"
 
 class Measurer {
  public:
@@ -60,7 +59,6 @@ class Measurer {
   ev3api::Motor leftWheel;
   ev3api::Motor rightWheel;
   ev3api::Motor armMotor;
-  ev3api::TouchSensor touchSensor;
 };
 
 #endif
