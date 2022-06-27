@@ -51,4 +51,3 @@ void LineTraceArea::runLineTraceArea(const bool isLeftCourse)
   // 緑までライントレース
   lineTracer.runToColor(COLOR::GREEN, 45, 50, PidGain{ 1.0, 1.0, 1.0 });
 }
-
