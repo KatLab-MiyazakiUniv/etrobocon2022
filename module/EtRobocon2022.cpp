@@ -8,6 +8,8 @@
 
 void EtRobocon2022::start()
 {
-  bool isLeftCourse = true;  // true:Lコース, false:Rコース
-  LineTraceArea::runLineTraceArea(isLeftCourse);
+  bool isLeftCourse = true;             // true:Lコース, false:Rコース
+  int targetBrightness = (93 - 3) / 2;  // 目標輝度
+
+  LineTraceArea::runLineTraceArea(isLeftCourse, targetBrightness);
 }

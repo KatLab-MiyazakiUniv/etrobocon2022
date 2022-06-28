@@ -69,8 +69,8 @@ void LineTracer::runToColor(COLOR targetColor, int targetBrightness, int pwm, co
   //左右で符号を変える
   sign = (isLeftEdge) ? -1 : 1;
 
-  //指定された色を取得するまで繰り返す
-  while(colorCount < 3) {
+  //指定された色を回連続で取得するまで繰り返す
+  while(colorCount < JUDGE_COUNT) {
     currentColor = ColorJudge::getColor(measurer.getRawColor());
     if(currentColor == targetColor) {
       colorCount++;

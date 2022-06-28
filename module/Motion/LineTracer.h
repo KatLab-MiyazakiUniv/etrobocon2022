@@ -62,6 +62,7 @@ class LineTracer {
   bool isLeftEdge;
   Measurer measurer;
   Controller controller;
+  static constexpr int JUDGE_COUNT = 3;
 };
 
 #endif

@@ -10,28 +10,33 @@
 #include <array>
 #include "LineTracer.h"
 
-//区間の情報を保持する構造体
+// 区間制御のパラメータを保持する構造体
 struct SectionParam {
-  double distance;       //走行距離
-  int targetBrightness;  //目標輝度
-  int pwm;               // PWM値
-  PidGain pidGain;       // PIDゲイン
+  double tweak;     // 調整距離
+  int pwm;          // PWM値
+  PidGain pidGain;  // PIDゲイン
 };
 
 class LineTraceArea {
  public:
   /**
-   * @fn static void runLineTraceArea();
    * @brief ライントレースエリアを走行する
    * @param isLeftCourse コースのLR判定(true:Lコース, false:Rコース)
+   * @param targetBrightness 目標輝度
    */
-  static void runLineTraceArea(const bool isLeftCourse);
+  static void runLineTraceArea(const bool isLeftCourse, const int targetBrightness);
 
  private:
-  static const int LEFT_SECTION_SIZE = 6;   // Lコースの区間の数
-  static const int RIGHT_SECTION_SIZE = 6;  // Rコースの区間の数
-  static const std::array<SectionParam, LEFT_SECTION_SIZE> LEFT_COURSE_INFO;  // Lコースの情報
-  static const std::array<SectionParam, RIGHT_SECTION_SIZE> RIGHT_COURSE_INFO;  // Rコースの情報
+  static constexpr int LEFT_SECTION_SIZE = 6;   // Lコースの区間の数
+  static constexpr int RIGHT_SECTION_SIZE = 6;  // Rコースの区間の数
+  // Lコースの各区間の距離
+  static const std::array<double, LEFT_SECTION_SIZE> LEFT_SECTION_DISTANCE;
+  // Rコースの各区間の距離
+  static const std::array<double, LEFT_SECTION_SIZE> RIGHT_SECTION_DISTANCE;
+
+  // 以下の2つの定数はファイル読み込みに置き換える（最後の要素は緑までライントレースのパラメータ）
+  static const std::array<SectionParam, LEFT_SECTION_SIZE + 1> LEFT_COURSE_INFO;  // Lコースの情報
+  static const std::array<SectionParam, RIGHT_SECTION_SIZE + 1> RIGHT_COURSE_INFO;  // Rコースの情報
 
   LineTraceArea();  // インスタンス化を禁止する
 };
