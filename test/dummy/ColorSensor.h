@@ -31,9 +31,6 @@ namespace ev3api {
      * @return RGBを保持するクラス
      */
     void getRawColor(rgb_raw_t& rgb);
-
-   private:
-    int brightnessCount;
   };
 }  // namespace ev3api
 
