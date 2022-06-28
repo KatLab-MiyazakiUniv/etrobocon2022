@@ -20,20 +20,22 @@ namespace etrobocon2022_test {
     int pwm = 100;
     PidGain gain = { 0.1, 0.05, 0.05 };
 
-    // ライントレース前のモータ回転数
+    // 初期値から期待する走行距離を求める
     int initialRightCount = measurer.getRightCount();
     int initialLeftCount = measurer.getLeftCount();
+    int expected = Mileage::calculateMileage(initialRightCount, initialLeftCount) + targetDistance;
+    int error = 10;  // 許容誤差
 
-    // 直線を想定してライントレースを実行
+    // ライントレースを実行
     lineTracer.run(targetDistance, targetBrightness, pwm, gain);
 
-    int rightCount = measurer.getRightCount() - initialRightCount;
-    int leftCount = measurer.getLeftCount() - initialLeftCount;
-    int actual = std::abs(rightCount - leftCount);  // 両輪の回転差
-    int expectedError = 50;                         // 両輪の回転の予測誤差（deg）
+    // ライントレース後の走行距離
+    int rightCount = measurer.getRightCount();
+    int leftCount = measurer.getLeftCount();
+    int actual = Mileage::calculateMileage(rightCount, leftCount);
 
-    // ライントレース後の両輪の回転差が予測誤差以下である．
-    EXPECT_GE(expectedError, actual);
+    EXPECT_LE(expected, actual);  // ライントレース後に走行した距離が期待する走行距離以上である
+    EXPECT_GE(expected + error, actual);  // ライントレース後に走行した距離が許容誤差以内である
   }
 
   TEST(LineTracerTest, runRightEdge)
@@ -46,20 +48,22 @@ namespace etrobocon2022_test {
     int pwm = 100;
     PidGain gain = { 0.1, 0.05, 0.05 };
 
-    // ライントレース前のモータ回転数
+    // 初期値から期待する走行距離を求める
     int initialRightCount = measurer.getRightCount();
     int initialLeftCount = measurer.getLeftCount();
+    int expected = Mileage::calculateMileage(initialRightCount, initialLeftCount) + targetDistance;
+    int error = 10;  // 許容誤差
 
-    // 直線を想定してライントレースを実行
+    // ライントレースを実行
     lineTracer.run(targetDistance, targetBrightness, pwm, gain);
 
-    int rightCount = measurer.getRightCount() - initialRightCount;
-    int leftCount = measurer.getLeftCount() - initialLeftCount;
-    int actual = std::abs(rightCount - leftCount);  // 両輪の回転差
-    int expectedError = 50;                         // 両輪の回転の予測誤差（deg）
+    // ライントレース後の走行距離
+    int rightCount = measurer.getRightCount();
+    int leftCount = measurer.getLeftCount();
+    int actual = Mileage::calculateMileage(rightCount, leftCount);
 
-    // ライントレース後の両輪の回転差が予測誤差以下である．
-    EXPECT_GE(expectedError, actual);
+    EXPECT_LE(expected, actual);  // ライントレース後に走行した距離が期待する走行距離以上である
+    EXPECT_GE(expected + error, actual);  // ライントレース後に走行した距離が許容誤差以内である
   }
 
   TEST(LineTracerTest, runZeroPWM)
@@ -72,20 +76,20 @@ namespace etrobocon2022_test {
     int pwm = 0;
     PidGain gain = { 0.1, 0.05, 0.05 };
 
-    // ライントレース前のモータ回転数
+    // 初期値から期待する走行距離を求める
     int initialRightCount = measurer.getRightCount();
     int initialLeftCount = measurer.getLeftCount();
+    int expected = Mileage::calculateMileage(initialRightCount, initialLeftCount);
 
-    // 直線を想定してライントレースを実行
+    // ライントレースを実行
     lineTracer.run(targetDistance, targetBrightness, pwm, gain);
 
-    int rightCount = measurer.getRightCount() - initialRightCount;
-    int leftCount = measurer.getLeftCount() - initialLeftCount;
-    int actual = std::abs(rightCount - leftCount);  // 両輪の回転差
-    int expectedError = 0;                          // 両輪の回転の予測誤差（deg）
+    // ライントレース後の走行距離
+    int rightCount = measurer.getRightCount();
+    int leftCount = measurer.getLeftCount();
+    int actual = Mileage::calculateMileage(rightCount, leftCount);
 
-    // ライントレース後の両輪の回転差が予測誤差以下である．
-    EXPECT_EQ(expectedError, actual);
+    EXPECT_EQ(expected, actual);  // ライントレース前後で走行距離に変化はない
   }
 
   TEST(LineTracerTest, runBack)
@@ -98,20 +102,48 @@ namespace etrobocon2022_test {
     int pwm = -100;
     PidGain gain = { 0.1, 0.05, 0.05 };
 
-    // ライントレース前のモータ回転数
+    // 初期値から期待する走行距離を求める
     int initialRightCount = measurer.getRightCount();
     int initialLeftCount = measurer.getLeftCount();
+    int expected = Mileage::calculateMileage(initialRightCount, initialLeftCount) - targetDistance;
+    int error = 10;  // 許容誤差
 
-    // 直線を想定してライントレースを実行
+    // ライントレースを実行
     lineTracer.run(targetDistance, targetBrightness, pwm, gain);
 
-    int rightCount = measurer.getRightCount() - initialRightCount;
-    int leftCount = measurer.getLeftCount() - initialLeftCount;
-    int actual = std::abs(rightCount - leftCount);  // 両輪の回転差
-    int expectedError = 50;                         // 両輪の回転の予測誤差（deg）
+    // ライントレース後の走行距離
+    int rightCount = measurer.getRightCount();
+    int leftCount = measurer.getLeftCount();
+    int actual = Mileage::calculateMileage(rightCount, leftCount);
 
-    // ライントレース後の両輪の回転差が予測誤差以下である．
-    EXPECT_GE(expectedError, actual);
+    EXPECT_GE(expected, actual);  // ライントレース後に走行した距離が期待する走行距離以下である
+    EXPECT_LE(expected - error, actual);  // ライントレース後に走行した距離が許容誤差以内である
+  }
+
+  TEST(LineTracerTest, runToColor)
+  {
+    Measurer measurer;
+    bool isLeftEdge = true;
+    LineTracer lineTracer(isLeftEdge);
+    COLOR targetColor = COLOR::GREEN;
+    double targetBrightness = 45;
+    int pwm = 100;
+    PidGain gain = { 0.1, 0.05, 0.05 };
+
+    // 初期値から期待する走行距離を求める
+    int initialRightCount = measurer.getRightCount();
+    int initialLeftCount = measurer.getLeftCount();
+    int expected = Mileage::calculateMileage(initialRightCount, initialLeftCount);
+
+    // 緑までライントレースを実行
+    lineTracer.runToColor(targetColor, targetBrightness, pwm, gain);
+
+    // ライントレース後の走行距離
+    int rightCount = measurer.getRightCount();
+    int leftCount = measurer.getLeftCount();
+    int actual = Mileage::calculateMileage(rightCount, leftCount);
+
+    EXPECT_LT(expected, actual);  // 初期値より少しでも進んでいる
   }
 
   // ゲッターのテスト

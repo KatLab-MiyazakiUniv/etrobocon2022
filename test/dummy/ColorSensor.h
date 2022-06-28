@@ -27,12 +27,6 @@ namespace ev3api {
     explicit ColorSensor(ePortS port);
 
     /**
-     * 明るさを取得
-     * @return 反射光の強さ(0-100)
-     */
-    int getBrightness();  //明るさを取得
-
-    /**
      * RGB値を取得
      * @return RGBを保持するクラス
      */
