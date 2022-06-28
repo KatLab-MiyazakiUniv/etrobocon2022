@@ -1,7 +1,7 @@
 /**
  *  @file   StraightRunnerTest.cpp
  *  @brief  StraightRunnerクラスのテストファイル
- *  @author sugaken0528
+ *  @author mutotaka0426
  */
 
 #include <gtest/gtest.h>
@@ -11,7 +11,7 @@
 
 using namespace std;
 
-namespace etrobocon2021_test {
+namespace etrobocon2022_test {
 
   TEST(runStraightToDistanceTest, runStraightToDistance)
   {
@@ -25,7 +25,7 @@ namespace etrobocon2021_test {
 
     double targetDistance = 350;
     int pwm = 50;
-    double distanceError = 3.0, differenceError = 2.0;
+    double distanceError = 3.0, differenceError = 1.0;
 
     // 初期値
     rightAngle = measurer.getRightCount();
@@ -64,7 +64,7 @@ namespace etrobocon2021_test {
 
     double targetDistance = 350;
     int pwm = 100;
-    double distanceError = 3.5, differenceError = 2.0;
+    double distanceError = 3.5, differenceError = 1.0;
 
     // 初期値
     leftAngle = measurer.getLeftCount();
@@ -123,7 +123,7 @@ namespace etrobocon2021_test {
 
     double targetDistance = 350;
     int pwm = -50;
-    double distanceError = 3.0, differenceError = 2.0;
+    double distanceError = 3.0, differenceError = 1.0;
 
     // 初期値
     leftAngle = measurer.getLeftCount();
@@ -162,7 +162,7 @@ namespace etrobocon2021_test {
 
     double targetDistance = 350;
     int pwm = -100;
-    double distanceError = 3.5, differenceError = 2.0;
+    double distanceError = 3.5, differenceError = 1.0;
 
     // 初期値
     leftAngle = measurer.getLeftCount();
@@ -226,4 +226,4 @@ namespace etrobocon2021_test {
     // 走行距離のテスト
     EXPECT_EQ(expectedDistance, currentDistance);
   }
-}  // namespace etrobocon2021_test
+}  // namespace etrobocon2022_test

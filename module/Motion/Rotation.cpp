@@ -5,29 +5,27 @@
  */
 
 #include "Rotation.h"
-#include "stdio.h"
 
 using namespace std;
 
 Rotation::Rotation()
-  : RADIUS(45.0), TREAD(140), ROTATE_MIN_PWM(50), PIVOT_FRONT_MIN_PWM(50), PIVOT_BACK_MIN_PWM(50)
+  : RADIUS(50.0), TREAD(125.0), ROTATE_MIN_PWM(40), PIVOT_FRONT_MIN_PWM(40), PIVOT_BACK_MIN_PWM(40)
 {
 }
 
-//左回転
+//左回頭
 void Rotation::rotateLeft(int angle, int pwm)
 {
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     printf("\x1b[36m"); /* 文字色をシアンに */
-    printf("warning: The pwm value passed to LineTracer::run is 0\n");
+    printf("warning: The pwm value passed to Rotation::rotateLeft is 0\n");
     printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
     return;
   }
-  const double _TREAD = TREAD - 8;  // 回頭距離の調整
   int leftSign = -1;
   int rightSign = 1;
-  double targetDistance = M_PI * _TREAD * abs(angle) / 360;  //弧の長さ
+  double targetDistance = M_PI * TREAD * abs(angle) / 360;  //弧の長さ
   //目標距離（呼び出し時の走行距離 ± 指定された回転量に必要な距離）
   double targetLeftDistance
       = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance * leftSign;
@@ -68,20 +66,19 @@ void Rotation::rotateLeft(int angle, int pwm)
   controller.stopMotor();
 }
 
-//右回転
+//右回頭
 void Rotation::rotateRight(int angle, int pwm)
 {
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     printf("\x1b[36m"); /* 文字色をシアンに */
-    printf("warning: The pwm value passed to LineTracer::run is 0\n");
+    printf("warning: The pwm value passed to Rotation::rotateRight is 0\n");
     printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
     return;
   }
-  const double _TREAD = TREAD - 8;  // 回頭距離の調整
   int leftSign = 1;
   int rightSign = -1;
-  double targetDistance = M_PI * _TREAD * abs(angle) / 360;  //弧の長さ
+  double targetDistance = M_PI * TREAD * abs(angle) / 360;  //弧の長さ
   //目標距離（呼び出し時の走行距離 ± 指定された回転量に必要な距離）
   double targetLeftDistance
       = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance * leftSign;
@@ -105,6 +102,7 @@ void Rotation::rotateRight(int angle, int pwm)
       rightSign = 0;
     }
 
+    //徐々に速度を遅くする処理
     // PWM値 = 残りの走行距離/走行距離 * 指定PWM値(最小値 MIN_PWM)
     int leftPwm = (diffLeftDistance / targetDistance * pwm >= ROTATE_MIN_PWM)
                       ? diffLeftDistance / targetDistance * pwm
@@ -112,6 +110,7 @@ void Rotation::rotateRight(int angle, int pwm)
     int rightPwm = (diffRightDistance / targetDistance * pwm >= ROTATE_MIN_PWM)
                        ? diffRightDistance / targetDistance * pwm
                        : ROTATE_MIN_PWM;
+
     controller.setLeftMotorPwm(abs(leftPwm) * leftSign);
     controller.setRightMotorPwm(abs(rightPwm) * rightSign);
 
@@ -128,7 +127,7 @@ void Rotation::turnForwardRightPivot(int angle, int pwm)
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     printf("\x1b[36m"); /* 文字色をシアンに */
-    printf("warning: The pwm value passed to LineTracer::run is 0\n");
+    printf("warning: The pwm value passed to Rotation::turnForwardRightPivot is 0\n");
     printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
     return;
   }
@@ -137,11 +136,12 @@ void Rotation::turnForwardRightPivot(int angle, int pwm)
 
   controller.resetMotorCount();
   double motorCount = 0;
-  double targetMotorCount = calculate(angle);
+  double targetMotorCount = calculateMotorCount(angle);
 
   while(motorCount <= targetMotorCount) {
     if(pwm == 0) break;
 
+    //徐々に速度を遅くする処理
     double leftCountRate = 1 - (measurer.getLeftCount() / targetMotorCount);
     leftPwm = pwm * leftCountRate > PIVOT_FRONT_MIN_PWM ? (int)(pwm * leftCountRate)
                                                         : PIVOT_FRONT_MIN_PWM;
@@ -163,7 +163,7 @@ void Rotation::turnBackRightPivot(int angle, int pwm)
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     printf("\x1b[36m"); /* 文字色をシアンに */
-    printf("warning: The pwm value passed to LineTracer::run is 0\n");
+    printf("warning: The pwm value passed to Rotation::turnBackRightPivot is 0\n");
     printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
     return;
   }
@@ -172,11 +172,12 @@ void Rotation::turnBackRightPivot(int angle, int pwm)
   int rightPwm = 3;
   controller.resetMotorCount();
   double motorCount = 0;
-  double targetMotorCount = calculate(angle);
+  double targetMotorCount = calculateMotorCount(angle);
 
   while(motorCount <= targetMotorCount) {
     if(pwm == 0) break;
 
+    //徐々に速度を遅くする処理
     double leftCountRate = 1 - (abs(measurer.getLeftCount()) / targetMotorCount);
     leftPwm = pwm * leftCountRate > PIVOT_FRONT_MIN_PWM ? (int)(pwm * leftCountRate)
                                                         : PIVOT_FRONT_MIN_PWM;
@@ -198,7 +199,7 @@ void Rotation::turnForwardLeftPivot(int angle, int pwm)
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     printf("\x1b[36m"); /* 文字色をシアンに */
-    printf("warning: The pwm value passed to LineTracer::run is 0\n");
+    printf("warning: The pwm value passed to Rotation::turnForwardLeftPivot is 0\n");
     printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
     return;
   }
@@ -206,11 +207,12 @@ void Rotation::turnForwardLeftPivot(int angle, int pwm)
   int rightPwm = pwm;
   controller.resetMotorCount();
   double motorCount = 0;
-  double targetMotorCount = calculate(angle);
+  double targetMotorCount = calculateMotorCount(angle);
 
   while(motorCount <= targetMotorCount) {
     if(pwm == 0) break;
 
+    //徐々に速度を遅くする処理
     double rightCountRate = 1 - (measurer.getRightCount() / targetMotorCount);
     rightPwm = pwm * rightCountRate > PIVOT_FRONT_MIN_PWM ? (int)(pwm * rightCountRate)
                                                           : PIVOT_FRONT_MIN_PWM;
@@ -231,7 +233,7 @@ void Rotation::turnBackLeftPivot(int angle, int pwm)
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     printf("\x1b[36m"); /* 文字色をシアンに */
-    printf("warning: The pwm value passed to LineTracer::run is 0\n");
+    printf("warning: The pwm value passed to Rotation::turnBackLeftPivot is 0\n");
     printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
     return;
   }
@@ -240,7 +242,7 @@ void Rotation::turnBackLeftPivot(int angle, int pwm)
   int rightPwm = pwm;
   controller.resetMotorCount();
   double motorCount = 0;
-  double targetMotorCount = calculate(angle);
+  double targetMotorCount = calculateMotorCount(angle);
 
   while(motorCount <= targetMotorCount) {
     if(pwm == 0) break;
@@ -261,7 +263,7 @@ void Rotation::turnBackLeftPivot(int angle, int pwm)
   controller.stopMotor();
 }
 
-double Rotation::calculate(int angle)
+double Rotation::calculateMotorCount(int angle)
 {
   // @see https://shogo82148.github.io/homepage/memo/tenchijin/odmetry.html
   const double transform = 2.0 * RADIUS / TREAD;

@@ -5,7 +5,6 @@
  */
 
 #include "StraightRunner.h"
-#include "stdio.h"
 
 StraightRunner::StraightRunner() {}
 
@@ -15,7 +14,7 @@ void StraightRunner::runStraightToDistance(double targetDistance, int pwm)
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     printf("\x1b[36m"); /* 文字色をシアンに */
-    printf("warning: The pwm value passed to LineTracer::run is 0\n");
+    printf("warning: The pwm value passed to StraightRunner::runStraightToDistance is 0\n");
     printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
     return;
   }

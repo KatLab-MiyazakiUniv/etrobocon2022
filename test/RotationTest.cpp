@@ -8,10 +8,10 @@
 #include <gtest/gtest.h>
 #include <cmath>
 
-namespace etrobocon2021_test {
+namespace etrobocon2022_test {
 
-  const double RADIUS = 45.0;  // 車輪の半径[mm]
-  const double TREAD = 140;    // 走行体のトレッド幅（両輪の間の距離）[mm]
+  const double RADIUS = 50.0;  // 車輪の半径[mm]
+  const double TREAD = 125.0;  // 走行体のトレッド幅（両輪の間の距離）[mm]
   const double transform = 2.0 * RADIUS / TREAD;
 
   //左回頭のテスト
@@ -25,7 +25,7 @@ namespace etrobocon2021_test {
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
-    double tread = 132.0;
+    double tread = 125.0;
     double error = (M_PI * tread / 360) * 2;  //誤差2度
     int angle, pwm;
 
@@ -81,7 +81,7 @@ namespace etrobocon2021_test {
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
-    double tread = 132.0;
+    double tread = 125.0;
     double error = (M_PI * tread / 360) * 2;  //誤差2度
     int angle, pwm;
 
@@ -108,7 +108,7 @@ namespace etrobocon2021_test {
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
-    double tread = 132.0;
+    double tread = 125.0;
     double error = (M_PI * tread / 360) * 2;  //誤差2度
     int angle, pwm;
 
@@ -136,7 +136,7 @@ namespace etrobocon2021_test {
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
-    double tread = 132.0;
+    double tread = 125.0;
     double error = (M_PI * tread / 360) * 2;  //誤差2度
     int angle, pwm;
 
@@ -181,7 +181,7 @@ namespace etrobocon2021_test {
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
-    double tread = 132.0;
+    double tread = 125.0;
     double error = (M_PI * tread / 360) * 2;  //誤差2度
     int angle, pwm;
 
@@ -223,7 +223,7 @@ namespace etrobocon2021_test {
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
-    double tread = 132.0;
+    double tread = 125.0;
     double error = (M_PI * tread / 360) * 2;  //誤差2度
     int angle, pwm;
 
@@ -250,7 +250,7 @@ namespace etrobocon2021_test {
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
-    double tread = 132.0;
+    double tread = 125.0;
     double error = (M_PI * tread / 360) * 2;  //誤差2度
     int angle, pwm;
 
@@ -278,7 +278,7 @@ namespace etrobocon2021_test {
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
-    double tread = 132.0;
+    double tread = 125.0;
     double error = (M_PI * tread / 360) * 2;  //誤差2度
     int angle, pwm;
 
@@ -648,4 +648,4 @@ namespace etrobocon2021_test {
     ASSERT_GE(expected + 2.0, actual);
     ASSERT_LE(expected - 2.0, actual);
   }
-}  // namespace etrobocon2021_test
+}  // namespace etrobocon2022_test

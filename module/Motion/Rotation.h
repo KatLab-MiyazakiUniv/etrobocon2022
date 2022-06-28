@@ -7,6 +7,7 @@
 #ifndef ROTATION_H
 #define ROTATION_H
 
+#include <stdio.h>
 #include <cmath>
 #include "Controller.h"
 #include "Measurer.h"
@@ -79,7 +80,7 @@ class Rotation {
    *  @param Angle [走行体が回頭する角度[deg]]
    *  @return 片輪の回転角度(回転方向に関わらず正の数)
    */
-  double calculate(int angle);
+  double calculateMotorCount(int angle);
 };
 
 #endif
