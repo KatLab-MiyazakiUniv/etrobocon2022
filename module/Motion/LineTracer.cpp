@@ -26,7 +26,7 @@ void LineTracer::run(double targetDistance, int targetBrightness, int pwm, const
   }
 
   //左右で符号を変える
-  sign = (isLeftEdge) ? -1 : 1;
+  sign = isLeftEdge ? -1 : 1;
 
   // 初期値を格納
   initialDistance = Mileage::calculateMileage(measurer.getRightCount(), measurer.getLeftCount());
@@ -67,7 +67,7 @@ void LineTracer::runToColor(COLOR targetColor, int targetBrightness, int pwm, co
   }
 
   //左右で符号を変える
-  sign = (isLeftEdge) ? -1 : 1;
+  sign = isLeftEdge ? -1 : 1;
 
   //指定された色をJUDGE_COUNT回連続で取得するまで繰り返す
   while(colorCount < JUDGE_COUNT) {
