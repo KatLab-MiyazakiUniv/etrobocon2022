@@ -5,7 +5,6 @@
  */
 
 #include "LineTraceArea.h"
-#include "Controller.h"  // テスト用に書いたやつだから消し忘れるなよ
 using namespace std;
 
 // Lコースの情報を初期化する
@@ -38,11 +37,8 @@ void LineTraceArea::runLineTraceArea(const bool isLeftCourse)
   // LineTracerにエッジを与えてインスタンス化する
   LineTracer lineTracer(isLeftEdge);
 
-  Controller controller;  // テスト用に書いたやつだから消し忘れるなよ
-
   // LRに応じて各区間を順番に走らせる
   for(int i = 0; i < LEFT_SECTION_SIZE; i++) {
-    // for(int i = 0; i < 4; i++) {
     SectionParam section = param[i];
     // Linetracerクラスのrun関数に区間の情報を渡して走行させる
     lineTracer.run(section.distance, section.targetBrightness, section.pwm, section.pidGain);
