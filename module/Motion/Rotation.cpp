@@ -13,7 +13,7 @@ Rotation::Rotation()
 {
 }
 
-//左回頭
+//左に回頭する
 void Rotation::rotateLeft(int angle, int pwm)
 {
   // pwm値が0の場合はwarningを出して終了する
@@ -67,7 +67,7 @@ void Rotation::rotateLeft(int angle, int pwm)
   controller.stopMotor();
 }
 
-//右回頭
+//右に回頭する
 void Rotation::rotateRight(int angle, int pwm)
 {
   // pwm値が0の場合はwarningを出して終了する
@@ -81,13 +81,13 @@ void Rotation::rotateRight(int angle, int pwm)
   int rightSign = -1;
   double targetDistance
       = M_PI * TREAD * abs(angle) / 360;  //指定した角度に対する目標の走行距離(弧の長さ)
-  //目標距離（呼び出し時の走行距離 ± 目標の走行距離）
+  // 目標距離（呼び出し時の走行距離 ± 目標の走行距離）
   double targetLeftDistance
       = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance * leftSign;
   double targetRightDistance
       = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance * rightSign;
 
-  //両輪が目標距離に到達するまでループ
+  // 両輪が目標距離に到達するまでループ
   while(leftSign != 0 || rightSign != 0) {
     // 残りの移動距離 (目標の走行距離 - 現在の走行距離)
     double diffLeftDistance
@@ -121,7 +121,7 @@ void Rotation::rotateRight(int angle, int pwm)
   controller.stopMotor();
 }
 
-//設定された角度とPWM値で右タイヤを軸に前方へピボットターンする
+// 右タイヤを軸に前方へピボットターンする
 void Rotation::turnForwardRightPivot(int angle, int pwm)
 {
   // pwm値が0の場合はwarningを出して終了する
@@ -164,7 +164,7 @@ void Rotation::turnForwardRightPivot(int angle, int pwm)
   controller.stopMotor();
 }
 
-// 設定された角度とPWM値で右タイヤを軸に後方へピボットターンする
+// 右タイヤを軸に後方へピボットターンする
 void Rotation::turnBackRightPivot(int angle, int pwm)
 {
   // pwm値が0の場合はwarningを出して終了する
@@ -207,7 +207,7 @@ void Rotation::turnBackRightPivot(int angle, int pwm)
   controller.stopMotor();
 }
 
-//設定された角度とPWM値で左タイヤを軸に前方へピボットターンする
+// 左タイヤを軸に前方へピボットターンする
 void Rotation::turnForwardLeftPivot(int angle, int pwm)
 {
   // pwm値が0の場合はwarningを出して終了する
@@ -250,7 +250,7 @@ void Rotation::turnForwardLeftPivot(int angle, int pwm)
   controller.stopMotor();
 }
 
-//設定された角度とPWM値で左タイヤを軸に後方へピボットターンする
+//　左タイヤを軸に後方へピボットターンする
 void Rotation::turnBackLeftPivot(int angle, int pwm)
 {
   // pwm値が0の場合はwarningを出して終了する
@@ -295,7 +295,7 @@ void Rotation::turnBackLeftPivot(int angle, int pwm)
   controller.stopMotor();
 }
 
-// 指定角度回頭したときの片輪の回転角度を計算する
+// 指定された角度回頭したときの片輪の回転角度を計算する
 double Rotation::calculateTireAngle(int angle)
 {
   // @see https://shogo82148.github.io/homepage/memo/tenchijin/odmetry.html

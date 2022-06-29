@@ -8,20 +8,18 @@
 
 StraightRunner::StraightRunner() {}
 
-// 設定された距離を直進する
+// 指定された距離を直進する
 void StraightRunner::run(double targetDistance, int pwm)
 {
   // 目標距離の値が負またはpwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     printf("\x1b[36m"); /* 文字色をシアンに */
-    printf("warning: The pwm value passed to StraightRunner::runStraightToDistance is 0 or \n");
+    printf("warning: The pwm value passed to StraightRunner::run is 0 \n");
     printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
     return;
   } else if(targetDistance < 0) {
     printf("\x1b[36m");
-    printf("warning: The targetDostamce value passed to StraightRunner::runStraightToDistance is "
-           "negative "
-           "or \n");
+    printf("warning: The targetDistance value passed to StraightRunner::run is negative \n");
     printf("\x1b[39m");
     return;
   }
@@ -39,6 +37,7 @@ void StraightRunner::run(double targetDistance, int pwm)
   int count = 0;
   // 現在のpwm値
   int currentPwm = 0;
+  int sign = (pwm > 0) ? 1 : -1;
 
   // 走行距離が目標距離に到達するまで繰り返す
   while(true) {
@@ -55,7 +54,7 @@ void StraightRunner::run(double targetDistance, int pwm)
     // PWM値を徐々に目標値に合わせる
     if(currentPwm != pwm) {
       // ループ毎にPWM値を加速値分だけ上げていく
-      currentPwm = MIN_PWM + (ACCELE_PWM * count) * ((pwm > 0) ? 1 : -1);
+      currentPwm = MIN_PWM + (ACCELE_PWM * count) * sign;
       if(std::abs(currentPwm) > std::abs(pwm)) {
         currentPwm = pwm;
       }
