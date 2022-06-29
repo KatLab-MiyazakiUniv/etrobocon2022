@@ -54,6 +54,7 @@ void Controller::sleep(int milliSec)
   clock.sleep(milliSec);
 }
 
+// モータの回転数を初期化
 void Controller::resetMotorCount()
 {
   while((measurer.getLeftCount() != 0) || (measurer.getRightCount() != 0)) {

@@ -52,6 +52,9 @@ class Controller {
   //  */
   // void notifyCompletedToSimulator();
 
+  /**
+   * モータの回転数を初期化する
+   */
   void resetMotorCount();
 
  private:

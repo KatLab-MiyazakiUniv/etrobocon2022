@@ -20,8 +20,8 @@ namespace etrobocon2022_test {
   {
     Measurer measurer;
     Rotation rotation;
-    double leftExpected, rightExpected;
-    double leftActual, rightActual;
+    double expectedLeft, expectedRight;
+    double actualLeft, actualRight;
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
@@ -34,50 +34,50 @@ namespace etrobocon2022_test {
     pwm = 30;
     targetDistance = M_PI * tread * abs(angle) / 360;
     // 期待する走行距離
-    rightExpected = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
+    expectedRight = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
     // 回頭
     rotation.rotateLeft(angle, pwm);
     // 関数実行後の走行距離
-    rightActual = Mileage::calculateWheelMileage(measurer.getRightCount());
+    actualRight = Mileage::calculateWheelMileage(measurer.getRightCount());
     // 誤差のテスト
-    EXPECT_LE(rightExpected, rightActual);
-    EXPECT_GE(rightExpected + error, rightActual);
+    EXPECT_LE(expectedRight, actualRight);
+    EXPECT_GE(expectedRight + error, actualRight);
 
     // 180度左回頭の回頭誤差が１度未満かテスト
     angle = 180;
     pwm = 30;
     targetDistance = M_PI * tread * abs(angle) / 360;
 
-    rightExpected = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
+    expectedRight = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
 
     rotation.rotateLeft(angle, pwm);
 
-    rightActual = Mileage::calculateWheelMileage(measurer.getRightCount());
+    actualRight = Mileage::calculateWheelMileage(measurer.getRightCount());
 
-    EXPECT_LE(rightExpected, rightActual);
-    EXPECT_GE(rightExpected + error, rightActual);
+    EXPECT_LE(expectedRight, actualRight);
+    EXPECT_GE(expectedRight + error, actualRight);
 
     // 360度左回頭の回頭誤差が１度未満かテスト
     angle = 360;
     pwm = 30;
     targetDistance = M_PI * tread * abs(angle) / 360;
 
-    rightExpected = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
+    expectedRight = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
 
     rotation.rotateLeft(angle, pwm);
 
-    rightActual = Mileage::calculateWheelMileage(measurer.getRightCount());
+    actualRight = Mileage::calculateWheelMileage(measurer.getRightCount());
 
-    EXPECT_LE(rightExpected, rightActual);
-    EXPECT_GE(rightExpected + error, rightActual);
+    EXPECT_LE(expectedRight, actualRight);
+    EXPECT_GE(expectedRight + error, actualRight);
   }
 
   TEST(Rotation, rotateLeft_zero)
   {
     Measurer measurer;
     Rotation rotation;
-    double leftExpected, rightExpected;
-    double leftActual, rightActual;
+    double expectedLeft, expectedRight;
+    double actualLeft, actualRight;
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
@@ -90,21 +90,21 @@ namespace etrobocon2022_test {
     pwm = 30;
     targetDistance = M_PI * tread * abs(angle) / 360;
 
-    rightExpected = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
+    expectedRight = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
 
     rotation.rotateLeft(angle, pwm);
 
-    rightActual = Mileage::calculateWheelMileage(measurer.getRightCount());
+    actualRight = Mileage::calculateWheelMileage(measurer.getRightCount());
 
-    EXPECT_DOUBLE_EQ(rightExpected, rightActual);
+    EXPECT_DOUBLE_EQ(expectedRight, actualRight);
   }
 
   TEST(Rotation, rotateLeft_maxpwm)
   {
     Measurer measurer;
     Rotation rotation;
-    double leftExpected, rightExpected;
-    double leftActual, rightActual;
+    double expectedLeft, expectedRight;
+    double actualLeft, actualRight;
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
@@ -117,22 +117,22 @@ namespace etrobocon2022_test {
     pwm = 100;
     targetDistance = M_PI * tread * abs(angle) / 360;
 
-    rightExpected = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
+    expectedRight = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
 
     rotation.rotateLeft(angle, pwm);
 
-    rightActual = Mileage::calculateWheelMileage(measurer.getRightCount());
+    actualRight = Mileage::calculateWheelMileage(measurer.getRightCount());
 
-    EXPECT_LE(rightExpected, rightActual);
-    EXPECT_GE(rightExpected + error, rightActual);
+    EXPECT_LE(expectedRight, actualRight);
+    EXPECT_GE(expectedRight + error, actualRight);
   }
 
   TEST(Rotation, rotateLeft_minus)
   {
     Measurer measurer;
     Rotation rotation;
-    double leftExpected, rightExpected;
-    double leftActual, rightActual;
+    double expectedLeft, expectedRight;
+    double actualLeft, actualRight;
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
@@ -145,28 +145,28 @@ namespace etrobocon2022_test {
     pwm = 100;
     targetDistance = M_PI * tread * abs(angle) / 360;
 
-    rightExpected = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
+    expectedRight = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
 
     rotation.rotateLeft(angle, pwm);
 
-    rightActual = Mileage::calculateWheelMileage(measurer.getRightCount());
+    actualRight = Mileage::calculateWheelMileage(measurer.getRightCount());
 
-    EXPECT_LE(rightExpected, rightActual);
-    EXPECT_GE(rightExpected + error, rightActual);
+    EXPECT_LE(expectedRight, actualRight);
+    EXPECT_GE(expectedRight + error, actualRight);
 
     // PWM値がマイナス
     angle = 90;
     pwm = -100;
     targetDistance = M_PI * tread * abs(angle) / 360;
 
-    rightExpected = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
+    expectedRight = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
 
     rotation.rotateLeft(angle, pwm);
 
-    rightActual = Mileage::calculateWheelMileage(measurer.getRightCount());
+    actualRight = Mileage::calculateWheelMileage(measurer.getRightCount());
 
-    EXPECT_LE(rightExpected, rightActual);
-    EXPECT_GE(rightExpected + error, rightActual);
+    EXPECT_LE(expectedRight, actualRight);
+    EXPECT_GE(expectedRight + error, actualRight);
   }
 
   //右回頭のテスト
@@ -176,8 +176,8 @@ namespace etrobocon2022_test {
     Measurer measurer;
     Controller controller;
     Rotation rotation;
-    double leftExpected, rightExpected;
-    double leftActual, rightActual;
+    double expectedLeft, expectedRight;
+    double actualLeft, actualRight;
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
@@ -190,36 +190,36 @@ namespace etrobocon2022_test {
     pwm = 30;
     targetDistance = M_PI * tread * abs(angle) / 360;
 
-    leftExpected = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
+    expectedLeft = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
 
     rotation.rotateRight(angle, pwm);
 
-    leftActual = Mileage::calculateWheelMileage(measurer.getLeftCount());
+    actualLeft = Mileage::calculateWheelMileage(measurer.getLeftCount());
 
-    EXPECT_LE(leftExpected, leftActual);
-    EXPECT_GE(leftExpected + error, leftActual);
+    EXPECT_LE(expectedLeft, actualLeft);
+    EXPECT_GE(expectedLeft + error, actualLeft);
 
     // 180度右回頭の回頭誤差が１度未満かテスト
     angle = 180;
     pwm = 30;
     targetDistance = M_PI * tread * abs(angle) / 360;
 
-    leftExpected = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
+    expectedLeft = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
 
     rotation.rotateRight(angle, pwm);
 
-    leftActual = Mileage::calculateWheelMileage(measurer.getLeftCount());
+    actualLeft = Mileage::calculateWheelMileage(measurer.getLeftCount());
 
-    EXPECT_LE(leftExpected, leftActual);
-    EXPECT_GE(leftExpected + error, leftActual);
+    EXPECT_LE(expectedLeft, actualLeft);
+    EXPECT_GE(expectedLeft + error, actualLeft);
   }
 
   TEST(Rotation, rotateRight_zero)
   {
     Measurer measurer;
     Rotation rotation;
-    double leftExpected, rightExpected;
-    double leftActual, rightActual;
+    double expectedLeft, expectedRight;
+    double actualLeft, actualRight;
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
@@ -232,21 +232,21 @@ namespace etrobocon2022_test {
     pwm = 30;
     targetDistance = M_PI * tread * abs(angle) / 360;
 
-    leftExpected = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
+    expectedLeft = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
 
     rotation.rotateRight(angle, pwm);
 
-    leftActual = Mileage::calculateWheelMileage(measurer.getLeftCount());
+    actualLeft = Mileage::calculateWheelMileage(measurer.getLeftCount());
 
-    EXPECT_DOUBLE_EQ(leftExpected, leftActual);
+    EXPECT_DOUBLE_EQ(expectedLeft, actualLeft);
   }
 
   TEST(Rotation, rotateRight_maxpwm)
   {
     Measurer measurer;
     Rotation rotation;
-    double leftExpected, rightExpected;
-    double leftActual, rightActual;
+    double expectedLeft, expectedRight;
+    double actualLeft, actualRight;
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
@@ -259,22 +259,22 @@ namespace etrobocon2022_test {
     pwm = 100;
     targetDistance = M_PI * tread * abs(angle) / 360;
 
-    leftExpected = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
+    expectedLeft = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
 
     rotation.rotateRight(angle, pwm);
 
-    leftActual = Mileage::calculateWheelMileage(measurer.getLeftCount());
+    actualLeft = Mileage::calculateWheelMileage(measurer.getLeftCount());
 
-    EXPECT_LE(leftExpected, leftActual);
-    EXPECT_GE(leftExpected + error, leftActual);
+    EXPECT_LE(expectedLeft, actualLeft);
+    EXPECT_GE(expectedLeft + error, actualLeft);
   }
 
   TEST(Rotation, rotateRight_minus)
   {
     Measurer measurer;
     Rotation rotation;
-    double leftExpected, rightExpected;
-    double leftActual, rightActual;
+    double expectedLeft, expectedRight;
+    double actualLeft, actualRight;
     double leftMotorCount;
     double rightMotorCount;
     double targetDistance;
@@ -287,28 +287,28 @@ namespace etrobocon2022_test {
     pwm = 100;
     targetDistance = M_PI * tread * abs(angle) / 360;
 
-    leftExpected = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
+    expectedLeft = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
 
     rotation.rotateRight(angle, pwm);
 
-    leftActual = Mileage::calculateWheelMileage(measurer.getLeftCount());
+    actualLeft = Mileage::calculateWheelMileage(measurer.getLeftCount());
 
-    EXPECT_LE(leftExpected, leftActual);
-    EXPECT_GE(leftExpected + error, leftActual);
+    EXPECT_LE(expectedLeft, actualLeft);
+    EXPECT_GE(expectedLeft + error, actualLeft);
 
     // PWM値がマイナス
     angle = 90;
     pwm = -100;
     targetDistance = M_PI * tread * abs(angle) / 360;
 
-    leftExpected = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
+    expectedLeft = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
 
     rotation.rotateRight(angle, pwm);
 
-    leftActual = Mileage::calculateWheelMileage(measurer.getLeftCount());
+    actualLeft = Mileage::calculateWheelMileage(measurer.getLeftCount());
 
-    EXPECT_LE(leftExpected, leftActual);
-    EXPECT_GE(leftExpected + error, leftActual);
+    EXPECT_LE(expectedLeft, actualLeft);
+    EXPECT_GE(expectedLeft + error, actualLeft);
   }
 
   //左軸前方向ピボットターン
