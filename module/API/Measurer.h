@@ -7,6 +7,7 @@
 #ifndef MEASURER_H
 #define MEASURER_H
 
+#include <algorithm>
 #include "ev3api.h"
 #include "ColorSensor.h"
 #include "Motor.h"
@@ -47,12 +48,6 @@ class Measurer {
    * @return アームモータ角位置[deg]
    */
   int getArmMotorCount();
-
-  /**
-   * タッチセンサ状態取得
-   * @return true:押されている状態, false:押されていない状態
-   */
-  bool isPressed();
 
  private:
   ev3api::ColorSensor colorSensor;
