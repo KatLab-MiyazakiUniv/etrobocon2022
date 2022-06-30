@@ -19,7 +19,7 @@ class Controller {
   Controller();
 
   /**
-   * モータにPWM値をセット
+   * タイヤのモータにPWM値をセット
    * @param pwm PWM値
    */
   void setRightMotorPwm(const int pwm);
@@ -31,7 +31,7 @@ class Controller {
   void stopMotor();
 
   /**
-   * アームにPWM値をセット
+   * アームのモータにPWM値をセット
    * @param pwm PWM値
    */
   void setArmMotorPwm(const int pwm);
@@ -42,10 +42,10 @@ class Controller {
   void stopArmMotor();
 
   /**
-   * 自タスクスリープ
-   * @param milliSec スリープ時間(ミリ秒)
+   * 自タスクスリープ（デフォルトは10ミリ秒）
+   * @param milliSec スリープ時間(マイクロ秒)
    */
-  void sleep(int milliSec = 10);
+  void sleep(int microSec = 10000);
 
   // /**
   //  * シミュレータへ競技の終了を通知する

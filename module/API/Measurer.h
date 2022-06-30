@@ -7,10 +7,10 @@
 #ifndef MEASURER_H
 #define MEASURER_H
 
+#include <algorithm>
 #include "ev3api.h"
 #include "ColorSensor.h"
 #include "Motor.h"
-#include "TouchSensor.h"
 
 class Measurer {
  public:
@@ -49,18 +49,11 @@ class Measurer {
    */
   int getArmMotorCount();
 
-  /**
-   * タッチセンサ状態取得
-   * @return true:押されている状態, false:押されていない状態
-   */
-  bool isPressed();
-
  private:
   ev3api::ColorSensor colorSensor;
   ev3api::Motor leftWheel;
   ev3api::Motor rightWheel;
   ev3api::Motor armMotor;
-  ev3api::TouchSensor touchSensor;
 };
 
 #endif
