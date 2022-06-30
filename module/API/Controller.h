@@ -9,6 +9,7 @@
 #include "ev3api.h"
 #include "Motor.h"
 #include "Clock.h"
+#include "Measurer.h"
 
 class Controller {
  public:
@@ -51,6 +52,9 @@ class Controller {
   //  */
   // void notifyCompletedToSimulator();
 
+  /**
+   * モータの回転数を初期化する
+   */
   void resetMotorCount();
 
  private:
@@ -58,6 +62,8 @@ class Controller {
   ev3api::Motor leftWheel;
   ev3api::Motor armMotor;
   ev3api::Clock clock;
+
+  Measurer measurer;
 
   /**
    * モータに設定するPWM値の制限

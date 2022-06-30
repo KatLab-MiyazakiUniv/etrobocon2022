@@ -53,3 +53,13 @@ void Controller::sleep(int microSec)
 {
   clock.sleep(microSec);
 }
+
+// モータの回転数を初期化
+void Controller::resetMotorCount()
+{
+  while((measurer.getLeftCount() != 0) || (measurer.getRightCount() != 0)) {
+    leftWheel.reset();
+    rightWheel.reset();
+    sleep();
+  }
+}
