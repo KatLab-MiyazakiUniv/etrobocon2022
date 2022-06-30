@@ -2,8 +2,9 @@
 [![Build Check](https://github.com/KatLab-MiyazakiUniv/etrobocon2022/actions/workflows/build-check.yaml/badge.svg)](https://github.com/KatLab-MiyazakiUniv/etrobocon2022/actions/workflows/build-check.yaml)
 
 # etrobocon2022
-宮崎大学片山徹郎研究室チームKatLabが作成する[ETロボコン2022](https://www.etrobo.jp/)アドバンストクラスのプログラムです。
+宮崎大学片山徹郎研究室チームKatLabが作成する[ETロボコン2022](https://www.etrobo.jp/)アドバンストクラスの走行システムプログラムです。
 
+カメラシステムについては[こちら](https://github.com/KatLab-MiyazakiUniv/etrobocon2022-camera-system)を参照してください。
 
 
 ## 開発環境
