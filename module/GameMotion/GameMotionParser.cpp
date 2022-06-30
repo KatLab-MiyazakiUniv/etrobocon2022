@@ -6,6 +6,7 @@
 
 #include "GameMotionParser.h"
 
+// データファイルを読み込む
 int GameMotionParser::readGameMotionFile()
 {
   const int BUF_SIZE = 128;
@@ -26,6 +27,7 @@ int GameMotionParser::readGameMotionFile()
     printf("%s", row);
   }
 
+  // ファイルを閉じる
   fclose(fp);
 
   return 0;
