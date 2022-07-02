@@ -6,10 +6,10 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include "Measurer.h"
 #include "ev3api.h"
 #include "Motor.h"
 #include "Clock.h"
-#include "Measurer.h"
 
 class Controller {
  public:
