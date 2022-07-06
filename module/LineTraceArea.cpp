@@ -53,6 +53,10 @@ void LineTraceArea::runLineTraceArea(const bool isLeftCourse, const int targetBr
   // LineTracerにエッジを与えてインスタンス化する
   LineTracer lineTracer(isLeftEdge);
 
+  string course = isLeftCourse ? "Left" : "Right";
+  printf("\x1b[32m");  // 文字色を緑に
+  printf("\nRun on the %s Course\n", course.c_str());
+  printf("\x1b[39m\n");  // 文字色をデフォルトに戻す
   // LRに応じて各区間を順番に走らせる
   for(int i = 0; i < size; i++) {
     // Linetracer::runに区間の情報を渡して走行させる

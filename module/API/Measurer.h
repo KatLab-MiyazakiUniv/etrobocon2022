@@ -1,7 +1,7 @@
 /**
  * @file Measurer.h
  * @brief 計測に用いる関数をまとめたラッパークラス
- * @author KakinokiKanta
+ * @author KakinokiKanta mutotaka0426
  */
 
 #ifndef MEASURER_H
@@ -10,6 +10,7 @@
 #include <algorithm>
 #include "ev3api.h"
 #include "ColorSensor.h"
+#include "SonarSensor.h"
 #include "Motor.h"
 
 class Measurer {
@@ -49,8 +50,34 @@ class Measurer {
    */
   int getArmMotorCount();
 
+  /**
+   * 正面から見て左ボタンの押下状態を取得
+   * @return 左ボタンの押下状態 true:押されてる, false：押されていない
+   */
+  bool getLeftButton();
+
+  /**
+   * 正面から見て右ボタンの押下状態を取得
+   * @return 右ボタンの押下状態 true:押されてる, false：押されていない
+   */
+  bool getRightButton();
+
+  /**
+   * 中央ボタンの押下状態を取得
+   * @return 中央ボタンの押下状態 true:押されてる, false：押されていない
+   */
+  bool getEnterButton();
+
+  /**
+   * 超音波センサからの距離を取得
+   * @return 超音波センサからの距離[cm]
+   * @note センサが認識していない時は1000を返す
+   */
+  int getDistance();
+
  private:
   ev3api::ColorSensor colorSensor;
+  ev3api::SonarSensor sonarSensor;
   ev3api::Motor leftWheel;
   ev3api::Motor rightWheel;
   ev3api::Motor armMotor;
