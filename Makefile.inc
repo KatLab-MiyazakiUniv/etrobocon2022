@@ -9,6 +9,9 @@ APPL_CXXOBJS += $(shell echo \
 APPL_CXXOBJS += $(shell echo \
                     `ls ${mkfile_path}module/*/*.cpp | \
                      sed -r 's/(\/.*)*\/(.*\.)cpp/\2o/g'`)
+APPL_CXXOBJS += $(shell echo \
+                    `ls ${mkfile_path}common/*.cpp | \
+                     sed -r 's/(\/.*)*\/(.*\.)cpp/\2o/g'`)
 SRCLANG := c++
 
 ifdef CONFIG_EV3RT_APPLICATION
@@ -24,7 +27,8 @@ APPL_DIRS += \
     $(mkfile_path)module \
     $(mkfile_path)module/API \
     $(mkfile_path)module/Motion \
-    $(mkfile_path)module/GameMotion
+    $(mkfile_path)module/GameMotion \
+    $(mkfile_path)common
 
 # ヘッダファイルのあるディレクトリを指定する？
 INCLUDES += \
@@ -33,6 +37,7 @@ INCLUDES += \
     -I$(ETROBO_HRP3_WORKSPACE)/etroboc_common \
     -I$(mkfile_path)module/API \
     -I$(mkfile_path)module/Motion \
-    -I$(mkfile_path)module/GameMotion
+    -I$(mkfile_path)module/GameMotion \
+    -I$(mkfile_path)common
 
 COPTS += -std=gnu++11
