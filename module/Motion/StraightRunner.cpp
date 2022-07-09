@@ -38,6 +38,9 @@ void StraightRunner::run(double targetDistance, int pwm)
   // 現在のpwm値
   int currentPwm = 0;
   int sign = (pwm > 0) ? 1 : -1;
+  int error = 0;                // 左右の回転数の誤差
+  Pid pid(1.2, 0.3, 0.001, 0);  // 左右の回転数を合わせるためのPID
+  int adjustment = 0;           // 左右の誤差の補正値
 
   // 走行距離が目標距離に到達するまで繰り返す
   while(true) {
@@ -60,6 +63,11 @@ void StraightRunner::run(double targetDistance, int pwm)
       }
       count++;
     }
+
+    // 左右のモーターカウントを合わせるための補正値計算
+    error = (currentLeftMotorCount - initialLeftMotorCount)
+            - (currentRightMotorCount - initialRightMotorCount);
+    adjustment = static_cast<int>(pid.calculatePid(error));
 
     // モータにPWM値をセット
     controller.setLeftMotorPwm(currentPwm);
