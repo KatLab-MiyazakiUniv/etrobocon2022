@@ -27,6 +27,9 @@ void BonusBlockCarrier::carryBonusBlock()
   // 左に90度ピボットターン
   rotation.turnForwardLeftPivot(91, 87);
 
+  // 直進を安定させるために1秒待機
+  controller.sleep(1000000);
+
   // 緑を認識するまで直進(指定した距離まで直進で代用)
   straightRunner.run(400, 50);
 
