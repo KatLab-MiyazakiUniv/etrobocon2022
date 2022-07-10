@@ -19,7 +19,7 @@ class Logging {
 //入力された文字列を色を変更してerrorMessageとしてターミナルに表示
   void writeErrorMessage(const char* errorMessage);
  private:
-  cahr* Logs;
+  char* Logs;
 };
 
 #endif

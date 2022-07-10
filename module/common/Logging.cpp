@@ -10,10 +10,10 @@ Logging::Logging() {}
 void Logging::writeLogs(const char* logs)
 {
   const char* log = logs;
-  printf("Logs: %s\n", log);
+  printf("%s\n", log);
 }
 
-void Logging::writewarningMessage(const char* warningMessage)
+void Logging::writeWarningMessage(const char* warningMessage)
 {
   const char* warning = warningMessage;
   printf("\x1b[36m"); /* 文字色をシアンに */
