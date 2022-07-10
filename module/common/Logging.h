@@ -12,12 +12,13 @@ class Logging {
  public:
   Logging();
 
-//入力された文字列をLogとしてターミナルに表示
+  //入力された文字列をLogとしてターミナルに表示
   void writeLogs(const char* logs);
-//入力された文字列を色を変更してwarningMessageとしてターミナルに表示
+  //入力された文字列を色を変更してwarningMessageとしてターミナルに表示
   void writeWarningMessage(const char* warningMessage);
-//入力された文字列を色を変更してerrorMessageとしてターミナルに表示
+  //入力された文字列を色を変更してerrorMessageとしてターミナルに表示
   void writeErrorMessage(const char* errorMessage);
+
  private:
   char* Logs;
 };
