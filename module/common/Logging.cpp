@@ -1,5 +1,5 @@
 /**
- * @file Logging.h
+ * @file Logging.cpp
  * @brief 動作確認に用いるprintf()関数を所持するクラス
  * @author sap2368
  */
