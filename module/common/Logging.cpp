@@ -7,9 +7,9 @@
 
 Logging::Logging() {}
 
-void Logging::writeLogs(const char* logs)
+void Logging::writeLogMessage(const char* logMessage)
 {
-  const char* log = logs;
+  const char* log = logMessage;
   printf("%s\n", log);
 }
 
@@ -26,5 +26,13 @@ void Logging::writeErrorMessage(const char* errorMessage)
   const char* error = errorMessage;
   printf("\x1b[35m"); /* 文字色をマゼンタに */
   printf("Error: %s\n", error);
+  printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
+}
+
+void Logging::writeHighlightLog(const char* highlightLog)
+{
+  const char* hlog = highlightLog;
+  printf("\x1b[32m"); /* 文字色を緑色に */
+  printf("%s\n", highlightLog);
   printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
 }

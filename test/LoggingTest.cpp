@@ -11,7 +11,7 @@ namespace etrobocon2022_test {
   TEST(LoggingTest, writeLogs)
   {
     Logging logging;
-    logging.writeLogs("write logs test.");
+    logging.writeLogMessage("write logs test.");
   }
 
   TEST(LoggingTest, writeWarningMessage)
@@ -25,4 +25,11 @@ namespace etrobocon2022_test {
     Logging logging;
     logging.writeErrorMessage("write ErrorMessage test.");
   }
+
+  TEST(LoggingTest, writeHighlightLog)
+  {
+    Logging logging;
+    logging.writeHighlightLog("write HighlightLog test.");
+  }
+
 }  // namespace etrobocon2022_test
