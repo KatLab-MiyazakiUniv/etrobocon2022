@@ -10,6 +10,7 @@
 #include <string>
 #include "Measurer.h"
 #include "Controller.h"
+#include "SystemInfo.h"
 
 class Calibrator {
  public:

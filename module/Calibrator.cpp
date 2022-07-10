@@ -6,7 +6,10 @@
 
 #include "Calibrator.h"
 
-Calibrator::Calibrator() : isLeftCourse(true), targetBrightness((93 + 3) / 2) {}
+Calibrator::Calibrator()
+  : isLeftCourse(true), targetBrightness((WHITE_BRIGHTNESS + BLACK_BRIGHTNESS) / 2)
+{
+}
 
 void Calibrator::run()
 {
@@ -56,8 +59,8 @@ void Calibrator::selectCourse()
 void Calibrator::measureTargetBrightness()
 {
   // 黒と白の輝度（初期化の値はロボコン部屋で取得した値）
-  int blackBrightness = 3;
-  int whiteBrightness = 93;
+  int blackBrightness = BLACK_BRIGHTNESS;
+  int whiteBrightness = WHITE_BRIGHTNESS;
 
   // 黒の上で中央ボタンを押して黒の輝度を取得する
   printf("Press the Center Button on the Black\n");

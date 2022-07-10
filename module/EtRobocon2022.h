@@ -7,6 +7,8 @@
 #ifndef ETROBOCON2022_H
 #define ETROBOCON2022_H
 
+#include "SystemInfo.h"
+
 class EtRobocon2022 {
  public:
   static void start();

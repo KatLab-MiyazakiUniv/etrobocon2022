@@ -11,7 +11,7 @@
 void EtRobocon2022::start()
 {
   bool isLeftCourse = true;
-  int targetBrightness = (93 + 3) / 2;
+  int targetBrightness = (WHITE_BRIGHTNESS + BLACK_BRIGHTNESS) / 2;
   Calibrator calibrator;
 
   // キャリブレーションする

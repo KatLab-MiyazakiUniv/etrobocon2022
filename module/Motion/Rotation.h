@@ -13,6 +13,7 @@
 #include "Controller.h"
 #include "Measurer.h"
 #include "Mileage.h"
+#include "SystemInfo.h"
 
 /**
  * 回頭とピボットターンをするクラス
@@ -70,8 +71,6 @@ class Rotation {
   Controller controller;
   Measurer measurer;
 
-  const double RADIUS;       // 車輪の半径[mm]
-  const double TREAD;        // 走行体のトレッド幅（両輪の間の距離）[mm]
   const int ROTATE_MIN_PWM;  // 回頭の時のモーターパワーの最小値
   const int PIVOT_FRONT_MIN_PWM;  //ピボットターン前方向の時のモーターパワーの最小値
   const int PIVOT_BACK_MIN_PWM;  //ピボットターン後方向の時のモーターパワーの最小値

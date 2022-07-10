@@ -6,7 +6,9 @@
 
 #ifndef MILEAGE_H
 #define MILEAGE_H
-#include "cmath"
+
+#include <cmath>
+#include "SystemInfo.h"
 
 class Mileage {
  public:
@@ -28,8 +30,6 @@ class Mileage {
   static double calculateMileage(int rightAngle, int leftAngle);
 
  private:
-  static const double RADIUS;
-
-  Mileage();
+  Mileage();  // インスタンス化を禁止する
 };
 #endif
