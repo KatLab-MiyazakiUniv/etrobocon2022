@@ -26,7 +26,7 @@ namespace etrobocon2022_test {
     double rightMotorCount;
     double targetDistance;
     double tread = 125.0;
-    double error = (M_PI * tread / 360) * 2;  //誤差2度
+    double error = (M_PI * tread / 360) * 3;  //誤差3度
     int angle, pwm;
 
     // 90度左回頭の回頭誤差が１度未満かテスト
@@ -82,7 +82,7 @@ namespace etrobocon2022_test {
     double rightMotorCount;
     double targetDistance;
     double tread = 125.0;
-    double error = (M_PI * tread / 360) * 2;  //誤差2度
+    double error = (M_PI * tread / 360) * 3;  //誤差3度
     int angle, pwm;
 
     // 0度左回頭のテスト
@@ -109,7 +109,7 @@ namespace etrobocon2022_test {
     double rightMotorCount;
     double targetDistance;
     double tread = 125.0;
-    double error = (M_PI * tread / 360) * 2;  //誤差2度
+    double error = (M_PI * tread / 360) * 3;  //誤差3度
     int angle, pwm;
 
     // PWM値が100の時のテスト
@@ -137,7 +137,7 @@ namespace etrobocon2022_test {
     double rightMotorCount;
     double targetDistance;
     double tread = 125.0;
-    double error = (M_PI * tread / 360) * 2;  //誤差2度
+    double error = (M_PI * tread / 360) * 3;  //誤差3度
     int angle, pwm;
 
     // 回転角度がマイナス
@@ -182,7 +182,7 @@ namespace etrobocon2022_test {
     double rightMotorCount;
     double targetDistance;
     double tread = 125.0;
-    double error = (M_PI * tread / 360) * 2;  //誤差2度
+    double error = (M_PI * tread / 360) * 3;  //誤差3度
     int angle, pwm;
 
     // 90度右回頭の回頭誤差が１度未満かテスト
@@ -224,7 +224,7 @@ namespace etrobocon2022_test {
     double rightMotorCount;
     double targetDistance;
     double tread = 125.0;
-    double error = (M_PI * tread / 360) * 2;  //誤差2度
+    double error = (M_PI * tread / 360) * 3;  //誤差3度
     int angle, pwm;
 
     // 0度右回頭のテスト
@@ -251,7 +251,7 @@ namespace etrobocon2022_test {
     double rightMotorCount;
     double targetDistance;
     double tread = 125.0;
-    double error = (M_PI * tread / 360) * 2;  //誤差2度
+    double error = (M_PI * tread / 360) * 3;  //誤差3度
     int angle, pwm;
 
     // PWM値が100の時のテスト
@@ -279,7 +279,7 @@ namespace etrobocon2022_test {
     double rightMotorCount;
     double targetDistance;
     double tread = 125.0;
-    double error = (M_PI * tread / 360) * 2;  //誤差2度
+    double error = (M_PI * tread / 360) * 3;  //誤差3度
     int angle, pwm;
 
     // 回転角度がマイナス
@@ -326,7 +326,7 @@ namespace etrobocon2022_test {
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
   }
 
   TEST(RotationTest, leftFront45)
@@ -342,7 +342,7 @@ namespace etrobocon2022_test {
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
   }
 
   TEST(RotationTest, leftFront90)
@@ -358,7 +358,7 @@ namespace etrobocon2022_test {
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
   }
 
   TEST(RotationTest, leftFront135)
@@ -374,7 +374,7 @@ namespace etrobocon2022_test {
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
   }
 
   TEST(RotationTest, leftFront180)
@@ -390,7 +390,7 @@ namespace etrobocon2022_test {
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
   }
 
   //右軸前方向ピボットターン
@@ -408,7 +408,7 @@ namespace etrobocon2022_test {
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
   }
 
   TEST(RotationTest, rightFront45)
@@ -424,7 +424,7 @@ namespace etrobocon2022_test {
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
   }
 
   TEST(RotationTest, rightFront90)
@@ -440,7 +440,7 @@ namespace etrobocon2022_test {
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
   }
 
   TEST(RotationTest, rightFront135)
@@ -456,7 +456,7 @@ namespace etrobocon2022_test {
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
   }
 
   TEST(RotationTest, rightFront180)
@@ -472,7 +472,7 @@ namespace etrobocon2022_test {
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
   }
 
   //左軸後ろピボットターン
@@ -490,7 +490,7 @@ namespace etrobocon2022_test {
         = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
 
     actual = transform * motorCount;
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
     ASSERT_LE(expected - 2.0, actual);
   }
 
@@ -507,7 +507,7 @@ namespace etrobocon2022_test {
         = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
 
     actual = transform * motorCount;
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
     ASSERT_LE(expected - 2.0, actual);
   }
 
@@ -524,7 +524,7 @@ namespace etrobocon2022_test {
         = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
 
     actual = transform * motorCount;
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
     ASSERT_LE(expected - 2.0, actual);
   }
 
@@ -541,7 +541,7 @@ namespace etrobocon2022_test {
         = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
 
     actual = transform * motorCount;
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
     ASSERT_LE(expected - 2.0, actual);
   }
 
@@ -558,7 +558,7 @@ namespace etrobocon2022_test {
         = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
 
     actual = transform * motorCount;
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
     ASSERT_LE(expected - 2.0, actual);
   }
 
@@ -577,7 +577,7 @@ namespace etrobocon2022_test {
         = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
 
     actual = transform * motorCount;
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
     ASSERT_LE(expected - 2.0, actual);
   }
 
@@ -594,7 +594,7 @@ namespace etrobocon2022_test {
         = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
 
     actual = transform * motorCount;
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
     ASSERT_LE(expected - 2.0, actual);
   }
 
@@ -611,7 +611,7 @@ namespace etrobocon2022_test {
         = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
 
     actual = transform * motorCount;
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
     ASSERT_LE(expected - 2.0, actual);
   }
 
@@ -628,7 +628,7 @@ namespace etrobocon2022_test {
         = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
 
     actual = transform * motorCount;
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
     ASSERT_LE(expected - 2.0, actual);
   }
 
@@ -645,7 +645,7 @@ namespace etrobocon2022_test {
         = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
 
     actual = transform * motorCount;
-    ASSERT_GE(expected + 2.0, actual);
+    ASSERT_GE(expected + 4.0, actual);
     ASSERT_LE(expected - 2.0, actual);
   }
 }  // namespace etrobocon2022_test
