@@ -41,7 +41,7 @@ class ColorJudge {
   static constexpr int WHITE_LIMIT_BORDER = 250;  // 白の明度の境界
   static constexpr int BLACK_BORDER = 110;        // 無彩色の黒の明度の境界
   static constexpr int RED_BORDER = 25;           // 赤の色相の境界
-  static constexpr int YELLOW_BORDER = 40;        // 黄の色相の境界
+  static constexpr int YELLOW_BORDER = 50;        // 黄の色相の境界
   static constexpr int GREEN_BORDER = 170;        // 緑の色相の境界
   static constexpr int BLUE_BORDER = 300;         // 青の色相の境界
   static constexpr rgb_raw_t MAX_RGB = { 244, 245, 252 };  //コースが白の時（最大）のRGB値
