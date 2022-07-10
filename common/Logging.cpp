@@ -10,23 +10,21 @@ Logging::Logging() {}
 void Logging::writeLogs(const char* logs)
 {
   const char* log = logs;
-  printf("\x1b[36m"); /* 文字色をシアンに */
   printf("Logs: %s\n", log);
+}
+
+void Logging::writewarningMessage(const char* warningMessage)
+{
+  const char* warning = warningMessage;
+  printf("\x1b[36m"); /* 文字色をシアンに */
+  printf("Warning: %s\n", warning);
   printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
 }
 
-void Logging::writeWarnings(const char* warnings)
+void Logging::writeErrorMessage(const char* errorMessage)
 {
-  const char* warning = warnings;
-  printf("\x1b[33m"); /* 文字色を黄色に */
-  printf("Warnings: %s\n", warning);
-  printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
-}
-
-void Logging::writeErrors(const char* errors)
-{
-  const char* error = errors;
+  const char* error = errorMessage;
   printf("\x1b[35m"); /* 文字色をマゼンタに */
-  printf("Errors: %s\n", error);
+  printf("Error: %s\n", error);
   printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
 }
