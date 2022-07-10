@@ -35,6 +35,6 @@ INCLUDES += \
     -I$(mkfile_path)module/API \
     -I$(mkfile_path)module/Motion \
     -I$(mkfile_path)module/GameMotion \
-    -I$(mkfile_path)module/common
+    -I$(mkfile_path)module/common 
 
 COPTS += -std=gnu++11
