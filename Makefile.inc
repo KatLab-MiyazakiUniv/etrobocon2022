@@ -9,7 +9,6 @@ APPL_CXXOBJS += $(shell echo \
 APPL_CXXOBJS += $(shell echo \
                     `ls ${mkfile_path}module/*/*.cpp | \
                      sed -r 's/(\/.*)*\/(.*\.)cpp/\2o/g'`)
-
 SRCLANG := c++
 
 ifdef CONFIG_EV3RT_APPLICATION
