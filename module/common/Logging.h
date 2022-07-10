@@ -24,9 +24,9 @@ class Logging {
    */
   void writeWarningMessage(const char* warningMessage);
 
-  /*
+  /**
    * 入力された文字列をerrorMessageとして色を変更し、ターミナルに表示
-   * @param errorMessage 表示するerroメッセージ
+   * @param errorMessage 表示するerrorメッセージ
    */
   void writeErrorMessage(const char* errorMessage);
 
