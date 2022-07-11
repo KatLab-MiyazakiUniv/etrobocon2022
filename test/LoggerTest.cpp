@@ -9,7 +9,7 @@
 #include <gtest/internal/gtest-port.h>
 
 namespace etrobocon2022_test {
-  TEST(LoggerTest, writeLogs)
+  TEST(LoggerTest, log)
   {
     Logger logger;
     std::string logMsg = "logs test.";
@@ -20,7 +20,7 @@ namespace etrobocon2022_test {
     ASSERT_STREQ(expected.c_str(), actual.c_str());
   }
 
-  TEST(LoggingTest, writeWarningMessage)
+  TEST(LoggerTest, logWarning)
   {
     Logger logger;
     std::string logMsg = "WarningMessage test.";
@@ -33,7 +33,7 @@ namespace etrobocon2022_test {
     ASSERT_STREQ(expected.c_str(), actual.c_str());
   }
 
-  TEST(LoggingTest, writeErrorMessage)
+  TEST(LoggerTest, logError)
   {
     Logger logger;
     std::string logMsg = "ErrorMessage test.";
@@ -46,7 +46,7 @@ namespace etrobocon2022_test {
     ASSERT_STREQ(expected.c_str(), actual.c_str());
   }
 
-  TEST(LoggingTest, writeHighlightLog)
+  TEST(LoggerTest, logHighlight)
   {
     Logger logger;
     std::string logMsg = "HighlightLog test.";
