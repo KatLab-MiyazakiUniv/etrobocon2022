@@ -9,7 +9,7 @@
 #include <stdio.h>
 
 class Logger {
-  public:
+ public:
   Logger();
 
   /**
