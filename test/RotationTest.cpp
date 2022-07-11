@@ -1,7 +1,7 @@
 /**
  * @file Rotation.cpp
  * @brief Roationクラスをテストする
- * @author sugaken0528
+ * @author sugaken0528 KakinokiKanta
  */
 
 #include "Rotation.h"

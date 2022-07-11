@@ -1,7 +1,7 @@
 /**
  * @file Rotation.cpp
  * @brief 回頭・ピボットターンする
- * @author sugaken0528
+ * @author sugaken0528 KakinokiKanta
  */
 
 #include "Rotation.h"
