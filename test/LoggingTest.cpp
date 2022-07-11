@@ -1,35 +1,35 @@
 /**
- * @file LoggingTest.cpp
- * @brief Loggingクラスをテストする
+ * @file LoggerTest.cpp
+ * @brief Loggerクラスをテストする
  * @author sap268
  */
 
-#include "Logging.h"
+#include "Logger.h"
 #include <gtest/gtest.h>
 
 namespace etrobocon2022_test {
-  TEST(LoggingTest, writeLogs)
+  TEST(LoggerTest, writeLogs)
   {
-    Logging logging;
-    logging.writeLogMessage("write logs test.");
+    Logger logger;
+    logger.log("logs test.");
   }
 
   TEST(LoggingTest, writeWarningMessage)
   {
-    Logging logging;
-    logging.writeWarningMessage("write WarningMessage test.");
+    Logger logger;
+    logger.logWarning("WarningMessage test.");
   }
 
   TEST(LoggingTest, writeErrorMessage)
   {
-    Logging logging;
-    logging.writeErrorMessage("write ErrorMessage test.");
+    Logger logger;
+    logger.logError("ErrorMessage test.");
   }
 
   TEST(LoggingTest, writeHighlightLog)
   {
-    Logging logging;
-    logging.writeHighlightLog("write HighlightLog test.");
+    Logger logger;
+    logger.logHighlight("HighlightLog test.");
   }
 
 }  // namespace etrobocon2022_test

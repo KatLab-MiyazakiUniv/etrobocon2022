@@ -3,17 +3,17 @@
  * @brief 動作確認に用いるprintf()関数を所持するクラス
  * @author sap2368
  */
-#include "Logging.h"
+#include "Logger.h"
 
-Logging::Logging() {}
+Logger::Logger() {}
 
-void Logging::writeLogMessage(const char* logMessage)
+void Logger::log(const char* logMessage)
 {
   const char* log = logMessage;
   printf("%s\n", log);
 }
 
-void Logging::writeWarningMessage(const char* warningMessage)
+void Logger::logWarning(const char* warningMessage)
 {
   const char* warning = warningMessage;
   printf("\x1b[36m"); /* 文字色をシアンに */
@@ -21,7 +21,7 @@ void Logging::writeWarningMessage(const char* warningMessage)
   printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
 }
 
-void Logging::writeErrorMessage(const char* errorMessage)
+void Logger::logError(const char* errorMessage)
 {
   const char* error = errorMessage;
   printf("\x1b[35m"); /* 文字色をマゼンタに */
@@ -29,7 +29,7 @@ void Logging::writeErrorMessage(const char* errorMessage)
   printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
 }
 
-void Logging::writeHighlightLog(const char* highlightLog)
+void Logger::logHighlight(const char* highlightLog)
 {
   const char* hlog = highlightLog;
   printf("\x1b[32m"); /* 文字色を緑色に */
