@@ -71,7 +71,7 @@ bool Measurer::getEnterButton()
 }
 
 // 超音波センサからの距離を取得
-int Measurer::getDistance()
+int Measurer::getForwardDistance()
 {
   int distance = sonarSensor.getDistance();
 

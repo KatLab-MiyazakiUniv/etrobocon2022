@@ -73,7 +73,7 @@ class Measurer {
    * @return 超音波センサからの距離[cm]
    * @note センサが認識していない時は1000を返す
    */
-  int getDistance();
+  int getForwardDistance();
 
  private:
   ev3api::ColorSensor colorSensor;

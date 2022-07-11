@@ -32,7 +32,7 @@ void Calibrator::selectCourse()
 
   // 中央ボタンが押されたら確定する
   while(!measurer.getEnterButton()) {
-    // 左ボタンが押されたらRコースをセットする
+    // 左ボタンが押されたらLコースをセットする
     if(measurer.getLeftButton() && !_isLeftCourse) {
       _isLeftCourse = true;
       printf(">> Set Left Course\n");
@@ -97,7 +97,7 @@ void Calibrator::waitForStart()
   printf("Signal within %dcm from Sonar Sensor.\n", startDistance);
 
   // startDistance以内の距離に物体がない間待機する
-  while(measurer.getDistance() > startDistance) {
+  while(measurer.getForwardDistance() > startDistance) {
     controller.sleep();  // 10ミリ秒スリープ
   }
 }
