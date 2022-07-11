@@ -9,7 +9,7 @@
 #include <gtest/gtest.h>
 
 namespace etrobocon2022_test {
-  TEST(ColorJudgeTest, getColorTrueBlack)
+  TEST(ColorJudgeTest, getColorZeroRgb)
   {
     rgb_raw_t rgb = { 0, 0, 0 };
     COLOR actual = ColorJudge::getColor(rgb);
