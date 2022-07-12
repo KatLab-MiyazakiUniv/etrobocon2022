@@ -67,10 +67,11 @@ endif()
 # -------------------
 # Google Test のために、ヘッダファイルのあるディレクトリを指定する？
 include_directories(${PROJECT_SOURCE_DIR}/module)
-include_directories(${PROJECT_SOURCE_DIR}/test/dummy)
 include_directories(${PROJECT_SOURCE_DIR}/module/API)
 include_directories(${PROJECT_SOURCE_DIR}/module/Motion)
 include_directories(${PROJECT_SOURCE_DIR}/module/GameMotion)
+include_directories(${PROJECT_SOURCE_DIR}/test/dummy)
+include_directories(${PROJECT_SOURCE_DIR}/test/test_data)
 include_directories(${GTEST_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/module)
 file(GLOB SRC_FILES
   ${PROJECT_SOURCE_DIR}/module/*.cpp
