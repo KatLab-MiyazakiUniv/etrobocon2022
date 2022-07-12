@@ -7,13 +7,13 @@
 #ifndef LINE_TRACER_H
 #define LINE_TRACER_H
 
-#include <stdio.h>
 #include <algorithm>
 #include "Pid.h"
 #include "Mileage.h"
 #include "ColorJudge.h"
 #include "Controller.h"
 #include "Measurer.h"
+#include "Logger.h"
 
 class LineTracer {
  public:

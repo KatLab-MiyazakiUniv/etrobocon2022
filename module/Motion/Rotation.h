@@ -7,12 +7,12 @@
 #ifndef ROTATION_H
 #define ROTATION_H
 
-#include <stdio.h>
 #include <cmath>
 #include <algorithm>
 #include "Controller.h"
 #include "Measurer.h"
 #include "Mileage.h"
+#include "Logger.h"
 
 /**
  * 回頭とピボットターンをするクラス

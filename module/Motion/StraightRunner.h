@@ -10,7 +10,7 @@
 #include "Measurer.h"
 #include "Mileage.h"
 #include "Controller.h"
-#include <stdio.h>
+#include "Logger.h"
 
 class StraightRunner {
  public:
