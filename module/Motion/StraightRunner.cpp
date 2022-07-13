@@ -13,14 +13,10 @@ void StraightRunner::run(double targetDistance, int pwm)
 {
   // 目標距離の値が負またはpwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
-    printf("\x1b[36m"); /* 文字色をシアンに */
-    printf("warning: The pwm value passed to StraightRunner::run is 0 \n");
-    printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
+    logger.logWarning(" The pwm value passed to StraightRunner::run is 0 ");
     return;
   } else if(targetDistance < 0) {
-    printf("\x1b[36m");
-    printf("warning: The targetDistance value passed to StraightRunner::run is negative \n");
-    printf("\x1b[39m");
+    logger.logWarning(" The targetDistance value passed to StraightRunner::run is negative ");
     return;
   }
 
