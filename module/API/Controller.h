@@ -52,11 +52,6 @@ class Controller {
   //  */
   // void notifyCompletedToSimulator();
 
-  /**
-   * モータの回転数を初期化する
-   */
-  void resetMotorCount();
-
  private:
   ev3api::Motor rightWheel;
   ev3api::Motor leftWheel;

@@ -1,7 +1,7 @@
 /**
  * @file Rotation.cpp
  * @brief 回頭・ピボットターンする
- * @author sugaken0528
+ * @author sugaken0528 KakinokiKanta
  */
 
 #include "Rotation.h"
@@ -128,8 +128,9 @@ void Rotation::turnForwardRightPivot(int angle, int pwm)
   int leftPwm = pwm;
   int rightPwm = -1;  // 軸がぶれるのを防止するため軸タイヤのモータ(右モータ)にセットするPWM値
 
-  // モータ回転量をリセット
-  controller.resetMotorCount();
+  // ピボットターン前のモータ回転量
+  int initialRightMotorCount = measurer.getRightCount();
+  int initialLeftMotorCount = measurer.getLeftCount();
 
   double motorCount = 0;
   double targetMotorCount
@@ -144,7 +145,11 @@ void Rotation::turnForwardRightPivot(int angle, int pwm)
     leftPwm = std::max((int)(pwm * leftCountRate), PIVOT_FRONT_MIN_PWM);
 
     // 現在のモータ回転量を取得
-    motorCount = (measurer.getLeftCount() + measurer.getRightCount()) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
 
     // モータにPWM値をセット
     controller.setLeftMotorPwm(leftPwm);
@@ -170,8 +175,9 @@ void Rotation::turnBackRightPivot(int angle, int pwm)
   int leftPwm = pwm;
   int rightPwm = 3;  // 軸がぶれるのを防止するため軸タイヤのモータ(右モータ)にセットするPWM値
 
-  // モータ回転量をリセット
-  controller.resetMotorCount();
+  // ピボットターン前のモータ回転量
+  int initialRightMotorCount = measurer.getRightCount();
+  int initialLeftMotorCount = measurer.getLeftCount();
 
   double motorCount = 0;
   double targetMotorCount
@@ -185,7 +191,11 @@ void Rotation::turnBackRightPivot(int angle, int pwm)
     leftPwm = std::max((int)(pwm * leftCountRate), PIVOT_FRONT_MIN_PWM);
 
     // 現在のモータ回転量を取得
-    motorCount = (abs(measurer.getLeftCount()) + abs(measurer.getRightCount())) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    motorCount = (abs(currentRightMotorCount) + abs(currentLeftMotorCount)) / 2;
 
     // モータにPWM値をセット
     controller.setLeftMotorPwm(-leftPwm);
@@ -210,8 +220,9 @@ void Rotation::turnForwardLeftPivot(int angle, int pwm)
   int leftPwm = -1;  // 軸がぶれるのを防止するため軸タイヤのモータ(左モータ)にセットするPWM値
   int rightPwm = pwm;
 
-  // モータ回転量をリセット
-  controller.resetMotorCount();
+  // ピボットターン前のモータ回転量
+  int initialRightMotorCount = measurer.getRightCount();
+  int initialLeftMotorCount = measurer.getLeftCount();
 
   double motorCount = 0;
   double targetMotorCount
@@ -226,7 +237,11 @@ void Rotation::turnForwardLeftPivot(int angle, int pwm)
     rightPwm = std::max((int)(pwm * rightCountRate), PIVOT_FRONT_MIN_PWM);
 
     // 現在のモータ回転量を取得
-    motorCount = ((measurer.getLeftCount()) + (measurer.getRightCount())) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
 
     // モータにPwm値をセット
     controller.setLeftMotorPwm(leftPwm);
@@ -253,8 +268,9 @@ void Rotation::turnBackLeftPivot(int angle, int pwm)
   int leftPwm = 3;  // 軸がぶれるのを防止するため軸タイヤのモータ(左モータ)にセットするPWM値
   int rightPwm = pwm;
 
-  // モータ回転量をリセット
-  controller.resetMotorCount();
+  // ピボットターン前のモータ回転量
+  int initialRightMotorCount = measurer.getRightCount();
+  int initialLeftMotorCount = measurer.getLeftCount();
 
   double motorCount = 0;
   double targetMotorCount
@@ -269,7 +285,11 @@ void Rotation::turnBackLeftPivot(int angle, int pwm)
     rightPwm = std::max((int)(pwm * rightCountRate), PIVOT_FRONT_MIN_PWM);
 
     // 現在のモータ回転量を取得
-    motorCount = (abs(measurer.getLeftCount()) + abs(measurer.getRightCount())) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    motorCount = (abs(currentRightMotorCount) + abs(currentLeftMotorCount)) / 2;
 
     // モータにPWM値をセット
     controller.setLeftMotorPwm(leftPwm);
