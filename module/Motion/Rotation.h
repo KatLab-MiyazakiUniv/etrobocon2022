@@ -7,13 +7,13 @@
 #ifndef ROTATION_H
 #define ROTATION_H
 
-#include <stdio.h>
 #include <cmath>
 #include <algorithm>
 #include "Controller.h"
 #include "Measurer.h"
 #include "Mileage.h"
 #include "SystemInfo.h"
+#include "Logger.h"
 
 /**
  * 回頭とピボットターンをするクラス
@@ -70,7 +70,7 @@ class Rotation {
  private:
   Controller controller;
   Measurer measurer;
-
+  Logger logger;
   const int ROTATE_MIN_PWM;  // 回頭の時のモーターパワーの最小値
   const int PIVOT_FRONT_MIN_PWM;  //ピボットターン前方向の時のモーターパワーの最小値
   const int PIVOT_BACK_MIN_PWM;  //ピボットターン後方向の時のモーターパワーの最小値

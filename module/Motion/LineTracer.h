@@ -7,13 +7,13 @@
 #ifndef LINE_TRACER_H
 #define LINE_TRACER_H
 
-#include <stdio.h>
 #include <algorithm>
 #include "Pid.h"
 #include "Mileage.h"
 #include "ColorJudge.h"
 #include "Controller.h"
 #include "Measurer.h"
+#include "Logger.h"
 
 class LineTracer {
  public:
@@ -62,6 +62,7 @@ class LineTracer {
   bool isLeftEdge;
   Measurer measurer;
   Controller controller;
+  Logger logger;
   static constexpr int JUDGE_COUNT = 3;
 };
 
