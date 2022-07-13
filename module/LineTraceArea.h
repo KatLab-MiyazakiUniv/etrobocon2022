@@ -10,7 +10,7 @@
 #include <array>
 #include <string>
 #include "LineTracer.h"
-//#include "Logger.h"
+#include "Logger.h"
 
 // 区間制御のパラメータを保持する構造体
 struct SectionParam {
