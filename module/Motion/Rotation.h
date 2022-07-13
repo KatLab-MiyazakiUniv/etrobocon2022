@@ -69,7 +69,7 @@ class Rotation {
  private:
   Controller controller;
   Measurer measurer;
-
+  Logger logger;
   const double RADIUS;       // 車輪の半径[mm]
   const double TREAD;        // 走行体のトレッド幅（両輪の間の距離）[mm]
   const int ROTATE_MIN_PWM;  // 回頭の時のモーターパワーの最小値

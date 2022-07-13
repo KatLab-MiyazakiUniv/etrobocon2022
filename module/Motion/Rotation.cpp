@@ -16,8 +16,6 @@ Rotation::Rotation()
 //左に回頭する
 void Rotation::rotateLeft(int angle, int pwm)
 {
-  Logger logger;
-
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     logger.logWarning(" The pwm value passed to Rotation::rotateLeft is 0");
@@ -70,8 +68,6 @@ void Rotation::rotateLeft(int angle, int pwm)
 //右に回頭する
 void Rotation::rotateRight(int angle, int pwm)
 {
-  Logger logger;
-
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     logger.logWarning(" The pwm value passed to Rotation::rotateRight is 0");
@@ -124,8 +120,6 @@ void Rotation::rotateRight(int angle, int pwm)
 // 右タイヤを軸に前方へピボットターンする
 void Rotation::turnForwardRightPivot(int angle, int pwm)
 {
-  Logger logger;
-
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     logger.logWarning(" The pwm value passed to Rotation::turnForwardRightPivot is 0");
@@ -167,8 +161,6 @@ void Rotation::turnForwardRightPivot(int angle, int pwm)
 // 右タイヤを軸に後方へピボットターンする
 void Rotation::turnBackRightPivot(int angle, int pwm)
 {
-  Logger logger;
-
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     logger.logWarning(" The pwm value passed to Rotation::turnBackRightPivot is 0");
@@ -210,7 +202,6 @@ void Rotation::turnBackRightPivot(int angle, int pwm)
 // 左タイヤを軸に前方へピボットターンする
 void Rotation::turnForwardLeftPivot(int angle, int pwm)
 {
-  Logger logger;
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     logger.logWarning(" The pwm value passed to Rotation::turnForwardLeftPivot is 0");
@@ -252,8 +243,6 @@ void Rotation::turnForwardLeftPivot(int angle, int pwm)
 //　左タイヤを軸に後方へピボットターンする
 void Rotation::turnBackLeftPivot(int angle, int pwm)
 {
-  Logger logger;
-
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     logger.logWarning(" The pwm value passed to Rotation::turnBackLeftPivot is 0");

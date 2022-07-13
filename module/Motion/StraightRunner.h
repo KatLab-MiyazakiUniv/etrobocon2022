@@ -34,5 +34,6 @@ class StraightRunner {
 
   Measurer measurer;
   Controller controller;
+  Logger logger;
 };
 #endif

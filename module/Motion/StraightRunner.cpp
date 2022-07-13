@@ -11,8 +11,6 @@ StraightRunner::StraightRunner() {}
 // 指定された距離を直進する
 void StraightRunner::run(double targetDistance, int pwm)
 {
-  Logger logger;
-
   // 目標距離の値が負またはpwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     logger.logWarning(" The pwm value passed to StraightRunner::run is 0 ");

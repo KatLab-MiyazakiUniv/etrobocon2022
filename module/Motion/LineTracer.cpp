@@ -16,7 +16,6 @@ void LineTracer::run(double targetDistance, int targetBrightness, int pwm, const
   int currentPid = 0;
   int sign = 0;
   Pid pid(gain.kp, gain.ki, gain.kd, targetBrightness);
-  Logger logger;
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     logger.logWarning("The pwm value passed to LineTracer::run is 0");
@@ -55,7 +54,6 @@ void LineTracer::runToColor(COLOR targetColor, int targetBrightness, int pwm, co
   Pid pid(gain.kp, gain.ki, gain.kd, targetBrightness);
   COLOR currentColor = COLOR::NONE;
   int colorCount = 0;
-  Logger logger;
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
     logger.logWarning("The pwm value passed to LineTracer::runToColor is 0");
