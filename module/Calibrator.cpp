@@ -25,76 +25,80 @@ void Calibrator::run()
 
 void Calibrator::selectCourse()
 {
+  char buf[50];  // log用にメッセージを一時保存する
   bool _isLeftCourse = true;
 
-  printf("Select a Course\n");
-  printf(">> Set Left Course\n");
+  logger.log("Select a Course\n");
+  logger.log(">> Set Left Course\n");
 
   // 中央ボタンが押されたら確定する
   while(!measurer.getEnterButton()) {
     // 左ボタンが押されたらLコースをセットする
     if(measurer.getLeftButton() && !_isLeftCourse) {
       _isLeftCourse = true;
-      printf(">> Set Left Course\n");
+      logger.log(">> Set Left Course\n");
     }
 
     // 右ボタンが押されたらRコースをセットする
     if(measurer.getRightButton() && _isLeftCourse) {
       _isLeftCourse = false;
-      printf(">> Set Right Course\n");
+      logger.log(">> Set Right Course\n");
     }
 
     controller.sleep();  // 10ミリ秒スリープ
   }
 
   isLeftCourse = _isLeftCourse;
-  std::string course = isLeftCourse ? "Left" : "Right";
+  const char* course = isLeftCourse ? "Left" : "Right";
+  sprintf(buf, "\nWill Run on the %s Course\n", course);
+  logger.logHighlight(buf);
 
-  printf("\x1b[32m");  // 文字色を緑に
-  printf("\nWill Run on the %s Course\n", course.c_str());
-  printf("\x1b[39m\n");       // 文字色をデフォルトに戻す
   controller.sleep(1000000);  // 1秒スリープ
 }
 
 void Calibrator::measureTargetBrightness()
 {
+  char buf[50];  // log用にメッセージを一時保存する
   // 黒と白の輝度（初期化の値はロボコン部屋で取得した値）
   int blackBrightness = BLACK_BRIGHTNESS;
   int whiteBrightness = WHITE_BRIGHTNESS;
 
   // 黒の上で中央ボタンを押して黒の輝度を取得する
-  printf("Press the Center Button on the Black\n");
+  logger.log("Press the Center Button on the Black\n");
   // 中央ボタンが押されるまで待機
   while(!measurer.getEnterButton()) {
     controller.sleep();  // 10ミリ秒スリープ
   }
   blackBrightness = measurer.getBrightness();
-  printf(">> Black Brightness Value is %d\n", blackBrightness);
+  sprintf(buf, ">> Black Brightness Value is %d\n", blackBrightness);
+  logger.log(buf);
   controller.sleep(1000000);  // 1秒スリープ
 
   // 白の上で中央ボタンを押して白の輝度を取得する
-  printf("Press the Center Button on the White\n");
+  logger.log("Press the Center Button on the White\n");
   // 中央ボタンが押されるまで待機
   while(!measurer.getEnterButton()) {
     controller.sleep();  // 10ミリ秒スリープ
   }
   whiteBrightness = measurer.getBrightness();
-  printf(">> White Brightness Value is %d\n", whiteBrightness);
+  sprintf(buf, ">> White Brightness Value is %d\n", whiteBrightness);
+  logger.log(buf);
   controller.sleep(1000000);  // 1秒スリープ
 
   // 黒と白の平均値を目標輝度とする
   targetBrightness = (whiteBrightness + blackBrightness) / 2;
-  printf("\x1b[32m");  // 文字色を緑に
-  printf("\nTarget Brightness is %d\n", targetBrightness);
-  printf("\x1b[39m\n");  // 文字色をデフォルトに戻す
+  sprintf(buf, "\nTarget Brightness is %s\n", targetBrightness);
+  logger.log(buf);
 }
 
 void Calibrator::waitForStart()
 {
+  char buf[50];                     // log用にメッセージを一時保存する
   constexpr int startDistance = 5;  // 手などでスタート合図を出す距離[cm]
 
-  printf("On standby.\n");
-  printf("Signal within %dcm from Sonar Sensor.\n", startDistance);
+  logger.log("On standby.\n");
+  sprintf(buf, "Signal within %dcm from Sonar Sensor.\n", startDistance);
+  logger.log(buf);
 
   // startDistance以内の距離に物体がない間待機する
   while(measurer.getForwardDistance() > startDistance) {

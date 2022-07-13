@@ -10,6 +10,7 @@
 #include <string>
 #include "Measurer.h"
 #include "Controller.h"
+#include "Logger.h"
 #include "SystemInfo.h"
 
 class Calibrator {
@@ -46,6 +47,7 @@ class Calibrator {
   int targetBrightness;  // 目標輝度
   Measurer measurer;
   Controller controller;
+  Logger logger;
 
   /**
    * 左右ボタンでLRコースを選択してisLeftCourseをセットする

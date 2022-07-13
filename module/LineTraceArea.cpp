@@ -37,6 +37,8 @@ void LineTraceArea::runLineTraceArea(const bool isLeftCourse, const int targetBr
   const double* DISTANCE;     // 各区間の距離
   const SectionParam* PARAM;  // ファイルから受け取ったパラメータ
   bool isLeftEdge;            // true:左エッジ, false:右エッジ
+  char buf[50];               // log用にメッセージを一時保存する
+  Logger logger;
 
   if(isLeftCourse) {  // Lコースの場合
     size = LEFT_SECTION_SIZE;
@@ -53,11 +55,9 @@ void LineTraceArea::runLineTraceArea(const bool isLeftCourse, const int targetBr
   // LineTracerにエッジを与えてインスタンス化する
   LineTracer lineTracer(isLeftEdge);
 
-  string course = isLeftCourse ? "Left" : "Right";
-  printf("\x1b[32m");  // 文字色を緑に
-  printf("\nRun on the %s Course\n", course.c_str());
-  printf("\x1b[39m\n");  // 文字色をデフォルトに戻す
-  // LRに応じて各区間を順番に走らせる
+  const char* course = isLeftCourse ? "Left" : "Right";
+  sprintf(buf, "\nRun on the %s Course\n", course);
+  logger.logHighlight(buf);
   for(int i = 0; i < size; i++) {
     // Linetracer::runに区間の情報を渡して走行させる
     lineTracer.run(DISTANCE[i] + PARAM[i].tweak, targetBrightness, PARAM[i].pwm, PARAM[i].pidGain);

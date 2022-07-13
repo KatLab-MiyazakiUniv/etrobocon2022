@@ -17,7 +17,7 @@ bool ev3_button_is_pressed(button_t button)
   // 右ボタンが押された時（num=1）
   if(button == RIGHT_BUTTON && num == 1) return true;
 
-  // 中央ボタンが押された時（num=0）
+  // 中央ボタンが押された時（num=2）
   if(button == ENTER_BUTTON && num == 2) return true;
 
   if(button != LEFT_BUTTON && button != RIGHT_BUTTON && button != ENTER_BUTTON) {
