@@ -29,7 +29,7 @@ namespace etrobocon2022_test {
     double error = (M_PI * tread / 360) * 3;  //誤差3度
     int angle, pwm;
 
-    // 90度左回頭の回頭誤差が１度未満かテスト
+    // 90度左回頭の回頭誤差が３度未満かテスト
     angle = 90;
     pwm = 30;
     targetDistance = M_PI * tread * abs(angle) / 360;
@@ -43,7 +43,7 @@ namespace etrobocon2022_test {
     EXPECT_LE(expectedRight, actualRight);
     EXPECT_GE(expectedRight + error, actualRight);
 
-    // 180度左回頭の回頭誤差が１度未満かテスト
+    // 180度左回頭の回頭誤差が３度未満かテスト
     angle = 180;
     pwm = 30;
     targetDistance = M_PI * tread * abs(angle) / 360;
@@ -57,7 +57,7 @@ namespace etrobocon2022_test {
     EXPECT_LE(expectedRight, actualRight);
     EXPECT_GE(expectedRight + error, actualRight);
 
-    // 360度左回頭の回頭誤差が１度未満かテスト
+    // 360度左回頭の回頭誤差が３度未満かテスト
     angle = 360;
     pwm = 30;
     targetDistance = M_PI * tread * abs(angle) / 360;
@@ -185,7 +185,7 @@ namespace etrobocon2022_test {
     double error = (M_PI * tread / 360) * 3;  //誤差3度
     int angle, pwm;
 
-    // 90度右回頭の回頭誤差が１度未満かテスト
+    // 90度右回頭の回頭誤差が３度未満かテスト
     angle = 90;
     pwm = 30;
     targetDistance = M_PI * tread * abs(angle) / 360;
@@ -199,7 +199,7 @@ namespace etrobocon2022_test {
     EXPECT_LE(expectedLeft, actualLeft);
     EXPECT_GE(expectedLeft + error, actualLeft);
 
-    // 180度右回頭の回頭誤差が１度未満かテスト
+    // 180度右回頭の回頭誤差が３度未満かテスト
     angle = 180;
     pwm = 30;
     targetDistance = M_PI * tread * abs(angle) / 360;

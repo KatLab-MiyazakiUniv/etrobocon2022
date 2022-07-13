@@ -6,14 +6,14 @@
 
 #include "BonusBlockCarrier.h"
 
-void BonusBlockCarrier::carryBonusBlock()
+// Lコースの下のベースエリアへの設置処理のみ実装
+// TODO: Lコース上左右, Rコース上下左右のベースエリアに設置する処理を追加する
+void BonusBlockCarrier::run(int targetBrightness)
 {
   Rotation rotation;
   StraightRunner straightRunner;
   LineTracer lineTracer(true);
   Controller controller;
-
-  int targetBrightness = (93 - 3) / 2;  // 目標輝度
 
   // 交点内を直進
   straightRunner.run(5, 50);
@@ -30,11 +30,16 @@ void BonusBlockCarrier::carryBonusBlock()
   // 直進を安定させるために1秒待機
   controller.sleep(1000000);
 
-  // 緑を認識するまで直進(指定した距離まで直進で代用)
+  // 緑を認識するまで直進
+  // TODO: 指定した距離まで直進で代用してるので，指定した色まで直進に変更する
   straightRunner.run(400, 50);
 
-  // 緑を認識するまでライントレース(指定した距離までライントレースで代用)
+  // 緑を認識するまでライントレース
+  // TODO: 指定した距離までライントレースで代用してるので，指定した色までライントレースに変更する
   lineTracer.run(240, targetBrightness, 53, PidGain(0.1, 0.08, 0.08));
+
+  // そのまま90度回頭して設置するとブロックがベースエリアからはみ出る場合がある
+  // 90度回頭の間に後退を行うことによって設置を行う
 
   // 左に80度回頭
   rotation.rotateLeft(80, 70);

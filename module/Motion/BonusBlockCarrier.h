@@ -14,6 +14,13 @@
 
 class BonusBlockCarrier {
  public:
-  static void carryBonusBlock();
+  /**
+   * ベースエリアにボーナスブロックを運ぶ
+   * @param targetBrightness 目標輝度
+   */
+  static void run(int targetBrightness);
+
+ private:
+  BonusBlockCarrier();  // インスタンス化を禁止する
 };
 #endif
