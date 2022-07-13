@@ -87,7 +87,7 @@ void Calibrator::measureTargetBrightness()
 
   // 黒と白の平均値を目標輝度とする
   targetBrightness = (whiteBrightness + blackBrightness) / 2;
-  sprintf(buf, "\nTarget Brightness is %s\n", targetBrightness);
+  sprintf(buf, "\nTarget Brightness is %d\n", targetBrightness);
   logger.log(buf);
 }
 
