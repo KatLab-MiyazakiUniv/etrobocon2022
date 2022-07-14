@@ -15,7 +15,7 @@ void Rotation::rotateLeft(int angle, int pwm)
 {
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
-    logger.logWarning(" The pwm value passed to Rotation::rotateLeft is 0");
+    logger.logWarning("The pwm value passed to Rotation::rotateLeft is 0");
     return;
   }
   int leftSign = -1;
@@ -62,7 +62,7 @@ void Rotation::rotateRight(int angle, int pwm)
 {
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
-    logger.logWarning(" The pwm value passed to Rotation::rotateRight is 0");
+    logger.logWarning("The pwm value passed to Rotation::rotateRight is 0");
     return;
   }
   int leftSign = 1;
@@ -109,7 +109,7 @@ void Rotation::turnForwardRightPivot(int angle, int pwm)
 {
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
-    logger.logWarning(" The pwm value passed to Rotation::turnForwardRightPivot is 0");
+    logger.logWarning("The pwm value passed to Rotation::turnForwardRightPivot is 0");
     return;
   }
   int leftPwm = pwm;
@@ -150,7 +150,7 @@ void Rotation::turnBackRightPivot(int angle, int pwm)
 {
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
-    logger.logWarning(" The pwm value passed to Rotation::turnBackRightPivot is 0");
+    logger.logWarning("The pwm value passed to Rotation::turnBackRightPivot is 0");
     return;
   }
   angle = abs(angle);
@@ -192,7 +192,7 @@ void Rotation::turnForwardLeftPivot(int angle, int pwm)
 {
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
-    logger.logWarning(" The pwm value passed to Rotation::turnForwardLeftPivot is 0");
+    logger.logWarning("The pwm value passed to Rotation::turnForwardLeftPivot is 0");
     return;
   }
   int leftPwm = -1;  // 軸がぶれるのを防止するため軸タイヤのモータ(左モータ)にセットするPWM値
@@ -233,7 +233,7 @@ void Rotation::turnBackLeftPivot(int angle, int pwm)
 {
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
-    logger.logWarning(" The pwm value passed to Rotation::turnBackLeftPivot is 0");
+    logger.logWarning("The pwm value passed to Rotation::turnBackLeftPivot is 0");
     return;
   }
 
@@ -274,7 +274,7 @@ void Rotation::turnBackLeftPivot(int angle, int pwm)
 // 指定された角度回頭したときの片輪の回転角度を計算する
 double Rotation::calculateTireAngle(int angle)
 {
-  // @see https://shogo82148.github.io/homepage/memo/tenchijin/odmetry.html
+  // @see https://github.com/KatLab-MiyazakiUniv/etrobocon2022/docs/odometry.md
   const double transform = 2.0 * RADIUS / TREAD;
   return angle / transform;
 }
