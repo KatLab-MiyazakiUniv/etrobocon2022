@@ -45,14 +45,9 @@ void Rotation::rotateLeft(int angle, int pwm)
       rightSign = 0;
     }
 
-    // 徐々に速度を遅くする処理
-    // PWM値 = 残りの走行距離/走行距離 * 指定PWM値(最小値 MIN_PWM)
-    int leftPwm = std::max((int)(diffLeftDistance / targetDistance * pwm), ROTATE_MIN_PWM);
-    int rightPwm = std::max((int)(diffRightDistance / targetDistance * pwm), ROTATE_MIN_PWM);
-
     // モータにPWM値をセット
-    controller.setLeftMotorPwm(abs(leftPwm) * leftSign);
-    controller.setRightMotorPwm(abs(rightPwm) * rightSign);
+    controller.setLeftMotorPwm(abs(pwm) * leftSign);
+    controller.setRightMotorPwm(abs(pwm) * rightSign);
 
     // 10ミリ秒待機
     controller.sleep();
@@ -97,14 +92,9 @@ void Rotation::rotateRight(int angle, int pwm)
       rightSign = 0;
     }
 
-    // 徐々に速度を遅くする処理
-    // PWM値 = 残りの走行距離/目標の走行距離 * 指定PWM値(最小値 MIN_PWM)
-    int leftPwm = std::max((int)(diffLeftDistance / targetDistance * pwm), ROTATE_MIN_PWM);
-    int rightPwm = std::max((int)(diffRightDistance / targetDistance * pwm), ROTATE_MIN_PWM);
-
     // モータにPWM値をセット
-    controller.setLeftMotorPwm(abs(leftPwm) * leftSign);
-    controller.setRightMotorPwm(abs(rightPwm) * rightSign);
+    controller.setLeftMotorPwm(abs(pwm) * leftSign);
+    controller.setRightMotorPwm(abs(pwm) * rightSign);
 
     // 10ミリ秒待機
     controller.sleep();
@@ -135,11 +125,6 @@ void Rotation::turnForwardRightPivot(int angle, int pwm)
 
   while(motorCount <= targetMotorCount) {
     if(pwm == 0) break;
-
-    // 徐々に速度を遅くする処理
-    // PWM値 = 指定PWM値 * (1 - 走行距離/目標走行距離)(最小値 MIN_PWM)
-    double leftCountRate = 1 - (measurer.getLeftCount() / targetMotorCount);
-    leftPwm = std::max((int)(pwm * leftCountRate), PIVOT_FRONT_MIN_PWM);
 
     // 現在のモータ回転量を取得
     double currentRightMotorCount
@@ -183,10 +168,6 @@ void Rotation::turnBackRightPivot(int angle, int pwm)
   while(motorCount <= targetMotorCount) {
     if(pwm == 0) break;
 
-    //徐々に速度を遅くする処理
-    double leftCountRate = 1 - (abs(measurer.getLeftCount()) / targetMotorCount);
-    leftPwm = std::max((int)(pwm * leftCountRate), PIVOT_FRONT_MIN_PWM);
-
     // 現在のモータ回転量を取得
     double currentRightMotorCount
         = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
@@ -227,11 +208,6 @@ void Rotation::turnForwardLeftPivot(int angle, int pwm)
 
   while(motorCount <= targetMotorCount) {
     if(pwm == 0) break;
-
-    // 徐々に速度を遅くする処理
-    // PWM値 = 指定PWM値 * (1 - 走行距離/目標走行距離)(最小値 MIN_PWM)
-    double rightCountRate = 1 - (measurer.getRightCount() / targetMotorCount);
-    rightPwm = std::max((int)(pwm * rightCountRate), PIVOT_FRONT_MIN_PWM);
 
     // 現在のモータ回転量を取得
     double currentRightMotorCount
@@ -275,11 +251,6 @@ void Rotation::turnBackLeftPivot(int angle, int pwm)
 
   while(motorCount <= targetMotorCount) {
     if(pwm == 0) break;
-
-    // 徐々に速度を遅くする処理
-    // PWM値 = 指定PWM値 * (1 - 走行距離/目標走行距離)(最小値 MIN_PWM)
-    double rightCountRate = 1 - (abs(measurer.getRightCount()) / targetMotorCount);
-    rightPwm = std::max((int)(pwm * rightCountRate), PIVOT_FRONT_MIN_PWM);
 
     // 現在のモータ回転量を取得
     double currentRightMotorCount

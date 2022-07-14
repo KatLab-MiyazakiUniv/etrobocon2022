@@ -11,6 +11,7 @@
 #include "Mileage.h"
 #include "Controller.h"
 #include "Logger.h"
+#include "Pid.h"
 
 class StraightRunner {
  public:
@@ -29,7 +30,7 @@ class StraightRunner {
  private:
   // SECTION_DISTANCE毎にACCELE_PWMだけPWM値を上げる
   static constexpr int SECTION_DISTANCE = 10;  // 調整距離[mm]
-  static constexpr double ACCELE_PWM = 0.1;    // 追加のPWM値
+  static constexpr double ACCELE_PWM = 0.3;    // 追加のPWM値
   static constexpr int MIN_PWM = 40;  // 静止時から走行体がモーターを動かせないPWM値
 
   Measurer measurer;
