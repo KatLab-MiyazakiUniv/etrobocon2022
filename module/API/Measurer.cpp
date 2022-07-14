@@ -1,12 +1,17 @@
 /**
  * @file Measurer.cpp
  * @brief 計測に用いる関数をまとめたラッパークラス
- * @author KakinokiKanta
+ * @author KakinokiKanta mutotaka0426
  */
 
 #include "Measurer.h"
 
-Measurer::Measurer() : colorSensor(PORT_2), leftWheel(PORT_C), rightWheel(PORT_B), armMotor(PORT_A)
+Measurer::Measurer()
+  : colorSensor(PORT_2),
+    sonarSensor(PORT_3),
+    leftWheel(PORT_C),
+    rightWheel(PORT_B),
+    armMotor(PORT_A)
 {
 }
 
@@ -29,20 +34,49 @@ rgb_raw_t Measurer::getRawColor()
   return rgb;
 }
 
-//左モータ角位置取得
+// 左モータ角位置取得
 int Measurer::getLeftCount()
 {
   return leftWheel.getCount();
 }
 
-//右モータ角位置取得
+// 右モータ角位置取得
 int Measurer::getRightCount()
 {
   return rightWheel.getCount();
 }
 
-//アームモータ角位置取得
+// アームモータ角位置取得
 int Measurer::getArmMotorCount()
 {
   return armMotor.getCount();
+}
+
+// 正面から見て左ボタンの押下状態を取得
+bool Measurer::getLeftButton()
+{
+  return ev3_button_is_pressed(LEFT_BUTTON);
+}
+
+// 正面から見て右ボタンの押下状態を取得
+bool Measurer::getRightButton()
+{
+  return ev3_button_is_pressed(RIGHT_BUTTON);
+}
+
+// 中央ボタンの押下状態を取得
+bool Measurer::getEnterButton()
+{
+  return ev3_button_is_pressed(ENTER_BUTTON);
+}
+
+// 超音波センサからの距離を取得
+int Measurer::getForwardDistance()
+{
+  int distance = sonarSensor.getDistance();
+
+  // センサが認識していない時が-1になる
+  if(distance == -1) distance = 1000;
+
+  return distance;
 }
