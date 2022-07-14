@@ -1,7 +1,7 @@
 /**
  * @file Rotation.cpp
  * @brief Roationクラスをテストする
- * @author sugaken0528
+ * @author sugaken0528 KakinokiKanta
  */
 
 #include "Rotation.h"
@@ -320,9 +320,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnForwardLeftPivot(angle, 100);
-    double motorCount = (measurer.getLeftCount() + measurer.getRightCount()) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
@@ -336,9 +342,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnForwardLeftPivot(angle, 100);
-    double motorCount = (measurer.getLeftCount() + measurer.getRightCount()) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
@@ -352,9 +364,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnForwardLeftPivot(angle, 100);
-    double motorCount = (measurer.getLeftCount() + measurer.getRightCount()) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
@@ -368,9 +386,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnForwardLeftPivot(angle, 100);
-    double motorCount = (measurer.getLeftCount() + measurer.getRightCount()) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
@@ -384,9 +408,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnForwardLeftPivot(angle, 100);
-    double motorCount = (measurer.getLeftCount() + measurer.getRightCount()) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
@@ -402,9 +432,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnForwardRightPivot(angle, 100);
-    double motorCount = (measurer.getLeftCount() + measurer.getRightCount()) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
@@ -418,9 +454,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnForwardRightPivot(angle, 100);
-    double motorCount = (measurer.getLeftCount() + measurer.getRightCount()) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
@@ -434,9 +476,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnForwardRightPivot(angle, 100);
-    double motorCount = (measurer.getLeftCount() + measurer.getRightCount()) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
@@ -450,9 +498,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnForwardRightPivot(angle, 100);
-    double motorCount = (measurer.getLeftCount() + measurer.getRightCount()) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
@@ -466,9 +520,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnForwardRightPivot(angle, 100);
-    double motorCount = (measurer.getLeftCount() + measurer.getRightCount()) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
 
     actual = transform * motorCount;
     ASSERT_LE(expected, actual);
@@ -484,10 +544,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnBackLeftPivot(angle, 100);
-    double motorCount
-        = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = transform * motorCount;
     ASSERT_GE(expected + 4.0, actual);
@@ -501,10 +566,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnBackLeftPivot(angle, 100);
-    double motorCount
-        = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = transform * motorCount;
     ASSERT_GE(expected + 4.0, actual);
@@ -518,10 +588,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnBackLeftPivot(angle, 100);
-    double motorCount
-        = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = transform * motorCount;
     ASSERT_GE(expected + 4.0, actual);
@@ -535,10 +610,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnBackLeftPivot(angle, 100);
-    double motorCount
-        = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = transform * motorCount;
     ASSERT_GE(expected + 4.0, actual);
@@ -552,10 +632,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnBackLeftPivot(angle, 100);
-    double motorCount
-        = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = transform * motorCount;
     ASSERT_GE(expected + 4.0, actual);
@@ -571,10 +656,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnBackRightPivot(angle, 100);
-    double motorCount
-        = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = transform * motorCount;
     ASSERT_GE(expected + 4.0, actual);
@@ -588,10 +678,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnBackRightPivot(angle, 100);
-    double motorCount
-        = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = transform * motorCount;
     ASSERT_GE(expected + 4.0, actual);
@@ -605,10 +700,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnBackRightPivot(angle, 100);
-    double motorCount
-        = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = transform * motorCount;
     ASSERT_GE(expected + 4.0, actual);
@@ -622,10 +722,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnBackRightPivot(angle, 100);
-    double motorCount
-        = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = transform * motorCount;
     ASSERT_GE(expected + 4.0, actual);
@@ -639,10 +744,15 @@ namespace etrobocon2022_test {
     double actual;
     Rotation rotation;
     Measurer measurer;
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
 
     rotation.turnBackRightPivot(angle, 100);
-    double motorCount
-        = (std::abs(measurer.getLeftCount()) + std::abs(measurer.getRightCount())) / 2;
+    double currentRightMotorCount
+        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
+    double currentLeftMotorCount
+        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
+    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = transform * motorCount;
     ASSERT_GE(expected + 4.0, actual);

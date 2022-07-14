@@ -1,7 +1,7 @@
 /**
  * @file ColorJudge.h
  * @brief 色識別クラス
- * @author mutotaka0426
+ * @author mutotaka0426 miyashita64
  */
 
 #ifndef COLOR_JUDGE_H
@@ -36,17 +36,16 @@ class ColorJudge {
   static COLOR getColor(rgb_raw_t const& rgb);
 
  private:
-  static constexpr int SATURATION_BORDER = 15;  // 無彩色かどうかの彩度の境界
-
-  static constexpr int BLACK_LIMIT_BORDER = 80;            // 黒の明度の境界
-  static constexpr int WHITE_LIMIT_BORDER = 140;           // 白の明度の境界
-  static constexpr int BLACK_BORDER = 110;                 // 無彩色の黒の明度の境界
-  static constexpr int RED_BORDER = 30;                    // 赤の色相の境界
-  static constexpr int YELLOW_BORDER = 75;                 // 黄の色相の境界
-  static constexpr int GREEN_BORDER = 170;                 // 緑の色相の境界
-  static constexpr int BLUE_BORDER = 300;                  // 青の色相の境界
-  static constexpr rgb_raw_t MAX_RGB = { 154, 143, 196 };  //コースが白の時（最大）のRGB値
-  static constexpr rgb_raw_t MIN_RGB = { 4, 5, 8 };  //コースが黒の時（最小）のRGB値
+  static constexpr int SATURATION_BORDER = 27;    // 無彩色かどうかの彩度の境界
+  static constexpr int BLACK_LIMIT_BORDER = 10;   // 黒の明度の境界
+  static constexpr int WHITE_LIMIT_BORDER = 250;  // 白の明度の境界
+  static constexpr int BLACK_BORDER = 110;        // 無彩色の黒の明度の境界
+  static constexpr int RED_BORDER = 25;           // 赤の色相の境界
+  static constexpr int YELLOW_BORDER = 50;        // 黄の色相の境界
+  static constexpr int GREEN_BORDER = 170;        // 緑の色相の境界
+  static constexpr int BLUE_BORDER = 300;         // 青の色相の境界
+  static constexpr rgb_raw_t MAX_RGB = { 244, 245, 252 };  //コースが白の時（最大）のRGB値
+  static constexpr rgb_raw_t MIN_RGB = { 9, 10, 10 };  //コースが黒の時（最小）のRGB値
 
   ColorJudge();  // インスタンス化を禁止する
 
