@@ -11,6 +11,7 @@
 #include "Mileage.h"
 #include "Controller.h"
 #include "Logger.h"
+#include "Pid.h"
 
 class StraightRunner {
  public:
