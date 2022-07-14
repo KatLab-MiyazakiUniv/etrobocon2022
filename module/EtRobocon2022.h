@@ -7,6 +7,9 @@
 #ifndef ETROBOCON2022_H
 #define ETROBOCON2022_H
 
+// ev3api.hを読み込むヘッダは.cppに記述する
+#include "SystemInfo.h"
+
 class EtRobocon2022 {
  public:
   static void start();

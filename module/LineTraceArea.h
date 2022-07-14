@@ -8,7 +8,9 @@
 #define LINE_TRACE_AREA_H
 
 #include <array>
+#include <string>
 #include "LineTracer.h"
+#include "Logger.h"
 
 // 区間制御のパラメータを保持する構造体
 struct SectionParam {

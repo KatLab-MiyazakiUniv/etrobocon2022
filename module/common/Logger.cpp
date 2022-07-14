@@ -33,6 +33,6 @@ void Logger::logHighlight(const char* highlightLog)
 {
   const char* hlog = highlightLog;
   printf("\x1b[32m"); /* 文字色を緑色に */
-  printf("%s\n", highlightLog);
+  printf("%s\n", hlog);
   printf("\x1b[39m"); /* 文字色をデフォルトに戻す */
 }

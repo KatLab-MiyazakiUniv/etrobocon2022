@@ -8,10 +8,7 @@
 
 using namespace std;
 
-Rotation::Rotation()
-  : RADIUS(50.0), TREAD(125.0), ROTATE_MIN_PWM(40), PIVOT_FRONT_MIN_PWM(40), PIVOT_BACK_MIN_PWM(40)
-{
-}
+Rotation::Rotation() : ROTATE_MIN_PWM(40), PIVOT_FRONT_MIN_PWM(40), PIVOT_BACK_MIN_PWM(40) {}
 
 //左に回頭する
 void Rotation::rotateLeft(int angle, int pwm)

@@ -21,5 +21,3 @@ double Mileage::calculateMileage(int rightAngle, int leftAngle)
   //走行体全体の累計走行距離 = (右タイヤの累計走行距離 + 左タイヤの累計走行距離) / 2
   return (rightWheel + leftWheel) / 2.0;
 }
-
-const double Mileage::RADIUS = 50.0;
