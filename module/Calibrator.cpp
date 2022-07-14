@@ -50,7 +50,7 @@ void Calibrator::selectCourse()
 
   isLeftCourse = _isLeftCourse;
   const char* course = isLeftCourse ? "Left" : "Right";
-  sprintf(buf, "\nWill Run on the %s Course", course);
+  sprintf(buf, "\nWill Run on the %s Course\n", course);
   logger.logHighlight(buf);
 
   controller.sleep(1000000);  // 1秒スリープ
