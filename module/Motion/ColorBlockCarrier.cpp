@@ -25,7 +25,7 @@ void ColorBlockCarrier::run(int targetBrightness)
   rotation.rotateRight(38, 70);
 
   // ブロックまで直進
-  straightRunner.run(50, 50);
+  straightRunner.run(135, 50);
 
   // // 右に45度回頭
   // rotation.rotateRight(45, 70);
