@@ -16,11 +16,16 @@ void ColorBlockCarrier::run(int targetBrightness)
   Controller controller;
 
   // 交点内を直進
+<<<<<<< HEAD
   straightRunner.run(10, -50);
+=======
+  straightRunner.run(5, -50);
+>>>>>>> 98c216f1a2bdb811217141fa831b830065ff7067
 
   // 緑を認識するまでライントレース
   lineTracer.runToColor(COLOR::GREEN, targetBrightness, -40, PidGain(0.1, 0.08, 0.08));
 
+<<<<<<< HEAD
   // // 右に45度回頭
   // rotation.rotateRight(45, 70);
 
@@ -53,4 +58,38 @@ void ColorBlockCarrier::run(int targetBrightness)
 
   // // 交点内を直進
   // straightRunner.run(5, 50);
+=======
+  // 右に45度回頭
+  rotation.rotateRight(45, 70);
+
+  // ブロックまで直進
+  straightRunner.run(34, 50);
+
+  // 右に45度回頭
+  rotation.rotateRight(45, 70);
+
+  // 黒線まで直進
+  straightRunner.run(24, 50);
+
+  // 右に90度回頭
+  rotation.rotateRight(90, 70);
+
+  // 黄色を認識するまでライントレース
+  lineTracer.runToColor(COLOR::YELLOW, targetBrightness, 40, PidGain(0.1, 0.08, 0.08));
+
+  // 交点内を直進
+  straightRunner.run(5, 50);
+
+  // 赤を認識するまでライントレース
+  lineTracer.runToColor(COLOR::RED, targetBrightness, 40, PidGain(0.1, 0.08, 0.08));
+
+  // 交点内を直進
+  straightRunner.run(5, 50);
+
+  // 赤を認識するまでライントレース
+  lineTracer.runToColor(COLOR::RED, targetBrightness, 40, PidGain(0.1, 0.08, 0.08));
+
+  // 交点内を直進
+  straightRunner.run(5, 50);
+>>>>>>> 98c216f1a2bdb811217141fa831b830065ff7067
 }
