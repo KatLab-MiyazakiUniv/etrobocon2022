@@ -16,7 +16,7 @@ void ColorBlockCarrier::run(int targetBrightness)
   Controller controller;
 
   // 交点内を直進
-  straightRunner.run(10, -50);
+  straightRunner.run(25, -50);
 
   // 緑を認識するまでライントレース
   lineTracer.runToColor(COLOR::GREEN, targetBrightness, -40, PidGain(0.1, 0.08, 0.08));
