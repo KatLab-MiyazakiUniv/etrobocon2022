@@ -7,6 +7,7 @@
 #include "EtRobocon2022.h"
 #include "LineTraceArea.h"
 #include "Calibrator.h"
+#include "BonusBlockCarrier.h"
 
 void EtRobocon2022::start()
 {
@@ -24,4 +25,7 @@ void EtRobocon2022::start()
 
   // ライントレースエリアを走行する
   LineTraceArea::runLineTraceArea(isLeftCourse, targetBrightness);
+
+  // ボーナスブロック運搬を実行
+  BonusBlockCarrier::run(targetBrightness);
 }
