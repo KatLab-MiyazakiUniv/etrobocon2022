@@ -39,11 +39,11 @@ void ColorBlockCarrier::run(int targetBrightness)
   // 直進を安定させるために1秒待機
   controller.sleep(1000000);
 
-  // 黄色を認識するまでライントレース
-  lineTracer.runToColor(COLOR::YELLOW, targetBrightness, 40, PidGain(0.1, 0.08, 0.08));
+  // // 黄色を認識するまでライントレース
+  // lineTracer.runToColor(COLOR::YELLOW, targetBrightness, 40, PidGain(0.1, 0.08, 0.08));
 
   // 交点内を直進
-  straightRunner.run(25, 70);
+  straightRunner.run(225, 70);
 
   // 赤を認識するまでライントレース
   lineTracer.runToColor(COLOR::RED, targetBrightness, 40, PidGain(0.1, 0.08, 0.08));
