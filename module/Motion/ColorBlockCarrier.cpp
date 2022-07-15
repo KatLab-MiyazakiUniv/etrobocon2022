@@ -22,10 +22,10 @@ void ColorBlockCarrier::run(int targetBrightness)
   lineTracer.runToColor(COLOR::GREEN, targetBrightness, -40, PidGain(0.1, 0.08, 0.08));
 
   // 右に45度回頭
-  rotation.rotateRight(45, 70);
+  rotation.rotateRight(38, 70);
 
   // ブロックまで直進
-  straightRunner.run(45, 50);
+  straightRunner.run(50, 50);
 
   // // 右に45度回頭
   // rotation.rotateRight(45, 70);
