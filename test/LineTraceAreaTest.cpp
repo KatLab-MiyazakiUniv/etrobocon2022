@@ -1,6 +1,6 @@
 /**
  * @file LineTraceAreaTest.cpp
- * @brief LineTracerAreaクラスのテスト
+ * @brief LineTraceAreaクラスのテスト
  * @author mutotaka0426
  */
 
