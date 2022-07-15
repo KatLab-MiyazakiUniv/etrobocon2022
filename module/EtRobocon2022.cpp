@@ -7,8 +7,7 @@
 #include "EtRobocon2022.h"
 #include "LineTraceArea.h"
 #include "Calibrator.h"
-#include "BonusBlockCarrier.h"
-
+#include "ColorBlockCarrier.h"
 void EtRobocon2022::start()
 {
   bool isLeftCourse = true;
@@ -23,9 +22,9 @@ void EtRobocon2022::start()
   // 合図を送るまで待機する
   calibrator.waitForStart();
 
-  // ライントレースエリアを走行する
-  LineTraceArea::runLineTraceArea(isLeftCourse, targetBrightness);
+  // // ライントレースエリアを走行する
+  // LineTraceArea::runLineTraceArea(isLeftCourse, targetBrightness);
 
-  // ボーナスブロック運搬を実行
-  BonusBlockCarrier::run(targetBrightness);
+  // カラーブロック運搬を実行
+  ColorBlockCarrier::run(targetBrightness);
 }

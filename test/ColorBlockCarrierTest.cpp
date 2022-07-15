@@ -14,7 +14,7 @@ namespace etrobocon2022_test {
   {
     int targetBrightness = 45;
 
-    // ボーナスブロック運搬を実行
+    // カラーブロック運搬を実行
     ColorBlockCarrier::run(targetBrightness);
   }
 }  // namespace etrobocon2022_test
