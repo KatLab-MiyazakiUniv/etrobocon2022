@@ -24,7 +24,6 @@ void EtRobocon2022::start()
 
   // // ライントレースエリアを走行する
   // LineTraceArea::runLineTraceArea(isLeftCourse, targetBrightness);
-
   // カラーブロック運搬を実行
   ColorBlockCarrier::run(targetBrightness);
 }
