@@ -34,7 +34,7 @@ void ColorBlockCarrier::run(int targetBrightness)
   straightRunner.run(135, 50);
 
   // 右に90度回頭
-  rotation.rotateRight(90, 75);
+  rotation.rotateRight(90, 70);
 
   // // 黄色を認識するまでライントレース
   // lineTracer.runToColor(COLOR::YELLOW, targetBrightness, 40, PidGain(0.1, 0.08, 0.08));
