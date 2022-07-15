@@ -21,11 +21,11 @@ void ColorBlockCarrier::run(int targetBrightness)
   // 緑を認識するまでライントレース
   lineTracer.runToColor(COLOR::GREEN, targetBrightness, -40, PidGain(0.1, 0.08, 0.08));
 
-  // // 右に45度回頭
-  // rotation.rotateRight(45, 70);
+  // 右に45度回頭
+  rotation.rotateRight(45, 70);
 
-  // // ブロックまで直進
-  // straightRunner.run(34, 50);
+  // ブロックまで直進
+  straightRunner.run(45, 50);
 
   // // 右に45度回頭
   // rotation.rotateRight(45, 70);
