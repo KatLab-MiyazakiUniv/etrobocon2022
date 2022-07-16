@@ -5,8 +5,9 @@
  */
 
 #include "EtRobocon2022.h"
-#include "LineTraceArea.h"
 #include "Calibrator.h"
+#include "LineTraceArea.h"
+#include "GameArea.h"
 
 void EtRobocon2022::start()
 {
@@ -24,4 +25,7 @@ void EtRobocon2022::start()
 
   // ライントレースエリアを走行する
   LineTraceArea::runLineTraceArea(isLeftCourse, targetBrightness);
+
+  // ゲームエリアを攻略する
+  // GameArea::gameAreaStart()
 }
