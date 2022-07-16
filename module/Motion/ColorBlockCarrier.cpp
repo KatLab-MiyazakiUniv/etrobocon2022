@@ -55,5 +55,5 @@ void ColorBlockCarrier::run(int targetBrightness)
   lineTracer.runToColor(COLOR::BLUE, targetBrightness, 40, PidGain(0.1, 0.08, 0.08));
 
   // 交点内を直進
-  straightRunner.run(5, 50);
+  straightRunner.run(15, 50);
 }
