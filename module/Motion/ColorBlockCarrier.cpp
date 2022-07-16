@@ -49,7 +49,7 @@ void ColorBlockCarrier::run(int targetBrightness)
   lineTracer.runToColor(COLOR::BLUE, targetBrightness, 50, PidGain(0.1, 0.08, 0.08));
 
   // 交点内を直進
-  straightRunner.run(40, 70);
+  straightRunner.run(80, 70);
 
   // 赤を認識するまでライントレース
   lineTracer.runToColor(COLOR::BLUE, targetBrightness, 50, PidGain(0.1, 0.08, 0.08));
