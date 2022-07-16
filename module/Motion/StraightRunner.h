@@ -12,6 +12,8 @@
 #include "Controller.h"
 #include "Logger.h"
 #include "Pid.h"
+#include "ColorJudge.h"
+
 
 class StraightRunner {
  public:
@@ -26,6 +28,7 @@ class StraightRunner {
    * @param pwm PWM値
    */
   void run(double targetDistance, int pwm);
+  void runStraightToColor(int pwm, COLOR targetColor);
 
  private:
   // SECTION_DISTANCE毎にACCELE_PWMだけPWM値を上げる
