@@ -7,7 +7,6 @@
 #include "ColorBlockCarrier.h"
 
 // Lコースの下のベースエリアへの設置処理のみ実装
-// TODO: Lコース上左右, Rコース上下左右のベースエリアに設置する処理を追加する
 void ColorBlockCarrier::run(int targetBrightness)
 {
   Rotation rotation;
@@ -41,16 +40,19 @@ void ColorBlockCarrier::run(int targetBrightness)
 
   // 黄色を認識するまでライントレース
   lineTracer.runToColor(COLOR::YELLOW, targetBrightness, 50, PidGain(0.1, 0.08, 0.08));
+
   // 交点内を直進
   straightRunner.run(35, 70);
 
   // 赤を認識するまでライントレース
   lineTracer.runToColor(COLOR::RED, targetBrightness, 50, PidGain(0.1, 0.08, 0.08));
+
   // 交点内を直進
   straightRunner.run(80, 70);
 
   // 赤を認識するまでライントレース
   lineTracer.runToColor(COLOR::RED, targetBrightness, 50, PidGain(0.1, 0.08, 0.08));
+
   // 交点内を直進
   straightRunner.run(35, 70);
 }

@@ -15,7 +15,7 @@
 class ColorBlockCarrier {
  public:
   /**
-   * ベースエリアにボーナスブロックを運ぶ
+   * ベースエリアにカラーブロックを運ぶ
    * @param targetBrightness 目標輝度
    */
   static void run(int targetBrightness);
