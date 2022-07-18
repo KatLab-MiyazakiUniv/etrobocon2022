@@ -7,7 +7,7 @@
 #include "EtRobocon2022.h"
 #include "LineTraceArea.h"
 #include "Calibrator.h"
-#include "ColorBlockCarrier.h"
+
 void EtRobocon2022::start()
 {
   bool isLeftCourse = true;
