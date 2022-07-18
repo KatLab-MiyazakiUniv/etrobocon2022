@@ -17,7 +17,7 @@ void GameArea::runGameArea(const bool isLeftCourse, const int targetBrightness)
   LineTracer lineTracer(isLeftEdge);
 
   // Linetracer::runに区間の情報を渡して走行させる (第1引数: 距離 + 調整距離(300+120))
-  lineTracer.run(420, targetBrightness, 80,  PidGain(1.2, 1.0, 1.0));
+  lineTracer.run(420, targetBrightness, 50,  PidGain(1.2, 1.0, 1.0));
 
   // Linetracer::runに区間の情報を渡して走行させる (第1引数: 距離 + 調整距離(485+0))
   lineTracer.run(485 + 0, targetBrightness, 50, PidGain(1.0, 0.8, 0.8));

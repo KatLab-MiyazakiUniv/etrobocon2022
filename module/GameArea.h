@@ -4,6 +4,9 @@
  * @author kawano
  */
 
+#ifndef GAME_AREA_H
+#define GAME_AREA_H
+
 #include "BonusBlockCarrier.h"
 #include "LineTracer.h"
 
