@@ -22,6 +22,6 @@ void EtRobocon2022::start()
   // 合図を送るまで待機する
   calibrator.waitForStart();
 
-  // // ライントレースエリアを走行する
+  // ライントレースエリアを走行する
   LineTraceArea::runLineTraceArea(isLeftCourse, targetBrightness);
 }
