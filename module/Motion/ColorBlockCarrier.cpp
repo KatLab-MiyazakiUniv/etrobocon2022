@@ -32,11 +32,10 @@ void ColorBlockCarrier::run(int targetBrightness)
   rotation.rotateRight(52, 70);
 
   // 黒線まで直進
-  straightRunner.run(160, 50);
+  straightRunner.run(163, 50);
 
   // 右に90度回頭
-  rotation.turnForwardRightPivot(91, 87);
-  // rotation.rotateRight(90, 70);
+  rotation.rotateRight(90, 70);
 
   // 直進を安定させるために1秒待機
   controller.sleep(1000000);
