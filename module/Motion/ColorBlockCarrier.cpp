@@ -18,8 +18,9 @@ void ColorBlockCarrier::run(int targetBrightness)
   // 交点内を直進
   straightRunner.run(40, -50);
 
-  // 緑を認識するまでライントレース
+  //つなぎ目回避のため黄色ノードから始めたver
   // lineTracer.runToColor(COLOR::YELLOW, targetBrightness, -40, PidGain(0.1, 0.08, 0.08));
+  // 緑を認識するまでライントレース
   lineTracer.runToColor(COLOR::GREEN, targetBrightness, -40, PidGain(0.1, 0.08, 0.08));
   // 右に38度回頭
   rotation.rotateRight(38, 70);
@@ -27,11 +28,13 @@ void ColorBlockCarrier::run(int targetBrightness)
   // ブロックまで直進
   straightRunner.run(135, 50);
 
+  rotation.rotateRight(52, 50);
   // 右に52度回頭
-  rotation.rotateRight(52, 70);
+  // rotation.rotateRight(52, 70);
 
+  straightRunner.run(155, 40);
   // 黒線まで直進
-  straightRunner.run(155, 70);
+  // straightRunner.run(155, 70);
 
   // 右に90度回頭
   rotation.rotateRight(90, 70);
@@ -39,20 +42,23 @@ void ColorBlockCarrier::run(int targetBrightness)
   // 直進を安定させるために1秒待機
   controller.sleep(1000000);
 
-  // 黄色を認識するまでライントレース
+  //つなぎ目回避のため黄色ノードから始めたver
   // lineTracer.runToColor(COLOR::RED, targetBrightness, 50, PidGain(0.1, 0.08, 0.08));
+  // 黄色を認識するまでライントレース
   lineTracer.runToColor(COLOR::YELLOW, targetBrightness, 50, PidGain(0.1, 0.08, 0.08));
   // 交点内を直進
   straightRunner.run(35, 70);
 
-  // 赤を認識するまでライントレース
+  //つなぎ目回避のため黄色ノードから始めたver
   // lineTracer.runToColor(COLOR::BLUE, targetBrightness, 50, PidGain(0.1, 0.08, 0.08));
+  // 赤を認識するまでライントレース
   lineTracer.runToColor(COLOR::RED, targetBrightness, 50, PidGain(0.1, 0.08, 0.08));
   // 交点内を直進
   straightRunner.run(80, 70);
 
-  // 赤を認識するまでライントレース
+  //つなぎ目回避のため黄色ノードから始めたver
   // lineTracer.runToColor(COLOR::BLUE, targetBrightness, 50, PidGain(0.1, 0.08, 0.08));
+  // 赤を認識するまでライントレース
   lineTracer.runToColor(COLOR::RED, targetBrightness, 50, PidGain(0.1, 0.08, 0.08));
   // 交点内を直進
   straightRunner.run(15, 50);
