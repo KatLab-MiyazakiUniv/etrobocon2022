@@ -28,7 +28,7 @@ void BonusBlockCarrier::run(int targetBrightness)
   // lineTracer.setIsLeftEdge(true);
 
   // 左に90度ピボットターン
-  rotation.turnForwardLeftPivot(91, 87);
+  rotation.turnForwardLeftPivot(89, 85);
 
   // 直進を安定させるために1秒待機
   controller.sleep(1000000);

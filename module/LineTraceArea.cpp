@@ -15,7 +15,7 @@ const array<double, LineTraceArea::RIGHT_SECTION_SIZE> LineTraceArea::RIGHT_SECT
 
 // Lコースのパラメータを初期化する（調整距離, PWM値, PIDゲイン）
 const array<SectionParam, LineTraceArea::LEFT_SECTION_SIZE> LineTraceArea::LEFT_COURSE_INFO = {
-  SectionParam{ 30, 50, PidGain(0.2, 0.8, 0.1) }, SectionParam{ 120, 50, PidGain(1.2, 1.0, 1.0) },
+  SectionParam{ 30, 50, PidGain(0.2, 0.8, 0.1) }, SectionParam{ 120, 50, PidGain(1.2, 1.0, 0.5) },
   SectionParam{ 0, 50, PidGain(1.0, 1.0, 1.0) },  SectionParam{ 120, 50, PidGain(1.2, 1.0, 1.0) },
   SectionParam{ 0, 50, PidGain(1.0, 0.8, 0.8) }
 };
