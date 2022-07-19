@@ -16,7 +16,7 @@ void BonusBlockCarrier::run(int targetBrightness)
   Controller controller;
 
   // 左に90度ピボットターン
-  rotation.turnForwardLeftPivot(90, 70); //角度, PWM
+  rotation.turnForwardLeftPivot(90, 70);  //角度, PWM
 
   // エッジ変更 true:左エッジ, false:右エッジ
   lineTracer.setIsLeftEdge(false);
@@ -39,13 +39,14 @@ void BonusBlockCarrier::run(int targetBrightness)
   // 指定した距離(交点マーカーを通り過ぎる距離)を直進
   straightRunner.run(80, 50);
 
+  // ブロックがひっかかるため、引っかかるところの前まで直進
   lineTracer.run(100, targetBrightness, 50, PidGain(0.5, 0.08, 0.08));
+
   // // 指定した色までライントレース
   // lineTracer.runToColor(COLOR::GREEN, targetBrightness, 50, PidGain(0.5, 0.08, 0.08));
 
   // // 指定した距離(交点マーカーを通り過ぎる距離)を直進
   // straightRunner.run(80, 50);
-
 
   // /**
   //  * そのまま90度回頭して設置するとブロックがベースエリアからはみ出る場合があるため，
