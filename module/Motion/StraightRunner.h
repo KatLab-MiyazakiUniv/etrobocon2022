@@ -14,7 +14,6 @@
 #include "Pid.h"
 #include "ColorJudge.h"
 
-
 class StraightRunner {
  public:
   /**
