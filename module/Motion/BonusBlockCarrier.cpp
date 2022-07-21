@@ -19,7 +19,7 @@ void BonusBlockCarrier::run(int targetBrightness)
   rotation.turnForwardLeftPivot(90, 70);  //角度, PWM
 
   // エッジ変更 true:左エッジ, false:右エッジ
-  lineTracer.setIsLeftEdge(false);
+  // lineTracer.setIsLeftEdge(false);
 
   // 赤(端点サークル)を認識するまでライントレース
   lineTracer.runToColor(COLOR::RED, targetBrightness, 40, PidGain(0.1, 0.08, 0.08));
@@ -27,11 +27,14 @@ void BonusBlockCarrier::run(int targetBrightness)
   // 左に90度ピボットターン
   rotation.turnForwardLeftPivot(89, 85);
 
+  // エッジ変更 true:左エッジ, false:右エッジ
+  lineTracer.setIsLeftEdge(false);
+
   // 直進を安定させるために1秒待機
   controller.sleep(1000000);
 
   // 緑の交点マーカー(右下)まで直進
-  straightRunner.runToColor(COLOR::GREEN, 50);
+  straightRunner.runToColor(COLOR::GREEN, 100);
 
   // 直進(交点マーカーを通り過ぎる)
   straightRunner.run(80, 50);
