@@ -21,19 +21,19 @@ void ColorBlockCarrier::run(int targetBrightness)
   lineTracer.runToColor(COLOR::GREEN, targetBrightness, -40, PidGain(0.1, 0.08, 0.08));
 
   // 右に38度回頭
-  rotation.rotateRight(38, 70);
+  rotation.rotateRight(38, 50);
 
   // ブロックまで直進
-  straightRunner.run(145, 60);
+  straightRunner.run(150, 50);
 
   // 右に52度回頭
-  rotation.rotateRight(52, 70);
+  rotation.rotateRight(52, 60);
 
   // 黒線まで直進
-  straightRunner.run(152, 60);
+  straightRunner.run(135, 60);
 
   // 右に90度回頭
-  rotation.rotateRight(90, 70);
+  rotation.rotateRight(90, 60);
 
   // 直進を安定させるために1秒待機
   controller.sleep(1000000);
