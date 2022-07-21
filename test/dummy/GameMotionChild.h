@@ -1,6 +1,6 @@
 /**
  * @file GameMotionChild.h
- * @brief GameMotionの子クラス
+ * @brief GameMotionの子クラス(ダミー)
  * @author kodama0720
  */
 
@@ -8,15 +8,16 @@
 #define GAME_MOTION_CHILD_H
 
 #include "GameMotion.h"
+#include "StraightRunner.h"
 
 class GameMotionChild : public GameMotion {
  public:
   GameMotionChild();
 
   /**
-   * @brief 何もしない関数
+   * @brief 前進する
    */
-  void run(void){};
+  void run();
 };
 
 #endif

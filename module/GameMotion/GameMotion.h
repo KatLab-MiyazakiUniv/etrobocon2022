@@ -1,21 +1,21 @@
 /**
- * @file BingoMotion.h
- * @brief ビンゴ動作の親クラス
+ * @file GameMotion.h
+ * @brief ゲーム動作の親クラス
  * @author kodama0720
  */
 
-#ifndef BINGO_MOTION_H
-#define BINGO_MOTION_H
+#ifndef GAME_MOTION_H
+#define GAME_MOTION_H
 
 class GameMotion {
  public:
   /**
    * コンストラクタ
    */
-  GameMotion(double time = 0, double risk = 0);
+  GameMotion(double time, double risk);
 
   /**
-   * ゲームエリア走行の純粋仮想関数（抽象メソッド）
+   * @brief ゲームエリア走行の純粋仮想関数（抽象メソッド）
    */
   virtual void run() = 0;
 
@@ -32,8 +32,8 @@ class GameMotion {
   double getFailureRisk(void);
 
  private:
-  double MOTION_TIME;
-  double FAILURE_RISK;
+  const double MOTION_TIME;
+  const double FAILURE_RISK;
 };
 
 #endif

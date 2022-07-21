@@ -1,6 +1,6 @@
 /**
- * @file BingoMotion.cpp
- * @brief ビンゴ動作の親クラス
+ * @file GameMotion.cpp
+ * @brief ゲーム動作の親クラス
  * @author kodama0720
  */
 
