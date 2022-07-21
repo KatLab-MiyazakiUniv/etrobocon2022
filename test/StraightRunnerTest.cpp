@@ -243,4 +243,51 @@ namespace etrobocon2022_test {
     // 走行距離のテスト
     EXPECT_EQ(expectedDistance, actualDistance);
   }
+
+  TEST(StraightRunnerTest, runToColorPlusPwm)
+  {
+    Measurer measurer;
+    StraightRunner straightRunner;
+    COLOR targetColor = COLOR::GREEN;
+    int pwm = 100;
+
+    // 初期値から期待する走行距離を求める
+    int initialRightCount = measurer.getRightCount();
+    int initialLeftCount = measurer.getLeftCount();
+    int expected = Mileage::calculateMileage(initialRightCount, initialLeftCount);
+
+    // 緑までライントレースを実行
+    straightRunner.runToColor(targetColor, pwm);
+
+    // ライントレース後の走行距離
+    int rightCount = measurer.getRightCount();
+    int leftCount = measurer.getLeftCount();
+    int actual = Mileage::calculateMileage(rightCount, leftCount);
+
+    EXPECT_LT(expected, actual);  // 初期値より少しでも進んでいる
+  }
+
+  TEST(StraightRunnerTest, runToColorMinusPwm)
+  {
+    Measurer measurer;
+    StraightRunner straightRunner;
+    COLOR targetColor = COLOR::GREEN;
+    int pwm = -100;
+
+    // 初期値から期待する走行距離を求める
+    int initialRightCount = measurer.getRightCount();
+    int initialLeftCount = measurer.getLeftCount();
+    int expected = Mileage::calculateMileage(initialRightCount, initialLeftCount);
+
+    // 緑までライントレースを実行
+    straightRunner.runToColor(targetColor, pwm);
+
+    // ライントレース後の走行距離
+    int rightCount = measurer.getRightCount();
+    int leftCount = measurer.getLeftCount();
+    int actual = Mileage::calculateMileage(rightCount, leftCount);
+
+    EXPECT_GT(expected, actual);  // 初期値より少しでも後退している
+  }
+
 }  // namespace etrobocon2022_test

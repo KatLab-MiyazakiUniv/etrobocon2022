@@ -1,7 +1,7 @@
 /**
  * @file LineTraceArea.cpp
  * @brief ライントレースエリアを攻略するクラス
- * @author mutotaka0426
+ * @author mutotaka0426 kawanoichi
  */
 
 #include "LineTraceArea.h"

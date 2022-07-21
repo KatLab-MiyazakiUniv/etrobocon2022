@@ -1,7 +1,7 @@
 /**
  * @file BonusBlockCarrier.cpp
  * @brief ボーナスブロックをベースエリアまで運搬する
- * @author sugaken0528
+ * @author sugaken0528 kawanoichi
  */
 
 #include "BonusBlockCarrier.h"
@@ -31,7 +31,7 @@ void BonusBlockCarrier::run(int targetBrightness)
   controller.sleep(1000000);
 
   // 緑の交点マーカー(右下)まで直進
-  straightRunner.runStraightToColor(50, COLOR::GREEN);
+  straightRunner.runToColor(COLOR::GREEN, 50);
 
   // 直進(交点マーカーを通り過ぎる)
   straightRunner.run(80, 50);

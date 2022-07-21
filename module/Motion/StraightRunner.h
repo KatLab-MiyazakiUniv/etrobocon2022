@@ -1,7 +1,7 @@
 /**
  * @file StraightRunner.h
  * @brief 直進クラス
- * @author sugaken0528
+ * @author sugaken0528 kawanoichi
  */
 
 #ifndef STRAIGHTER_H
@@ -27,12 +27,17 @@ class StraightRunner {
    * @param pwm PWM値
    */
   void run(double targetDistance, int pwm);
-  void runStraightToColor(int pwm, COLOR targetColor);
+
+  /**
+   * 指定した色を検出するまで直進する
+   * @param targetColor 目標色
+   * @param pwm PWM値
+   */
+  void runToColor(COLOR targetColor, int pwm);
 
  private:
   // SECTION_DISTANCE毎にACCELE_PWMだけPWM値を上げる
-  static constexpr int SECTION_DISTANCE = 10;  // 調整距離[mm]
-  static constexpr double ACCELE_PWM = 0.3;    // 追加のPWM値
+  static constexpr double ACCELE_PWM = 0.3;  // 追加のPWM値
   static constexpr int MIN_PWM = 40;  // 静止時から走行体がモーターを動かせないPWM値
 
   Measurer measurer;

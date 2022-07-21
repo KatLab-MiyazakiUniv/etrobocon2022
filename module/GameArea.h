@@ -1,7 +1,7 @@
 /**
  * @file GameArea.h
  * @brief ゲームエリアを攻略するクラス
- * @author kawano
+ * @author kawanoichi
  */
 
 #ifndef GAME_AREA_H

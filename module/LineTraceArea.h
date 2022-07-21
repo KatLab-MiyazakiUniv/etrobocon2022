@@ -36,7 +36,7 @@ class LineTraceArea {
   // Rコースの各区間の距離
   static const std::array<double, LEFT_SECTION_SIZE> RIGHT_SECTION_DISTANCE;
 
-  // 以下の2つの定数はファイル読み込みに置き換える（最後の要素は緑までライントレースのパラメータ）
+  // TODO: 以下の2つの定数はファイル読み込みに置き換える
   static const std::array<SectionParam, LEFT_SECTION_SIZE> LEFT_COURSE_INFO;  // Lコースの情報
   static const std::array<SectionParam, RIGHT_SECTION_SIZE> RIGHT_COURSE_INFO;  // Rコースの情報
 
