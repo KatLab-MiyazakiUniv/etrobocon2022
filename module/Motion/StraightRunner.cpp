@@ -128,6 +128,7 @@ void StraightRunner::runToColor(COLOR targetColor, int pwm)
       if(std::abs(currentPwm) > std::abs(pwm)) {
         currentPwm = pwm;
       }
+      count++;
     }
 
     // 左右のモーターカウントを合わせるための補正値計算
