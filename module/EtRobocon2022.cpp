@@ -1,12 +1,13 @@
 /**
  * @file EtRobocon2022.cpp
  * @brief 全体を制御するクラス
- * @author Takahiro55555 mutotaka0426
+ * @author Takahiro55555 mutotaka0426 kawanoichi
  */
 
 #include "EtRobocon2022.h"
-#include "LineTraceArea.h"
 #include "Calibrator.h"
+#include "LineTraceArea.h"
+#include "GameArea.h"
 
 void EtRobocon2022::start()
 {
@@ -24,4 +25,7 @@ void EtRobocon2022::start()
 
   // ライントレースエリアを走行する
   LineTraceArea::runLineTraceArea(isLeftCourse, targetBrightness);
+
+  // ゲームエリアを攻略する
+  GameArea::runGameArea(isLeftCourse, targetBrightness);
 }
