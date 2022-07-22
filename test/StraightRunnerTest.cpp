@@ -13,7 +13,7 @@ using namespace std;
 
 namespace etrobocon2022_test {
 
-  TEST(runTest, run)
+  TEST(StraightRunnerTest, run)
   {
     Measurer measurer;
     StraightRunner straightRunner;
@@ -56,7 +56,7 @@ namespace etrobocon2022_test {
     EXPECT_GE(expectedError, actualError);
   }
 
-  TEST(runTest, runFullPwm)
+  TEST(StraightRunnerTest, runFullPwm)
   {
     Measurer measurer;
     StraightRunner straightRunner;
@@ -99,7 +99,7 @@ namespace etrobocon2022_test {
     EXPECT_GE(expectedError, actualError);
   }
 
-  TEST(runTest, runZero)
+  TEST(StraightRunnerTest, runZero)
   {
     Measurer measurer;
     StraightRunner straightRunner;
@@ -119,7 +119,7 @@ namespace etrobocon2022_test {
     EXPECT_EQ(expectedDistance, actualDistance);
   }
 
-  TEST(runTest, runMinusPwm)
+  TEST(StraightRunnerTest, runMinusPwm)
   {
     Measurer measurer;
     StraightRunner straightRunner;
@@ -163,7 +163,7 @@ namespace etrobocon2022_test {
     EXPECT_GE(expectedError, actualError);
   }
 
-  TEST(runTest, runMinusFullPwm)
+  TEST(StraightRunnerTest, runMinusFullPwm)
   {
     Measurer measurer;
     StraightRunner straightRunner;
@@ -206,7 +206,7 @@ namespace etrobocon2022_test {
     EXPECT_GE(expectedError, actualError);
   }
 
-  TEST(runTest, runPwmZero)
+  TEST(StraightRunnerTest, runPwmZero)
   {
     Measurer measurer;
     StraightRunner straightRunner;
@@ -225,7 +225,7 @@ namespace etrobocon2022_test {
     EXPECT_EQ(expectedDistance, actualDistance);
   }
 
-  TEST(runTest, runStraightToMinusDistancePwmZero)
+  TEST(StraightRunnerTest, runStraightToMinusDistancePwmZero)
   {
     Measurer measurer;
     StraightRunner straightRunner;

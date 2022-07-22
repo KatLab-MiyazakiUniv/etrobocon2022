@@ -9,7 +9,7 @@
 #include <gtest/gtest.h>
 
 namespace etrobocon2022_test {
-  TEST(calculateMileageTest, calculateMilage)
+  TEST(MileageTest, calculateMilage)
   {
     double radius = 50;
     double rightAngle = 10;
@@ -21,7 +21,7 @@ namespace etrobocon2022_test {
     EXPECT_DOUBLE_EQ(expected, actual);
   }
 
-  TEST(calculateMileageTest, calculateMilage_minus)
+  TEST(MileageTest, calculateMilage_minus)
   {
     double radius = 50;
     double rightAngle = -10;
@@ -33,7 +33,7 @@ namespace etrobocon2022_test {
     EXPECT_DOUBLE_EQ(expected, actual);
   }
 
-  TEST(calculateMileageTest, calculateMilage_zero)
+  TEST(MileageTest, calculateMilage_zero)
   {
     double radius = 50;
     double rightAngle = 0;

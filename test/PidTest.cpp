@@ -77,7 +77,7 @@ namespace etrobocon2022_test {
     EXPECT_DOUBLE_EQ(expected, actualPid.calculatePid(currentValue));
   }
 
-  TEST(calculatePidTest, calculatePidMinus)
+  TEST(PidTest, calculatePidMinus)
   {
     constexpr double DELTA = 0.01;
     double expected_p = -0.3;
@@ -155,7 +155,7 @@ namespace etrobocon2022_test {
   }
 
   // setしてcalculatePidを呼び出す(Setterのテスト)
-  TEST(calculatePidTest, caluclatePidSetter)
+  TEST(PidTest, caluclatePidSetter)
   {
     constexpr double DELTA = 0.01;
     double expected_p = 0.6;
