@@ -11,11 +11,18 @@ StraightRunner::StraightRunner() {}
 // 指定された距離を直進する
 void StraightRunner::run(double targetDistance, int pwm)
 {
-  // 目標距離の値が負またはpwm値が0の場合はwarningを出して終了する
-  if(pwm == 0) {
-    logger.logWarning(" The pwm value passed to StraightRunner::run is 0 ");
-    return;
-  } else if(targetDistance < 0) {
+  // pwmの絶対値がMIN_PWMより小さい場合はwarningを出す
+  if(std::abs(pwm) < MIN_PWM) {
+    char errorMessage[64];
+    std::sprintf(errorMessage, " The pwm value passed to StraightRunner::run is %d ", pwm);
+    logger.logWarning(errorMessage);
+    // pwmが0の場合は終了する
+    if(pwm == 0) {
+      return;
+    }
+  }
+  // 目標距離の値が負の場合はwarningを出して終了する
+  if(targetDistance < 0) {
     logger.logWarning(" The targetDistance value passed to StraightRunner::run is negative ");
     return;
   }
@@ -36,7 +43,7 @@ void StraightRunner::run(double targetDistance, int pwm)
   int sign = (pwm > 0) ? 1 : -1;
   int error = 0;                // 左右の回転数の誤差
   Pid pid(0.5, 0.3, 0.001, 0);  // 左右の回転数を合わせるためのPID
-  int adjustment = 0;           // 左右の誤差の補正値
+  int adjustmentPwm = 0;        // 左右の誤差の補正値
 
   // 走行距離が目標距離に到達するまで繰り返す
   while(true) {
@@ -63,11 +70,11 @@ void StraightRunner::run(double targetDistance, int pwm)
     // 左右のモーターカウントを合わせるための補正値計算
     error = (currentLeftMotorCount - initialLeftMotorCount)
             - (currentRightMotorCount - initialRightMotorCount);
-    adjustment = static_cast<int>(pid.calculatePid(error));
+    adjustmentPwm = static_cast<int>(pid.calculatePid(error));
 
     // モータにPWM値をセット
-    controller.setLeftMotorPwm(currentPwm + adjustment);
-    controller.setRightMotorPwm(currentPwm - adjustment);
+    controller.setLeftMotorPwm(currentPwm + adjustmentPwm);
+    controller.setRightMotorPwm(currentPwm - adjustmentPwm);
 
     // 10ミリ秒待機
     controller.sleep();
@@ -79,11 +86,18 @@ void StraightRunner::run(double targetDistance, int pwm)
 // 指定した色を検出するまで直進する
 void StraightRunner::runToColor(COLOR targetColor, int pwm)
 {
-  // pwm値が0の場合はwarningを出して終了する
-  if(pwm == 0) {
-    logger.logWarning(" The pwm value passed to StraightRunner::run is 0 ");
-    return;
-  } else if(targetColor == COLOR::NONE) {
+  // pwmの絶対値がMIN_PWMより小さい場合はwarningを出す
+  if(std::abs(pwm) < MIN_PWM) {
+    char errorMessage[64];
+    std::sprintf(errorMessage, " The pwm value passed to StraightRunner::runToColor is %d ", pwm);
+    logger.logWarning(errorMessage);
+    // pwm値が0の場合は終了する
+    if(pwm == 0) {
+      return;
+    }
+  }
+  // 目標の色がNoneのときwarningを出して終了する
+  if(targetColor == COLOR::NONE) {
     logger.logWarning(" The targetColor value passed to StraightRunner::runToColor is NONE ");
     return;
   }
@@ -104,7 +118,7 @@ void StraightRunner::runToColor(COLOR targetColor, int pwm)
   int sign = (pwm > 0) ? 1 : -1;
   int error = 0;                // 左右の回転数の誤差
   Pid pid(0.5, 0.3, 0.001, 0);  // 左右の回転数を合わせるためのPID
-  int adjustment = 0;           // 左右の誤差の補正値
+  int adjustmentPwm = 0;        // 左右の誤差の補正値
   COLOR color = COLOR::NONE;
 
   while(true) {
@@ -134,11 +148,11 @@ void StraightRunner::runToColor(COLOR targetColor, int pwm)
     // 左右のモーターカウントを合わせるための補正値計算
     error = (currentLeftMotorCount - initialLeftMotorCount)
             - (currentRightMotorCount - initialRightMotorCount);
-    adjustment = static_cast<int>(pid.calculatePid(error));
+    adjustmentPwm = static_cast<int>(pid.calculatePid(error));
 
     // モータのPWM値をセット
-    controller.setLeftMotorPwm(currentPwm + adjustment);
-    controller.setRightMotorPwm(currentPwm - adjustment);
+    controller.setLeftMotorPwm(currentPwm + adjustmentPwm);
+    controller.setRightMotorPwm(currentPwm - adjustmentPwm);
 
     // 10ミリ秒待機
     controller.sleep();

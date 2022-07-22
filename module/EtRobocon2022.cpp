@@ -1,7 +1,7 @@
 /**
  * @file EtRobocon2022.cpp
  * @brief 全体を制御するクラス
- * @author Takahiro55555 mutotaka0426 kawaichi
+ * @author Takahiro55555 mutotaka0426 kawanoichi
  */
 
 #include "EtRobocon2022.h"

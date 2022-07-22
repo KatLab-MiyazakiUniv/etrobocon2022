@@ -15,7 +15,6 @@ void GameArea::runGameArea(const bool isLeftCourse, const int targetBrightness)
 
   // インスタンス化
   LineTracer lineTracer(isLeftEdge);
-  StraightRunner straightRunner;
 
   // 青までライントレース
   lineTracer.runToColor(COLOR::BLUE, targetBrightness, 40, PidGain(0.6, 0.8, 0.8));
