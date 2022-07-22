@@ -7,7 +7,6 @@
 #ifndef STRAIGHTER_H
 #define STRAIGHTER_H
 
-#include <string>
 #include "Measurer.h"
 #include "Mileage.h"
 #include "Controller.h"

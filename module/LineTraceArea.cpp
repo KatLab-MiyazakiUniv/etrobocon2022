@@ -59,7 +59,6 @@ void LineTraceArea::runLineTraceArea(const bool isLeftCourse, const int targetBr
   const char* course = isLeftCourse ? "Left" : "Right";
   sprintf(buf, "\nRun on the %s Course\n", course);
   logger.logHighlight(buf);
-  Controller controller;
   for(int i = 0; i < size; i++) {
     // Linetracer::runに区間の情報を渡して走行させる
     lineTracer.run(DISTANCE[i] + PARAM[i].tweak, targetBrightness, PARAM[i].pwm, PARAM[i].pidGain);

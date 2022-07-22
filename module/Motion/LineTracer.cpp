@@ -43,7 +43,6 @@ void LineTracer::run(double targetDistance, int targetBrightness, int pwm, const
     // 10ミリ秒待機
     controller.sleep();
   }
-
   //モータの停止
   controller.stopMotor();
 }

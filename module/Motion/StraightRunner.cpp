@@ -14,7 +14,7 @@ void StraightRunner::run(double targetDistance, int pwm)
   // pwmの絶対値がMIN_PWMより小さい場合はwarningを出す
   if(std::abs(pwm) < MIN_PWM) {
     char errorMessage[64];
-    std::sprintf(errorMessage, " The pwm value passed to StraightRunner::run is %d ", pwm);
+    std::sprintf(errorMessage, "The pwm value passed to StraightRunner::run is %d", pwm);
     logger.logWarning(errorMessage);
     // pwmが0の場合は終了する
     if(pwm == 0) {
@@ -23,7 +23,7 @@ void StraightRunner::run(double targetDistance, int pwm)
   }
   // 目標距離の値が負の場合はwarningを出して終了する
   if(targetDistance < 0) {
-    logger.logWarning(" The targetDistance value passed to StraightRunner::run is negative ");
+    logger.logWarning("The targetDistance value passed to StraightRunner::run is negative");
     return;
   }
 
@@ -89,7 +89,7 @@ void StraightRunner::runToColor(COLOR targetColor, int pwm)
   // pwmの絶対値がMIN_PWMより小さい場合はwarningを出す
   if(std::abs(pwm) < MIN_PWM) {
     char errorMessage[64];
-    std::sprintf(errorMessage, " The pwm value passed to StraightRunner::runToColor is %d ", pwm);
+    std::sprintf(errorMessage, "The pwm value passed to StraightRunner::runToColor is %d", pwm);
     logger.logWarning(errorMessage);
     // pwm値が0の場合は終了する
     if(pwm == 0) {
@@ -98,7 +98,7 @@ void StraightRunner::runToColor(COLOR targetColor, int pwm)
   }
   // 目標の色がNoneのときwarningを出して終了する
   if(targetColor == COLOR::NONE) {
-    logger.logWarning(" The targetColor value passed to StraightRunner::runToColor is NONE ");
+    logger.logWarning("The targetColor value passed to StraightRunner::runToColor is NONE");
     return;
   }
 
