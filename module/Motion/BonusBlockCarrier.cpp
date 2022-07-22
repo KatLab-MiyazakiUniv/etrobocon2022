@@ -27,7 +27,7 @@ void BonusBlockCarrier::run(int targetBrightness)
   // 左に90度ピボットターン
   rotation.turnForwardLeftPivot(89, 85);
 
-  // 直進を安定させるために1秒待機
+  // 直進を安定させるために0.1秒待機
   controller.sleep(100000);
 
   // 緑の交点マーカー(右下)まで直進

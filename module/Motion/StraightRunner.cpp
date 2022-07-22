@@ -137,7 +137,7 @@ void StraightRunner::runToColor(COLOR targetColor, int pwm)
 
     // PWM値を徐々に目標値に合わせる
     if(currentPwm != pwm) {
-      // 調整距離毎にPWM値を加速値分だけ上げていく
+      // ループ毎にPWM値を加速値分だけ上げていく
       currentPwm = (MIN_PWM + (ACCELE_PWM * count)) * sign;
       if(std::abs(currentPwm) > std::abs(pwm)) {
         currentPwm = pwm;
