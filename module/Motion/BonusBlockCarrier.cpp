@@ -15,17 +15,17 @@ void BonusBlockCarrier::run(int targetBrightness)
   LineTracer lineTracer(true);
   Controller controller;
 
-  // 左に90度ピボットターン
-  rotation.turnForwardLeftPivot(89, 70);  //角度, PWM
+  // 右に90度ピボットターン
+  rotation.turnForwardRightPivot(89, 70);  //角度, PWM
 
   // エッジ変更 true:左エッジ, false:右エッジ
-  lineTracer.setIsLeftEdge(false);
+  lineTracer.setIsLeftEdge(true);
 
   // 赤(端点サークル)を認識するまでライントレース
   lineTracer.runToColor(COLOR::RED, targetBrightness, 40, PidGain(0.1, 0.08, 0.08));
 
-  // 左に90度ピボットターン
-  rotation.turnForwardLeftPivot(89, 85);
+  // 右に90度ピボットターン
+  rotation.turnForwardRightPivot(91, 85);
 
   // 直進を安定させるために0.1秒待機
   controller.sleep(100000);
@@ -46,14 +46,14 @@ void BonusBlockCarrier::run(int targetBrightness)
    * そのまま90度回頭して設置するとブロックがベースエリアからはみ出る場合があるため，
    * 回頭と後退を分けて実行する
    */
-  // 左に80度回頭
-  rotation.rotateLeft(80, 70);
+  // 右に80度回頭
+  rotation.rotateRight(80, 70);
 
   // 後退
   straightRunner.run(20, -55);
 
-  // 左に10度回頭
-  rotation.rotateLeft(10, 80);
+  // 右に10度回頭
+  rotation.rotateRight(10, 80);
 
   // 後退
   straightRunner.run(40, -55);

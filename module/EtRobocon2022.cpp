@@ -24,7 +24,7 @@ void EtRobocon2022::start()
   calibrator.waitForStart();
 
   // ライントレースエリアを走行する
-  LineTraceArea::runLineTraceArea(isLeftCourse, targetBrightness);
+  //  LineTraceArea::runLineTraceArea(isLeftCourse, targetBrightness);
 
   // ゲームエリアを攻略する
   GameArea::runGameArea(isLeftCourse, targetBrightness);
