@@ -7,6 +7,10 @@
 #ifndef GAME_MOTION_H
 #define GAME_MOTION_H
 
+#include "LineTracer.h"
+#include "Rotation.h"
+#include "StraightRunner.h"
+
 class GameMotion {
  public:
   /**
@@ -34,6 +38,10 @@ class GameMotion {
  private:
   const double MOTION_TIME;
   const double FAILURE_RISK;
+
+ protected:
+  StraightRunner straightRunner;
+  Rotation rotation;
 };
 
 #endif

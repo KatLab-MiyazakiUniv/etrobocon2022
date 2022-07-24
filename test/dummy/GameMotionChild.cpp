@@ -10,7 +10,5 @@ GameMotionChild::GameMotionChild() : GameMotion(1.23, 1.09) {}
 
 void GameMotionChild::run()
 {
-  StraightRunner straightRunner;
-
   straightRunner.run(120, 50);
 }

@@ -8,7 +8,6 @@
 #define GAME_MOTION_CHILD_H
 
 #include "GameMotion.h"
-#include "StraightRunner.h"
 
 class GameMotionChild : public GameMotion {
  public:
