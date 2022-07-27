@@ -7,7 +7,7 @@
 #include "LineTracer.h"
 using namespace std;
 
-LineTracer::LineTracer(bool _isLeftEdge) : isLeftEdge(_isLeftEdge) {}
+LineTracer::LineTracer(bool& _isLeftEdge) : isLeftEdge(_isLeftEdge) {}
 
 void LineTracer::run(double targetDistance, int targetBrightness, int pwm, const PidGain& gain)
 {
@@ -91,7 +91,7 @@ bool LineTracer::getIsLeftEdge()
   return isLeftEdge;
 }
 
-void LineTracer::setIsLeftEdge(bool _isLeftEdge)
+void LineTracer::setIsLeftEdge(bool& _isLeftEdge)
 {
   isLeftEdge = _isLeftEdge;
 }

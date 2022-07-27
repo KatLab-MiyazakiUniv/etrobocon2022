@@ -26,7 +26,7 @@ class LineTraceArea {
    * @param isLeftCourse コースのLR判定(true:Lコース, false:Rコース)
    * @param targetBrightness 目標輝度
    */
-  static void runLineTraceArea(const bool isLeftCourse, const int targetBrightness);
+  static void runLineTraceArea(const bool& isLeftCourse, const int targetBrightness);
 
  private:
   static constexpr int LEFT_SECTION_SIZE = 6;   // Lコースの区間の数

@@ -11,17 +11,19 @@
 void EtRobocon2022::start()
 {
   bool isLeftCourse = true;
+  bool isLeftEdge = true;
   int targetBrightness = (WHITE_BRIGHTNESS + BLACK_BRIGHTNESS) / 2;
   Calibrator calibrator;
 
   // キャリブレーションする
   calibrator.run();
   isLeftCourse = calibrator.getIsLeftCourse();
+  isLeftEdge = isLeftCourse;
   targetBrightness = calibrator.getTargetBrightness();
 
   // 合図を送るまで待機する
   calibrator.waitForStart();
 
   // ライントレースエリアを走行する
-  LineTraceArea::runLineTraceArea(isLeftCourse, targetBrightness);
+  LineTraceArea::runLineTraceArea(isLeftEdge, targetBrightness);
 }

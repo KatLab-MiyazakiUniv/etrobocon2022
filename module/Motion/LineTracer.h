@@ -21,7 +21,7 @@ class LineTracer {
    * コンストラクタ
    * @param _isLeftEdge エッジの左右判定(true:左エッジ, false:右エッジ)
    */
-  LineTracer(bool _isLeftEdge);
+  LineTracer(bool& _isLeftEdge);
 
   /**
    * 指定された距離の間ライントレースをする
@@ -51,7 +51,7 @@ class LineTracer {
    * エッジのセッター
    * @param _isLeftEdge true: 左エッジ, false: 右エッジ
    */
-  void setIsLeftEdge(bool _isLeftEdge);
+  void setIsLeftEdge(bool& _isLeftEdge);
 
   /**
    * エッジを切り替える

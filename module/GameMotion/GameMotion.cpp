@@ -6,7 +6,11 @@
 
 #include "GameMotion.h"
 
-GameMotion::GameMotion(double time, double risk) : MOTION_TIME(time), FAILURE_RISK(risk){};
+GameMotion::GameMotion(bool& isLeftEdge, double time, double risk)
+  : MOTION_TIME(time), FAILURE_RISK(risk)
+{
+  LineTracer lineTracer(&isLeftEdge);
+};
 
 //動作時間の取得
 double GameMotion::getMotionTime(void)

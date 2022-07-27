@@ -16,12 +16,12 @@ class GameMotion {
   /**
    * コンストラクタ
    */
-  GameMotion(double time, double risk);
+  GameMotion(bool& isLeftEdge, double time, double risk);
 
   /**
    * @brief ゲームエリア走行の純粋仮想関数（抽象メソッド）
    */
-  virtual void run() = 0;
+  virtual void run(bool& isLeftEdge) = 0;
 
   /**
    * @brief 動作時間を取得する
