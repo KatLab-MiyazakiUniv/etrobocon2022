@@ -1,7 +1,7 @@
 /**
  * @file BonusBlockCarrierTest.cpp
  * @brief BonusBlockCarrierクラスのテスト
- * @author sugaken0528
+ * @author sugaken0528 kodama0720
  */
 
 #include "BonusBlockCarrier.h"

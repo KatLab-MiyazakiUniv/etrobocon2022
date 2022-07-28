@@ -1,7 +1,7 @@
 /**
  * @file LineTracerTest.cpp
  * @brief LineTracerクラスのテスト
- * @author mutotaka0426
+ * @author mutotaka0426 kodama0720
  */
 
 #include "LineTracer.h"
