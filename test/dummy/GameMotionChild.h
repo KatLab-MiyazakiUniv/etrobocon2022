@@ -16,8 +16,9 @@ class GameMotionChild : public GameMotion {
   /**
    * @brief 前進する
    */
-  void run(bool &isLeftEdge);
+  void run(bool& isLeftEdge);
 
+ private:
   bool edge = true;
 };
 
