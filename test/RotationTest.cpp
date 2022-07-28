@@ -322,7 +322,7 @@ namespace etrobocon2022_test {
 
     actual = TRANSFORM * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 4.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
   }
 
   TEST(RotationTest, leftFront45)
@@ -344,7 +344,7 @@ namespace etrobocon2022_test {
 
     actual = TRANSFORM * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 4.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
   }
 
   TEST(RotationTest, leftFront90)
@@ -366,7 +366,7 @@ namespace etrobocon2022_test {
 
     actual = TRANSFORM * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 4.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
   }
 
   TEST(RotationTest, leftFront135)
@@ -388,7 +388,7 @@ namespace etrobocon2022_test {
 
     actual = TRANSFORM * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 4.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
   }
 
   TEST(RotationTest, leftFront180)
@@ -410,7 +410,7 @@ namespace etrobocon2022_test {
 
     actual = TRANSFORM * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 4.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
   }
 
   //右軸前方向ピボットターン
@@ -434,7 +434,7 @@ namespace etrobocon2022_test {
 
     actual = TRANSFORM * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 4.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
   }
 
   TEST(RotationTest, rightFront45)
@@ -456,7 +456,7 @@ namespace etrobocon2022_test {
 
     actual = TRANSFORM * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 4.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
   }
 
   TEST(RotationTest, rightFront90)
@@ -478,7 +478,7 @@ namespace etrobocon2022_test {
 
     actual = TRANSFORM * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 4.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
   }
 
   TEST(RotationTest, rightFront135)
@@ -500,7 +500,7 @@ namespace etrobocon2022_test {
 
     actual = TRANSFORM * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 4.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
   }
 
   TEST(RotationTest, rightFront180)
@@ -522,7 +522,7 @@ namespace etrobocon2022_test {
 
     actual = TRANSFORM * motorCount;
     ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 4.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
   }
 
   //左軸後ろピボットターン
@@ -545,8 +545,8 @@ namespace etrobocon2022_test {
     double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 4.0, actual);
-    ASSERT_LE(expected - 2.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
+    ASSERT_LE(expected - 5.0, actual);
   }
 
   TEST(RotationTest, leftBack45)
@@ -567,8 +567,8 @@ namespace etrobocon2022_test {
     double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 4.0, actual);
-    ASSERT_LE(expected - 2.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
+    ASSERT_LE(expected - 5.0, actual);
   }
 
   TEST(RotationTest, leftBack90)
@@ -589,8 +589,8 @@ namespace etrobocon2022_test {
     double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 4.0, actual);
-    ASSERT_LE(expected - 2.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
+    ASSERT_LE(expected - 5.0, actual);
   }
 
   TEST(RotationTest, leftBack135)
@@ -611,8 +611,8 @@ namespace etrobocon2022_test {
     double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 4.0, actual);
-    ASSERT_LE(expected - 2.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
+    ASSERT_LE(expected - 5.0, actual);
   }
 
   TEST(RotationTest, leftBack180)
@@ -633,8 +633,8 @@ namespace etrobocon2022_test {
     double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 4.0, actual);
-    ASSERT_LE(expected - 2.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
+    ASSERT_LE(expected - 5.0, actual);
   }
 
   //右軸後ろピボットターン
@@ -657,8 +657,8 @@ namespace etrobocon2022_test {
     double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 4.0, actual);
-    ASSERT_LE(expected - 2.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
+    ASSERT_LE(expected - 5.0, actual);
   }
 
   TEST(RotationTest, rightBack45)
@@ -679,8 +679,8 @@ namespace etrobocon2022_test {
     double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 4.0, actual);
-    ASSERT_LE(expected - 2.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
+    ASSERT_LE(expected - 5.0, actual);
   }
 
   TEST(RotationTest, rightBack90)
@@ -701,8 +701,8 @@ namespace etrobocon2022_test {
     double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 4.0, actual);
-    ASSERT_LE(expected - 2.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
+    ASSERT_LE(expected - 5.0, actual);
   }
 
   TEST(RotationTest, rightBack135)
@@ -723,8 +723,8 @@ namespace etrobocon2022_test {
     double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 4.0, actual);
-    ASSERT_LE(expected - 2.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
+    ASSERT_LE(expected - 5.0, actual);
   }
 
   TEST(RotationTest, rightBack180)
@@ -745,7 +745,7 @@ namespace etrobocon2022_test {
     double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
 
     actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 4.0, actual);
-    ASSERT_LE(expected - 2.0, actual);
+    ASSERT_GE(expected + 5.0, actual);
+    ASSERT_LE(expected - 5.0, actual);
   }
 }  // namespace etrobocon2022_test

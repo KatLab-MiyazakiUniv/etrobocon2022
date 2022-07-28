@@ -1,18 +1,18 @@
 /**
  * @file BonusBlockCarrier.cpp
  * @brief ボーナスブロックをベースエリアまで運搬する
- * @author sugaken0528 kawanoichi
+ * @author sugaken0528 kawanoichi kodama0720
  */
 
 #include "BonusBlockCarrier.h"
 
 // Lコースの下のベースエリアへの設置処理のみ実装
 // TODO: Lコース上左右, Rコース上下左右のベースエリアに設置する処理を追加する
-void BonusBlockCarrier::run(int targetBrightness)
+void BonusBlockCarrier::run(bool& isLeftEdge, int targetBrightness)
 {
   Rotation rotation;
   StraightRunner straightRunner;
-  LineTracer lineTracer(true);
+  LineTracer lineTracer(isLeftEdge);
   Controller controller;
 
   // 左に90度ピボットターン

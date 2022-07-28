@@ -1,7 +1,7 @@
 /**
  * @file LineTracer.h
  * @brief ライントレースをするクラス
- * @author mutotaka0426
+ * @author mutotaka0426 kodama0720
  */
 
 #ifndef LINE_TRACER_H
@@ -21,7 +21,7 @@ class LineTracer {
    * コンストラクタ
    * @param _isLeftEdge エッジの左右判定(true:左エッジ, false:右エッジ)
    */
-  LineTracer(bool _isLeftEdge);
+  LineTracer(bool& _isLeftEdge);
 
   /**
    * 指定された距離の間ライントレースをする
@@ -59,7 +59,7 @@ class LineTracer {
   void toggleEdge();
 
  private:
-  bool isLeftEdge;
+  bool& isLeftEdge;
   Measurer measurer;
   Controller controller;
   Logger logger;

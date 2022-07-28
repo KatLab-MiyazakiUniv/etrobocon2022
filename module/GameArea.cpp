@@ -1,18 +1,13 @@
 /**
  * @file GameArea.cpp
  * @brief ゲームエリアを攻略するクラス
- * @author kawanoichi
+ * @author kawanoichi kodama0720
  */
 
 #include "GameArea.h"
 
-void GameArea::runGameArea(const bool isLeftCourse, const int targetBrightness)
+void GameArea::runGameArea(const bool isLeftCourse, bool& isLeftEdge, const int targetBrightness)
 {
-  bool isLeftEdge;  // true:左エッジ, false:右エッジ
-
-  // エッジをセット
-  isLeftEdge = isLeftCourse;
-
   // インスタンス化
   LineTracer lineTracer(isLeftEdge);
 
@@ -35,5 +30,5 @@ void GameArea::runGameArea(const bool isLeftCourse, const int targetBrightness)
   lineTracer.runToColor(COLOR::GREEN, targetBrightness, 50, PidGain(0.4, 0.8, 0.08));
 
   // ベースエリアにボーナスブロックを運ぶ
-  BonusBlockCarrier::run(targetBrightness);
+  BonusBlockCarrier::run(isLeftEdge, targetBrightness);
 }

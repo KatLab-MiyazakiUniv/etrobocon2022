@@ -31,12 +31,12 @@ const array<SectionParam, LineTraceArea::RIGHT_SECTION_SIZE> LineTraceArea::RIGH
   SectionParam{ 0, 50, PidGain(1.0, 0.8, 0.8) }     //直進
 };
 
-void LineTraceArea::runLineTraceArea(const bool isLeftCourse, const int targetBrightness)
+void LineTraceArea::runLineTraceArea(const bool isLeftCourse, bool& isLeftEdge,
+                                     const int targetBrightness)
 {
   int size;                   // 区間の数
   const double* DISTANCE;     // 各区間の距離
   const SectionParam* PARAM;  // ファイルから受け取ったパラメータ
-  bool isLeftEdge;            // true:左エッジ, false:右エッジ
   char buf[50];               // log用にメッセージを一時保存する
   Logger logger;
 
@@ -49,9 +49,6 @@ void LineTraceArea::runLineTraceArea(const bool isLeftCourse, const int targetBr
     DISTANCE = RIGHT_SECTION_DISTANCE.begin();
     PARAM = RIGHT_COURSE_INFO.begin();
   }
-
-  // エッジをセット
-  isLeftEdge = isLeftCourse;
 
   // LineTracerにエッジを与えてインスタンス化する
   LineTracer lineTracer(isLeftEdge);

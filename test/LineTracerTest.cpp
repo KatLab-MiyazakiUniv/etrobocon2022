@@ -1,7 +1,7 @@
 /**
  * @file LineTracerTest.cpp
  * @brief LineTracerクラスのテスト
- * @author mutotaka0426
+ * @author mutotaka0426 kodama0720
  */
 
 #include "LineTracer.h"
@@ -176,7 +176,7 @@ namespace etrobocon2022_test {
     LineTracer lineTracer(isLeftEdge);
     lineTracer.toggleEdge();
 
-    bool expected = !isLeftEdge;
+    bool expected = false;
     bool actual = lineTracer.getIsLeftEdge();
     EXPECT_EQ(expected, actual);
   }

@@ -1,7 +1,7 @@
 /**
  * @file BonusBlockCarrierTest.cpp
  * @brief BonusBlockCarrierクラスのテスト
- * @author sugaken0528
+ * @author sugaken0528 kodama0720
  */
 
 #include "BonusBlockCarrier.h"
@@ -13,8 +13,9 @@ namespace etrobocon2022_test {
   TEST(BonusBlockCarrierTest, run)
   {
     int targetBrightness = 45;
+    bool isLeftEdge = true;
 
     // ボーナスブロック運搬を実行
-    BonusBlockCarrier::run(targetBrightness);
+    BonusBlockCarrier::run(isLeftEdge, targetBrightness);
   }
 }  // namespace etrobocon2022_test
