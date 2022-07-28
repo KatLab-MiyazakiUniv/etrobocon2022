@@ -21,7 +21,7 @@ class GameMotion {
   /**
    * @brief ゲームエリア走行の純粋仮想関数（抽象メソッド）
    */
-  virtual void run(bool& isLeftEdge) = 0;
+  virtual void run() = 0;
 
   /**
    * @brief 動作時間を取得する

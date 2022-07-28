@@ -31,7 +31,7 @@ namespace etrobocon2022_test {
   {
     bool isLeftEdge = true;
     GameMotionChild gameMotionChild(isLeftEdge);
-    gameMotionChild.run(isLeftEdge);
+    gameMotionChild.run();
   }
 
 }  // namespace etrobocon2022_test

@@ -176,7 +176,7 @@ namespace etrobocon2022_test {
     LineTracer lineTracer(isLeftEdge);
     lineTracer.toggleEdge();
 
-    bool expected = !isLeftEdge;
+    bool expected = false;
     bool actual = lineTracer.getIsLeftEdge();
     EXPECT_EQ(expected, actual);
   }

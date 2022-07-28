@@ -8,7 +8,7 @@
 
 GameMotionChild::GameMotionChild(bool& isLeftEdge) : GameMotion(isLeftEdge, 1.23, 1.09) {}
 
-void GameMotionChild::run(bool& isLeftEdge)
+void GameMotionChild::run()
 {
   straightRunner.run(120, 50);
 }

@@ -59,7 +59,7 @@ class LineTracer {
   void toggleEdge();
 
  private:
-  bool isLeftEdge;
+  bool& isLeftEdge;
   Measurer measurer;
   Controller controller;
   Logger logger;
