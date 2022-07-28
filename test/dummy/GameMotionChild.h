@@ -11,15 +11,13 @@
 
 class GameMotionChild : public GameMotion {
  public:
-  GameMotionChild();
+  GameMotionChild(bool& isLeftEdge);
 
   /**
    * @brief 前進する
    */
   void run(bool& isLeftEdge);
 
- private:
-  bool edge = true;
 };
 
 #endif

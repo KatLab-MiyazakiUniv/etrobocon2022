@@ -1,7 +1,7 @@
 /**
  * @file BonusBlockCarrier.h
  * @brief ボーナスブロックをベースエリアまで運搬する
- * @author sugaken0528
+ * @author sugaken0528 kodama0720
  */
 
 #ifndef BONUS_BLOCK_CARRIER_H
@@ -18,7 +18,7 @@ class BonusBlockCarrier {
    * ベースエリアにボーナスブロックを運ぶ
    * @param targetBrightness 目標輝度
    */
-  static void run(int targetBrightness);
+  static void run(bool& isLeftEdge, int targetBrightness);
 
  private:
   BonusBlockCarrier();  // インスタンス化を禁止する

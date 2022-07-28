@@ -40,8 +40,9 @@ class GameMotion {
   const double FAILURE_RISK;
 
  protected:
-  StraightRunner straightRunner;
+  LineTracer lineTracer;
   Rotation rotation;
+  StraightRunner straightRunner;
 };
 
 #endif

@@ -13,8 +13,9 @@ namespace etrobocon2022_test {
   TEST(BonusBlockCarrierTest, run)
   {
     int targetBrightness = 45;
+    bool isLeftEdge = true;
 
     // ボーナスブロック運搬を実行
-    BonusBlockCarrier::run(targetBrightness);
+    BonusBlockCarrier::run(isLeftEdge, targetBrightness);
   }
 }  // namespace etrobocon2022_test

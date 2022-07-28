@@ -1,7 +1,7 @@
 /**
  * @file EtRobocon2022.cpp
  * @brief 全体を制御するクラス
- * @author Takahiro55555 mutotaka0426 kawanoichi
+ * @author Takahiro55555 mutotaka0426 kawanoichi kodama0720
  */
 
 #include "EtRobocon2022.h"
@@ -29,5 +29,5 @@ void EtRobocon2022::start()
   LineTraceArea::runLineTraceArea(isLeftCourse, isLeftEdge, targetBrightness);
 
   // ゲームエリアを攻略する
-  GameArea::runGameArea(isLeftEdge, targetBrightness);
+  GameArea::runGameArea(isLeftCourse, isLeftEdge, targetBrightness);
 }

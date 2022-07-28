@@ -1,7 +1,7 @@
 /**
  * @file LineTracer.h
  * @brief ライントレースをするクラス
- * @author mutotaka0426
+ * @author mutotaka0426 kodama0720
  */
 
 #ifndef LINE_TRACER_H

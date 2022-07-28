@@ -10,7 +10,8 @@
 namespace etrobocon2022_test {
   TEST(GameMotionTest, MotionTime)
   {
-    GameMotionChild gameMotionChild;
+    bool isLeftEdge = true;
+    GameMotionChild gameMotionChild(isLeftEdge);
     double expected = 1.23;
     double actual = gameMotionChild.getMotionTime();
     EXPECT_EQ(expected, actual);
@@ -18,7 +19,8 @@ namespace etrobocon2022_test {
 
   TEST(GameMotionTest, FailureRisk)
   {
-    GameMotionChild gameMotionChild;
+    bool isLeftEdge = true;
+    GameMotionChild gameMotionChild(isLeftEdge);
     double expected = 1.09;
     double actual = gameMotionChild.getFailureRisk();
     EXPECT_EQ(expected, actual);
@@ -27,9 +29,9 @@ namespace etrobocon2022_test {
   // 子クラスのrunを呼び出すだけのテスト
   TEST(GameMotionTest, callRun)
   {
-    GameMotionChild gameMotionChild;
-    bool edge = true;
-    gameMotionChild.run(edge);
+    bool isLeftEdge = true;
+    GameMotionChild gameMotionChild(isLeftEdge);
+    gameMotionChild.run(isLeftEdge);
   }
 
 }  // namespace etrobocon2022_test

@@ -6,7 +6,7 @@
 
 #include "GameMotionChild.h"
 
-GameMotionChild::GameMotionChild() : GameMotion(edge, 1.23, 1.09) {}
+GameMotionChild::GameMotionChild(bool& isLeftEdge) : GameMotion(isLeftEdge, 1.23, 1.09) {}
 
 void GameMotionChild::run(bool& isLeftEdge)
 {
