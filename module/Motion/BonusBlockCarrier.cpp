@@ -1,7 +1,7 @@
 /**
  * @file BonusBlockCarrier.cpp
  * @brief ボーナスブロックをベースエリアまで運搬する
- * @author sugaken0528
+ * @author sugaken0528 kawanoichi
  */
 
 #include "BonusBlockCarrier.h"
@@ -12,31 +12,36 @@ void BonusBlockCarrier::run(int targetBrightness)
 {
   Rotation rotation;
   StraightRunner straightRunner;
-  LineTracer lineTracer(true);
+  bool edge = true;
+  LineTracer lineTracer(edge);
   Controller controller;
 
-  // 交点内を直進
-  straightRunner.run(5, 50);
-
   // 左に90度ピボットターン
-  rotation.turnForwardLeftPivot(89, 70);
+  rotation.turnForwardLeftPivot(89, 70);  //角度, PWM
 
-  // 赤を認識するまでライントレース
+  // エッジ変更 true:左エッジ, false:右エッジ
+  lineTracer.setIsLeftEdge(false);
+
+  // 赤(端点サークル)を認識するまでライントレース
   lineTracer.runToColor(COLOR::RED, targetBrightness, 40, PidGain(0.1, 0.08, 0.08));
 
   // 左に90度ピボットターン
-  rotation.turnForwardLeftPivot(91, 87);
+  rotation.turnForwardLeftPivot(89, 85);
 
-  // 直進を安定させるために1秒待機
-  controller.sleep(1000000);
+  // 直進を安定させるために0.1秒待機
+  controller.sleep(100000);
 
-  // 緑を認識するまで直進
-  // TODO: 指定した距離まで直進で代用してるので，指定した色まで直進に変更する
-  straightRunner.run(400, 50);
+  // 緑の交点マーカー(右下)まで直進
+  straightRunner.runToColor(COLOR::GREEN, 50);
 
-  // 緑を認識するまでライントレース
-  // TODO: 指定した距離までライントレースで代用してるので，指定した色までライントレースに変更する
-  lineTracer.run(240, targetBrightness, 53, PidGain(0.1, 0.08, 0.08));
+  // 直進(交点マーカーを通り過ぎる)
+  straightRunner.run(70, 50);
+
+  // 緑の交点マーカー(左下)までライントレース
+  lineTracer.runToColor(COLOR::GREEN, targetBrightness, 50, PidGain(0.5, 0.08, 0.08));
+
+  // 直進(交点マーカーを通り過ぎる)
+  straightRunner.run(80, 50);
 
   /**
    * そのまま90度回頭して設置するとブロックがベースエリアからはみ出る場合があるため，

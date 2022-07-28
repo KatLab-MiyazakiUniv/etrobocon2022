@@ -9,7 +9,7 @@
 GameMotion::GameMotion(bool& isLeftEdge, double time, double risk)
   : MOTION_TIME(time), FAILURE_RISK(risk)
 {
-  LineTracer lineTracer(&isLeftEdge);
+  LineTracer lineTracer(isLeftEdge);
 };
 
 //動作時間の取得

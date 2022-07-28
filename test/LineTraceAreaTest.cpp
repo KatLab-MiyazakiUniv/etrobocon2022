@@ -1,6 +1,6 @@
 /**
  * @file LineTraceAreaTest.cpp
- * @brief LineTracerAreaクラスのテスト
+ * @brief LineTraceAreaクラスのテスト
  * @author mutotaka0426
  */
 
@@ -13,15 +13,17 @@ namespace etrobocon2022_test {
   TEST(LineTraceAreaTest, runLeftCourse)
   {
     bool isLeftCourse = true;
+    bool isLeftEdge = isLeftCourse;
     int targetBrightness = 45;
-    LineTraceArea::runLineTraceArea(isLeftCourse, targetBrightness);
+    LineTraceArea::runLineTraceArea(isLeftCourse, isLeftEdge, targetBrightness);
   }
 
   // Rコースで呼び出すだけのテスト
   TEST(LineTraceAreaTest, runRightCourse)
   {
     bool isLeftCourse = false;
+    bool isLeftEdge = isLeftCourse;
     int targetBrightness = 45;
-    LineTraceArea::runLineTraceArea(isLeftCourse, targetBrightness);
+    LineTraceArea::runLineTraceArea(isLeftCourse, isLeftEdge, targetBrightness);
   }
 }  // namespace etrobocon2022_test

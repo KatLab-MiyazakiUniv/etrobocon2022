@@ -51,7 +51,7 @@ class LineTracer {
    * エッジのセッター
    * @param _isLeftEdge true: 左エッジ, false: 右エッジ
    */
-  void setIsLeftEdge(bool& _isLeftEdge);
+  void setIsLeftEdge(bool _isLeftEdge);
 
   /**
    * エッジを切り替える

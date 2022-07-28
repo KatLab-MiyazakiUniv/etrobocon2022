@@ -91,7 +91,7 @@ bool LineTracer::getIsLeftEdge()
   return isLeftEdge;
 }
 
-void LineTracer::setIsLeftEdge(bool& _isLeftEdge)
+void LineTracer::setIsLeftEdge(bool _isLeftEdge)
 {
   isLeftEdge = _isLeftEdge;
 }

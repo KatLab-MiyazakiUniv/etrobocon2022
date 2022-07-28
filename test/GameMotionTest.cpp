@@ -28,7 +28,8 @@ namespace etrobocon2022_test {
   TEST(GameMotionTest, callRun)
   {
     GameMotionChild gameMotionChild;
-    gameMotionChild.run();
+    bool edge = true;
+    gameMotionChild.run(edge);
   }
 
 }  // namespace etrobocon2022_test
