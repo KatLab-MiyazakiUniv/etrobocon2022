@@ -14,8 +14,6 @@ const array<double, LineTraceArea::RIGHT_SECTION_SIZE> LineTraceArea::RIGHT_SECT
     = { 1070, 212, 1830, 190, 800 };
 
 // Lコースのパラメータを初期化する（調整距離, PWM値, PIDゲイン）
-//走行体２:精度60%(6/10) 平均タイム12.3333･･･
-//走行体１:精度90%(9/10) 平均タイム14.4444･･･
 const array<SectionParam, LineTraceArea::LEFT_SECTION_SIZE> LineTraceArea::LEFT_COURSE_INFO = {
   SectionParam{ 10, 70, PidGain(0.2, 0.8, 0.1) },     //直進
   SectionParam{ 160, 40, PidGain(1.0, 0.9, 1.0) },    //カーブ
@@ -56,7 +54,6 @@ void LineTraceArea::runLineTraceArea(const bool isLeftCourse, const int targetBr
 
   // LineTracerにエッジを与えてインスタンス化する
   LineTracer lineTracer(isLeftEdge);
-  Controller controller;
   const char* course = isLeftCourse ? "Left" : "Right";
   sprintf(buf, "\nRun on the %s Course\n", course);
   logger.logHighlight(buf);
