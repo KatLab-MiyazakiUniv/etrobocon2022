@@ -11,6 +11,7 @@
 #include <string>
 #include "LineTracer.h"
 #include "Logger.h"
+#include "Controller.h"
 
 // 区間制御のパラメータを保持する構造体
 struct SectionParam {

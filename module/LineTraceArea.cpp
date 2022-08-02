@@ -15,11 +15,11 @@ const array<double, LineTraceArea::RIGHT_SECTION_SIZE> LineTraceArea::RIGHT_SECT
 
 // Lコースのパラメータを初期化する（調整距離, PWM値, PIDゲイン）
 const array<SectionParam, LineTraceArea::LEFT_SECTION_SIZE> LineTraceArea::LEFT_COURSE_INFO = {
-  SectionParam{ 30, 50, PidGain(0.2, 0.8, 0.1) },     //直進
-  SectionParam{ 100, 30, PidGain(1.0, 0.7, 0.2) },    //カーブ
-  SectionParam{ -100, 50, PidGain(0.3, 0.8, 0.08) },  //直進
-  SectionParam{ 160, 30, PidGain(1.0, 0.9, 1.0) },    //カーブ
-  SectionParam{ -10, 50, PidGain(0.3, 0.7, 0.08) }    //直進
+  SectionParam{ 20, 70, PidGain(0.2, 0.8, 0.1) },     //直進
+  SectionParam{ 130, 30, PidGain(1.0, 0.7, 0.2) },    //カーブ
+  SectionParam{ -130, 70, PidGain(0.3, 0.8, 0.08) },  //直進
+  SectionParam{ 190, 30, PidGain(1.0, 0.9, 1.0) },    //カーブ
+  SectionParam{ 20, 70, PidGain(0.3, 0.7, 0.08) }     //直進
 };
 
 // Rコースのパラメータを初期化する（調整距離, PWM値, PIDゲイン）
@@ -56,11 +56,13 @@ void LineTraceArea::runLineTraceArea(const bool isLeftCourse, const int targetBr
   // LineTracerにエッジを与えてインスタンス化する
   LineTracer lineTracer(isLeftEdge);
 
+  Controller controller;
   const char* course = isLeftCourse ? "Left" : "Right";
   sprintf(buf, "\nRun on the %s Course\n", course);
   logger.logHighlight(buf);
   for(int i = 0; i < size; i++) {
     // Linetracer::runに区間の情報を渡して走行させる
     lineTracer.run(DISTANCE[i] + PARAM[i].tweak, targetBrightness, PARAM[i].pwm, PARAM[i].pidGain);
+    controller.sleep(1000000);
   }
 }
