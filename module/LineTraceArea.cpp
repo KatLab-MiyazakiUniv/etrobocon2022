@@ -1,7 +1,7 @@
 /**
  * @file LineTraceArea.cpp
  * @brief ライントレースエリアを攻略するクラス
- * @author mutotaka0426 kawanoichi
+ * @author mutotaka0426 kawanoichi sap2368
  */
 
 #include "LineTraceArea.h"
@@ -14,14 +14,15 @@ const array<double, LineTraceArea::RIGHT_SECTION_SIZE> LineTraceArea::RIGHT_SECT
     = { 1070, 212, 1830, 190, 800 };
 
 // Lコースのパラメータを初期化する（調整距離, PWM値, PIDゲイン）
+//走行体２:精度60%(6/10) 平均タイム12.3333･･･
+//走行体１:精度90%(9/10) 平均タイム14.4444･･･
 const array<SectionParam, LineTraceArea::LEFT_SECTION_SIZE> LineTraceArea::LEFT_COURSE_INFO = {
-  SectionParam{ 30, 50, PidGain(0.2, 0.8, 0.1) },     //直進
-  SectionParam{ 100, 30, PidGain(1.0, 0.7, 0.2) },    //カーブ
-  SectionParam{ -100, 50, PidGain(0.3, 0.8, 0.08) },  //直進
-  SectionParam{ 160, 30, PidGain(1.0, 0.9, 1.0) },    //カーブ
-  SectionParam{ -10, 50, PidGain(0.3, 0.7, 0.08) }    //直進
+  SectionParam{ 10, 70, PidGain(0.2, 0.8, 0.1) },     //直進
+  SectionParam{ 160, 40, PidGain(1.0, 0.9, 1.0) },    //カーブ
+  SectionParam{ -160, 70, PidGain(0.3, 0.8, 0.08) },  //直進
+  SectionParam{ 250, 40, PidGain(1.0, 0.9, 1.0) },    //カーブ
+  SectionParam{ 15, 70, PidGain(0.3, 0.7, 0.08) }     //直進
 };
-
 // Rコースのパラメータを初期化する（調整距離, PWM値, PIDゲイン）
 const array<SectionParam, LineTraceArea::RIGHT_SECTION_SIZE> LineTraceArea::RIGHT_COURSE_INFO = {
   SectionParam{ 30, 50, PidGain(0.2, 0.8, 0.1) },   //直進
@@ -55,7 +56,7 @@ void LineTraceArea::runLineTraceArea(const bool isLeftCourse, const int targetBr
 
   // LineTracerにエッジを与えてインスタンス化する
   LineTracer lineTracer(isLeftEdge);
-
+  Controller controller;
   const char* course = isLeftCourse ? "Left" : "Right";
   sprintf(buf, "\nRun on the %s Course\n", course);
   logger.logHighlight(buf);
