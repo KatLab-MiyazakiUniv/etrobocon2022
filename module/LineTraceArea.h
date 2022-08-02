@@ -1,20 +1,20 @@
 /**
  * @file LineTraceArea.h
  * @brief ライントレースエリアを攻略するクラス
- * @author mutotaka0426
+ * @author mutotaka0426 miyashita64
  */
 
 #ifndef LINE_TRACE_AREA_H
 #define LINE_TRACE_AREA_H
 
-#include <array>
+#include <stdio.h>
 #include <string>
 #include "LineTracer.h"
 #include "Logger.h"
 
 // 区間制御のパラメータを保持する構造体
 struct SectionParam {
-  double tweak;     // 調整距離
+  double distance;  // 距離
   int pwm;          // PWM値
   PidGain pidGain;  // PIDゲイン
 };
@@ -30,16 +30,9 @@ class LineTraceArea {
                                const int targetBrightness);
 
  private:
-  static constexpr int LEFT_SECTION_SIZE = 5;   // Lコースの区間の数
-  static constexpr int RIGHT_SECTION_SIZE = 5;  // Rコースの区間の数
-  // Lコースの各区間の距離
-  static const std::array<double, LEFT_SECTION_SIZE> LEFT_SECTION_DISTANCE;
-  // Rコースの各区間の距離
-  static const std::array<double, LEFT_SECTION_SIZE> RIGHT_SECTION_DISTANCE;
-
-  // TODO: 以下の2つの定数はファイル読み込みに置き換える
-  static const std::array<SectionParam, LEFT_SECTION_SIZE> LEFT_COURSE_INFO;  // Lコースの情報
-  static const std::array<SectionParam, RIGHT_SECTION_SIZE> RIGHT_COURSE_INFO;  // Rコースの情報
+  //  データファイルのパス
+  static constexpr char* leftSourceFileName = "etrobocon2022/datafiles/LineTraceLeftParams.csv";
+  static constexpr char* rightSourceFileName = "etrobocon2022/datafiles/LineTraceRightParams.csv";
 
   LineTraceArea();  // インスタンス化を禁止する
 };
