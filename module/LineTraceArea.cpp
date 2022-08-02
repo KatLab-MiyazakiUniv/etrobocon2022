@@ -10,12 +10,12 @@ using namespace std;
 void LineTraceArea::runLineTraceArea(const bool isLeftCourse, bool& isLeftEdge,
                                      const int targetBrightness)
 {
-  int size = 0;          // 区間の数
-  char buf[50];          // log用にメッセージを一時保存する
+  int size = 0;  // 区間の数
+  char buf[50];  // log用にメッセージを一時保存する
   Logger logger;
 
   // ファイルから受け取るパラメータ. なぜかvectorがincludeできないためやむなくmalloc.
-  SectionParam* params = (SectionParam *)malloc(LIMIT_SIZE * sizeof(SectionParam));
+  SectionParam* params = (SectionParam*)malloc(LIMIT_SIZE * sizeof(SectionParam));
 
   // LとRどちらのパラメータを読み込むかを設定
   char* sourceFileName = isLeftCourse ? leftSourceFileName : rightSourceFileName;
@@ -31,7 +31,8 @@ void LineTraceArea::runLineTraceArea(const bool isLeftCourse, bool& isLeftEdge,
   // 各行をパラメータとして読み込む
   char _comment[32];
   while(fscanf(fp, "%lf,%d,%lf,%lf,%lf,%s\n", &params[size].distance, &params[size].pwm,
-               &params[size].pidGain.kp, &params[size].pidGain.ki, &params[size].pidGain.kd, _comment)
+               &params[size].pidGain.kp, &params[size].pidGain.ki, &params[size].pidGain.kd,
+               _comment)
         != EOF) {
     size++;
   }
