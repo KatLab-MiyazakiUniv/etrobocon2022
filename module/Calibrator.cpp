@@ -53,7 +53,7 @@ void Calibrator::selectCourse()
   sprintf(buf, "\nWill Run on the %s Course\n", course);
   logger.logHighlight(buf);
 
-  controller.sleep(1000000);  // 1秒スリープ
+  controller.sleep(1000);  // 1秒スリープ
 }
 
 void Calibrator::measureTargetBrightness()
@@ -72,7 +72,7 @@ void Calibrator::measureTargetBrightness()
   blackBrightness = measurer.getBrightness();
   sprintf(buf, ">> Black Brightness Value is %d", blackBrightness);
   logger.log(buf);
-  controller.sleep(1000000);  // 1秒スリープ
+  controller.sleep(1000);  // 1秒スリープ
 
   // 白の上で中央ボタンを押して白の輝度を取得する
   logger.log("Press the Center Button on the White");
@@ -83,7 +83,7 @@ void Calibrator::measureTargetBrightness()
   whiteBrightness = measurer.getBrightness();
   sprintf(buf, ">> White Brightness Value is %d", whiteBrightness);
   logger.log(buf);
-  controller.sleep(1000000);  // 1秒スリープ
+  controller.sleep(1000);  // 1秒スリープ
 
   // 黒と白の平均値を目標輝度とする
   targetBrightness = (whiteBrightness + blackBrightness) / 2;
