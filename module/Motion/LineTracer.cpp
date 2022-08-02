@@ -1,13 +1,13 @@
 /**
  * @file LineTracer.cpp
  * @brief ライントレースをするクラス
- * @author mutotaka0426
+ * @author mutotaka0426 kodama0720
  */
 
 #include "LineTracer.h"
 using namespace std;
 
-LineTracer::LineTracer(bool _isLeftEdge) : isLeftEdge(_isLeftEdge) {}
+LineTracer::LineTracer(bool& _isLeftEdge) : isLeftEdge(_isLeftEdge) {}
 
 void LineTracer::run(double targetDistance, int targetBrightness, int pwm, const PidGain& gain)
 {
