@@ -4,14 +4,18 @@
  * @author mutotaka0426 kawanoichi miyashita64
  */
 
+// ビルド、GoogleTest、CIは通るが、実機でmakeしようとするとエラーが出たため退避。
+// LineTraceArea.hの下ではダメ。
+#include <vector>
+
 #include "LineTraceArea.h"
+
 using namespace std;
 
 void LineTraceArea::runLineTraceArea(const bool isLeftCourse, bool& isLeftEdge,
                                      const int targetBrightness)
 {
   const int BUF_SIZE = 128;
-  int size = 0;        // 区間の数
   char buf[BUF_SIZE];  // log用にメッセージを一時保存する
   Logger logger;
 
