@@ -13,7 +13,7 @@ ColorSensor::ColorSensor(ePortS port) {}
 // RGB値を取得
 void ColorSensor::getRawColor(rgb_raw_t& rgb)
 {
-  int index = (rand() + 1) % 6;
+  int index = rand() % 6;
   switch(index) {
     case 0:
       rgb = { 8, 9, 10 };  // black
