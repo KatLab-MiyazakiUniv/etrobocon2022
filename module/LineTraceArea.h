@@ -31,8 +31,6 @@ class LineTraceArea {
                                const int targetBrightness);
 
  private:
-  // 区間数の上限
-  static constexpr int LIMIT_SIZE = 10;
   // データファイルのパス
   static constexpr char* leftSourceFileName = "etrobocon2022/datafiles/LineTraceLeftParams.csv";
   static constexpr char* rightSourceFileName = "etrobocon2022/datafiles/LineTraceRightParams.csv";
