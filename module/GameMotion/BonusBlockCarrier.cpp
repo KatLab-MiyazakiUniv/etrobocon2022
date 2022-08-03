@@ -28,7 +28,7 @@ void BonusBlockCarrier::run(bool& isLeftEdge, int targetBrightness)
   rotation.turnForwardLeftPivot(89, 85);
 
   // 直進を安定させるために0.1秒待機
-  controller.sleep(100000);
+  controller.sleep(100);
 
   // 緑の交点マーカー(右下)まで直進
   straightRunner.runToColor(COLOR::GREEN, 50);
