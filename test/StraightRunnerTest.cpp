@@ -264,7 +264,7 @@ namespace etrobocon2022_test {
     int leftCount = measurer.getLeftCount();
     int actual = Mileage::calculateMileage(rightCount, leftCount);
 
-    EXPECT_LE(expected, actual);  // 初期値より少しでも進んでいる
+    EXPECT_LE(expected, actual);  // 初期値より0cm以上進んでいる
   }
 
   TEST(StraightRunnerTest, runToColorMinusPwm)
