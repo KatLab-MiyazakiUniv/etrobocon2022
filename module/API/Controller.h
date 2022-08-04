@@ -43,9 +43,9 @@ class Controller {
 
   /**
    * 自タスクスリープ（デフォルトは10ミリ秒）
-   * @param milliSec スリープ時間(マイクロ秒)
+   * @param milliSec スリープ時間(ミリ秒)
    */
-  void sleep(int microSec = 10000);
+  void sleep(int milliSec = 10);
 
   // /**
   //  * シミュレータへ競技の終了を通知する

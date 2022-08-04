@@ -1,7 +1,7 @@
 /**
  * @file LineTraceArea.cpp
  * @brief ライントレースエリアを攻略するクラス
- * @author mutotaka0426 kawanoichi miyashita64
+ * @author mutotaka0426 kawanoichi sap2368 miyashita64
  */
 
 // ビルド、GoogleTest、CIは通るが、実機でmakeしようとするとエラーが出たため退避。
