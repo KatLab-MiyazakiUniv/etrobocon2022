@@ -5,6 +5,7 @@
  */
 
 #include "ColorSensor.h"
+#include <stdio.h>
 using namespace ev3api;
 
 //コンストラクタ

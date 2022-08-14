@@ -7,6 +7,7 @@
 #ifndef COLOR_JUDGE_H
 #define COLOR_JUDGE_H
 
+#include <string.h>
 #include <algorithm>
 #include "Measurer.h"
 
@@ -34,6 +35,20 @@ class ColorJudge {
    * @return 色
    */
   static COLOR getColor(rgb_raw_t const& rgb);
+
+  /**
+   * @brief 文字列を列挙型COLORに変換する
+   * @param str 文字列の色
+   * @return 色
+   */
+  static COLOR stringToColor(const char* str);
+
+  /**
+   * @brief 列挙型COLORを文字列に変換する
+   * @param color 色
+   * @return 文字列の色
+   */
+  static const char* colorToString(COLOR color);
 
  private:
   static constexpr int SATURATION_BORDER = 27;    // 無彩色かどうかの彩度の境界

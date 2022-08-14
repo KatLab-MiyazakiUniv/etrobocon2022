@@ -1,12 +1,8 @@
 /**
- * @file LineTraceArea.cpp
- * @brief ライントレースエリアを攻略するクラス
+ * @file   LineTraceArea.cpp
+ * @brief  ライントレースエリアを攻略するクラス
  * @author mutotaka0426 kawanoichi sap2368 miyashita64
  */
-
-// ビルド、GoogleTest、CIは通るが、実機でmakeしようとするとエラーが出たため退避。
-// LineTraceArea.hの下ではダメ。
-#include <vector>
 
 #include "LineTraceArea.h"
 
@@ -19,58 +15,21 @@ void LineTraceArea::runLineTraceArea(const bool isLeftCourse, bool& isLeftEdge,
   char buf[BUF_SIZE];  // log用にメッセージを一時保存する
   Logger logger;
 
-  // ファイルから受け取るパラメータ.
-  vector<SectionParam> sectionParams;
+  // ファイルから受け取る動作リスト
+  vector<Motion*> motionList;
 
   // LとRどちらのパラメータを読み込むかを設定
-  char* sourceFileName = isLeftCourse ? leftSourceFileName : rightSourceFileName;
-  FILE* fp = fopen(sourceFileName, "r");
+  const char* filePath = isLeftCourse ? lineTraceAreaLeft : lineTraceAreaRight;
+  // 動作インスタンスのリストを生成する
+  motionList = MotionParser::createMotions(filePath, targetBrightness, isLeftEdge);
 
-  // ファイル読み込み失敗
-  if(fp == NULL) {
-    sprintf(buf, "%s file not open!\n", sourceFileName);
-    logger.logWarning(buf);
-    return;
-  }
-
-  // 各行の文字を一時的に保持する領域
-  char row[BUF_SIZE];
-  // 区切り文字
-  const char separator = ',';
-
-  // 行ごとにパラメータを読み込む
-  while(fgets(row, BUF_SIZE, fp) != NULL) {
-    vector<char*> params;
-    // 区切り文字を'\0'に置換したrowをparamに代入する
-    char* param = strtok(row, &separator);
-    while(param != NULL) {
-      // paramをパラメータとして保持する
-      params.push_back(param);
-      // 次のパラメータをparamに代入する
-      // strtok()は第1引数にNULLを与えると、前回の続きのアドレスから処理が開始される
-      param = strtok(NULL, &separator);
-    }
-    // 取得したパラメータの型を直す
-    SectionParam sectionParam = { atof(params[0]),
-                                  atoi(params[1]),
-                                  { atof(params[2]), atof(params[3]), atof(params[4]) } };
-    sectionParams.push_back(sectionParam);
-  }
-
-  // ファイルを閉じる
-  fclose(fp);
-
-  // LineTracerにエッジを与えてインスタンス化する
-  LineTracer lineTracer(isLeftEdge);
-
-  // ログメッセージ
-  const char* course = isLeftCourse ? "Left" : "Right";
-  sprintf(buf, "\nRun on the %s Course\n", course);
+  // 動作実行のメッセージ
+  sprintf(buf, "\nRun the commands in '%s'\n", filePath);
   logger.logHighlight(buf);
 
-  // 各区間のパラメータでライントレースする
-  for(auto itr = sectionParams.begin(); itr != sectionParams.end(); itr++) {
-    // Linetracer::runに区間の情報を渡して走行させる
-    lineTracer.run(itr->distance, targetBrightness, itr->pwm, itr->pidGain);
+  // 各動作を実行する
+  for(const auto& motion : motionList) {
+    motion->logRunning();
+    motion->run();
   }
 }

@@ -1,0 +1,148 @@
+/**
+ * @file   MotionParser.cpp
+ * @brief  動作コマンドファイルを解析するクラス
+ * @author mutotaka0426 kawanoichi sap2368 miyashita64
+ */
+
+#include "MotionParser.h"
+
+using namespace std;
+
+vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrightness,
+                                            bool& isLeftEdge)
+{
+  const int BUF_SIZE = 128;
+  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  Logger logger;
+
+  vector<Motion*> motionList;  // 動作インスタンスのリスト
+
+  // ファイル読み込み
+  FILE* fp = fopen(filePath, "r");
+  // ファイル読み込み失敗
+  if(fp == NULL) {
+    sprintf(buf, "%s file not open!\n", filePath);
+    logger.logWarning(buf);
+    return motionList;
+  }
+
+  // 各行の文字を一時的に保持する領域
+  char row[BUF_SIZE];
+  // 区切り文字
+  const char separator = ',';
+
+  // 行ごとにパラメータを読み込む
+  while(fgets(row, BUF_SIZE, fp) != NULL) {
+    vector<char*> params;
+    // 区切り文字を'\0'に置換したrowをparamに代入する
+    char* param = strtok(row, &separator);
+    while(param != NULL) {
+      // paramをパラメータとして保持する
+      params.push_back(param);
+      // 次のパラメータをparamに代入する
+      // strtok()は第1引数にNULLを与えると、前回の続きのアドレスから処理が開始される
+      param = strtok(NULL, &separator);
+    }
+
+    // 取得したパラメータから動作インスタンスを生成する
+    COMMAND command = convertCommand(params[0]);  // 行の最初のパラメータをCOMMAND型に変換
+    if(command == COMMAND::LD) {  // 指定距離ライントレース動作の生成
+      LineTracerDistance* ld = new LineTracerDistance(
+          atof(params[1]),                                             // 目標距離
+          targetBrightness + atoi(params[2]),                          // 目標輝度 + 調整
+          atoi(params[3]),                                             // PWM値
+          PidGain(atof(params[4]), atof(params[5]), atof(params[6])),  // PIDゲイン
+          isLeftEdge);                                                 // エッジ
+
+      motionList.push_back(ld);          // 動作リストに追加
+    } else if(command == COMMAND::LC) {  // 色指定ライントレース動作の生成
+      LineTracerColor* lc = new LineTracerColor(
+          ColorJudge::stringToColor(params[1]),                        // 目標色
+          targetBrightness + atoi(params[2]),                          // 目標輝度 + 調整
+          atoi(params[3]),                                             // PWM値
+          PidGain(atof(params[4]), atof(params[5]), atof(params[6])),  // PIDゲイン
+          isLeftEdge);                                                 // エッジ
+
+      motionList.push_back(lc);          // 動作リストに追加
+    } else if(command == COMMAND::SD) {  // 距離指定極真動作の生成
+      StraightRunnerDistance* sd = new StraightRunnerDistance(atof(params[1]),   // 目標距離
+                                                              atoi(params[2]));  // PWM値
+
+      motionList.push_back(sd);          // 動作リストに追加
+    } else if(command == COMMAND::SC) {  // 色指定直進動作の生成
+      StraightRunnerColor* sc
+          = new StraightRunnerColor(ColorJudge::stringToColor(params[1]),  // 目標色
+                                    atoi(params[2]));                      // PWM値
+
+      motionList.push_back(sc);                             // 動作リストに追加
+    } else if(command == COMMAND::RT) {                     // 回頭動作の生成
+      Rotation* rt = new Rotation(atoi(params[1]),          // 回転角度
+                                  atoi(params[2]),          // PWM値
+                                  convertBool(params[3]));  // 回頭方向
+
+      motionList.push_back(rt);                                    // 動作リストに追加
+    } else if(command == COMMAND::TD) {                            // 旋回動作の生成
+      TurningDistance* td = new TurningDistance(atof(params[1]),   // 目標距離
+                                                atoi(params[2]),   // 左モータのPWM値
+                                                atoi(params[3]));  // 右モータのPWM値
+
+      motionList.push_back(td);                                   // 動作リストに追加
+    } else if(command == COMMAND::EC) {                           // エッジ切り替えの生成
+      EdgeChanger* ec = new EdgeChanger(isLeftEdge,               // エッジ
+                                        convertBool(params[1]));  // 切り替え後のエッジ
+
+      motionList.push_back(ec);          // 動作リストに追加
+    } else if(command == COMMAND::SL) {  // 自タスクスリープの生成
+      Sleeping* sl = new Sleeping(atoi(params[1]));
+
+      motionList.push_back(sl);  // 動作リストに追加
+    } else {
+      sprintf(buf, "Command '%s' does not exist", params[0]);
+      logger.logWarning(buf);
+      NoneMotion* nm = new NoneMotion();
+      motionList.push_back(nm);  // 動作リストに追加
+    }
+  }
+
+  // ファイルを閉じる
+  fclose(fp);
+
+  return motionList;
+}
+
+COMMAND MotionParser::convertCommand(char* str)
+{
+  if(strcmp(str, "LD") == 0) {  // 文字列がLDの場合
+    return COMMAND::LD;
+  } else if(strcmp(str, "LC") == 0) {  // 文字列がLCの場合
+    return COMMAND::LC;
+  } else if(strcmp(str, "SD") == 0) {  // 文字列がSDの場合
+    return COMMAND::SD;
+  } else if(strcmp(str, "SC") == 0) {  // 文字列がSCの場合
+    return COMMAND::SC;
+  } else if(strcmp(str, "RT") == 0) {  // 文字列がRTの場合
+    return COMMAND::RT;
+  } else if(strcmp(str, "TD") == 0) {  // 文字列がTDの場合
+    return COMMAND::TD;
+  } else if(strcmp(str, "EC") == 0) {  // 文字列がECの場合
+    return COMMAND::EC;
+  } else if(strcmp(str, "SL") == 0) {  // 文字列がSLの場合
+    return COMMAND::SL;
+  } else {  //想定していない文字列が来た場合
+    return COMMAND::NONE;
+  }
+}
+
+bool MotionParser::convertBool(char* str)
+{
+  Logger logger;
+
+  if(strcmp(str, "true") == 0) {  // 文字列がtrueの場合
+    return true;
+  } else if(strcmp(str, "false") == 0) {  // 文字列がfalseの場合
+    return false;
+  } else {  //想定していない文字列が来た場合
+    logger.logWarning("String before conversion must be 'true' or 'false'");
+    return true;
+  }
+}
