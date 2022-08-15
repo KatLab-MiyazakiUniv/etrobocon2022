@@ -8,7 +8,7 @@
 #include "Calibrator.h"
 #include "LineTraceArea.h"
 #include "GameArea.h"
-#include "PartsofGameMotion.h"
+
 void EtRobocon2022::start()
 {
   bool isLeftCourse = true;
