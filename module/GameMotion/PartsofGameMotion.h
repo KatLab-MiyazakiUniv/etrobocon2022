@@ -12,9 +12,11 @@
 #include "StraightRunner.h"
 #include "Controller.h"
 
-class PartsofGameMotion {
-
+class PartsofGameMotion{
  public:
+   /**
+   * コンストラクタ
+   */
   PartsofGameMotion();
 
   /**
@@ -75,5 +77,4 @@ class PartsofGameMotion {
   Controller controller;
   Rotation rotation;
 };
-
 #endif
