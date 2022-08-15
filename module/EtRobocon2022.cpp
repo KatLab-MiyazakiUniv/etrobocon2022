@@ -14,28 +14,25 @@ void EtRobocon2022::start()
   bool isLeftCourse = true;
   bool isLeftEdge = true;
   int targetBrightness = 48;
-  // int targetBrightness = (WHITE_BRIGHTNESS + BLACK_BRIGHTNESS) / 2;
+  int targetBrightness = (WHITE_BRIGHTNESS + BLACK_BRIGHTNESS) / 2;
   Calibrator calibrator;
   PartsofGameMotion partsofgamemotion;
   Rotation rotation;
   Controller controller;
   StraightRunner straightRunner;
-  
 
-  partsofgamemotion.reverse_action(isLeftEdge, targetBrightness);
-  
-  // // キャリブレーションする
-  // calibrator.run();
-  // isLeftCourse = calibrator.getIsLeftCourse();
-  // isLeftEdge = isLeftCourse;
-  // targetBrightness = calibrator.getTargetBrightness();
+  // キャリブレーションする
+  calibrator.run();
+  isLeftCourse = calibrator.getIsLeftCourse();
+  isLeftEdge = isLeftCourse;
+  targetBrightness = calibrator.getTargetBrightness();
 
-  // // 合図を送るまで待機する
-  // calibrator.waitForStart();
+  // 合図を送るまで待機する
+  calibrator.waitForStart();
 
-  // // ライントレースエリアを走行する
-  // LineTraceArea::runLineTraceArea(isLeftCourse, isLeftEdge, targetBrightness);
+  // ライントレースエリアを走行する
+  LineTraceArea::runLineTraceArea(isLeftCourse, isLeftEdge, targetBrightness);
 
-  // // ゲームエリアを攻略する
-  // GameArea::runGameArea(isLeftCourse, isLeftEdge, targetBrightness);
+  // ゲームエリアを攻略する
+  GameArea::runGameArea(isLeftCourse, isLeftEdge, targetBrightness);
 }

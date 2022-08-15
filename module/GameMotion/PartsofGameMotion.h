@@ -1,8 +1,9 @@
 /**
- * @file PartsofGameMotion.h
- * @brief ゲームエリア内動作をまとめたラッパークラス
+ * @file PartsofGameMotion.cpp
+ * @brief ゲームエリア内動作パラメータ調整用の仮コード
  * @author sap2368
  */
+
 #ifndef PARTS_OF_GAME_MOTION_H
 #define PARTS_OF_GAME_MOTION_H
 
@@ -19,7 +20,7 @@ class PartsofGameMotion {
    * 中点→交点
    */
   void mp2ip(bool& isLeftEdge, int targetBrightness);
-
+ 
   /**
    * 中点→ブロック
    */
@@ -29,7 +30,6 @@ class PartsofGameMotion {
    * 中点→中点
    */
   void mp2mp();
-
 
   /**
    * ブロック→交点
@@ -65,7 +65,7 @@ class PartsofGameMotion {
    * 斜め調整
    */
   void Dadjustment();
-  
+
  private:
   bool isLeftEdge;       // true:左コース, false: コース
   int targetBrightness;  // 目標輝度
