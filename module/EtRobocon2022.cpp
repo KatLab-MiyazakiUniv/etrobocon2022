@@ -13,13 +13,8 @@ void EtRobocon2022::start()
 {
   bool isLeftCourse = true;
   bool isLeftEdge = true;
-  int targetBrightness = 48;
   int targetBrightness = (WHITE_BRIGHTNESS + BLACK_BRIGHTNESS) / 2;
   Calibrator calibrator;
-  PartsofGameMotion partsofgamemotion;
-  Rotation rotation;
-  Controller controller;
-  StraightRunner straightRunner;
 
   // キャリブレーションする
   calibrator.run();
