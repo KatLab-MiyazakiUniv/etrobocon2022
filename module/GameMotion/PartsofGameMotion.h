@@ -13,6 +13,7 @@
 #include "Controller.h"
 
 class PartsofGameMotion {
+
  public:
   PartsofGameMotion();
 
@@ -20,7 +21,7 @@ class PartsofGameMotion {
    * 中点→交点
    */
   void mp2ip(bool& isLeftEdge, int targetBrightness);
- 
+
   /**
    * 中点→ブロック
    */
