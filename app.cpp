@@ -20,7 +20,7 @@ void main_task(intptr_t unused)
 void arm_task(intptr_t unused)
 {
   // 角度を変えるために最低限必要なPWM値
-  static constexpr int MIN_PWM = 12;
+  static constexpr int MIN_PWM = 20;
 
   Measurer measurer;
   Controller controller;
@@ -28,10 +28,10 @@ void arm_task(intptr_t unused)
   // 0はRasPike起動時のアームの角度（モータの回転量）
   int maxCount = 0;
   int currentCount = measurer.getArmMotorCount();
-  int prevCount = currentCount;
+  int prevCount = currentCount - 1;
+  int stopCounter = 0;
   int direction = 0;
   while(true) {
-    printf("current count: %d\n", currentCount);
     // 現在のアームの角度を取得する
     currentCount = measurer.getArmMotorCount();
 
@@ -40,9 +40,15 @@ void arm_task(intptr_t unused)
       maxCount = currentCount;
     }
 
+    if(currentCount > prevCount){
+      stopCounter++;
+    }
+
     // アームが下がる(回転量が大きくなる)余地があれば調整する
     direction = currentCount > prevCount || maxCount > currentCount ? 1 : 0;
+    if(direction > 0) printf("current count: %d\n", currentCount);
     controller.setArmMotorPwm(MIN_PWM * direction);
+    prevCount = currentCount;
     controller.sleep();
   }
   ext_tsk();
