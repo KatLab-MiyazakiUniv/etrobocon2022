@@ -118,7 +118,7 @@ const char* ColorJudge::colorToString(COLOR color)
     return "YELLOW";
   } else if(color == COLOR::RED) {  // REDの場合
     return "RED";
-  } else {  //想定していない来た場合
+  } else {  //想定していない色の場合
     return "NONE";
   }
 }

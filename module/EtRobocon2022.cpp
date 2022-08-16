@@ -36,7 +36,7 @@ void EtRobocon2022::start()
 
   // ライントレースエリアを走行する
   LineTraceArea::runLineTraceArea(isLeftCourse, isLeftEdge, targetBrightness);
-  //
+
   // ゲームエリアを攻略する
   GameArea::runGameArea(isLeftCourse, isLeftEdge, targetBrightness);
 }

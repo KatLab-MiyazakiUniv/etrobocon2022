@@ -49,12 +49,11 @@ namespace etrobocon2022_test {
     expectedList.push_back(ec);
     Sleeping* sl = new Sleeping(1000);
     expectedList.push_back(sl);
-    NoneMotion* nm = new NoneMotion();
-    expectedList.push_back(nm);
 
     // Warning文
     string expectedOutput = "\x1b[36m";  // 文字色をシアンに
-    expectedOutput += "Warning: Command 'UNDEFINED' does not exist";
+    expectedOutput += "Warning: ../test/test_data/CommandParserTestData.csv:9: ";
+    expectedOutput += "'UNDEFINED' is undefined command";
     expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
 
     // expectedListのログを取る
@@ -88,4 +87,16 @@ namespace etrobocon2022_test {
     EXPECT_EQ(expectedList, actualList);  // ファイルを読み込めないためリストは空のまま
   }
 
+  TEST(MotionParserTest, testyoudakara_kesiwasurerunayo)
+  {
+    constexpr char* filePath = "../test/test_data/CommandParserTestData.csv";
+    int targetBrightness = 45;
+    bool isLeftEdge = true;
+    std::vector<Motion*> actualList
+        = MotionParser::createMotions(filePath, targetBrightness, isLeftEdge);
+
+    for(const auto a : actualList) {
+      a->logRunning();
+    }
+  }
 }  // namespace etrobocon2022_test

@@ -37,14 +37,12 @@ void StraightRunnerColor::run()
   int initialRightMotorCount = measurer.getRightCount();
   int initialLeftMotorCount = measurer.getLeftCount();
 
-  // ループ回数
-  int count = 0;
-  // 現在のpwm値
-  int currentPwm = 0;
-  int sign = (pwm > 0) ? 1 : -1;
-  int error = 0;                // 左右の回転数の誤差
-  Pid pid(0.5, 0.3, 0.001, 0);  // 左右の回転数を合わせるためのPID
-  int adjustmentPwm = 0;        // 左右の誤差の補正値
+  int count = 0;                  // ループ回数
+  int currentPwm = 0;             // 現在のpwm値
+  int sign = (pwm > 0) ? 1 : -1;  // 加速させる向き（符号）
+  int error = 0;                  // 左右の回転数の誤差
+  Pid pid(0.5, 0.3, 0.001, 0);    // 左右の回転数を合わせるためのPID
+  int adjustmentPwm = 0;          // 左右の誤差の補正値
   COLOR color = COLOR::NONE;
 
   while(true) {

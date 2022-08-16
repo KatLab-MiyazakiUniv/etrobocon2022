@@ -20,7 +20,6 @@
 #include "TurningDistance.h"
 #include "EdgeChanger.h"
 #include "Sleeping.h"
-#include "NoneMotion.h"
 
 enum class COMMAND {
   LD,  // 指定距離ライントレース

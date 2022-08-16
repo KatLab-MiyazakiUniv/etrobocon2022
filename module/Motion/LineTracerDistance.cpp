@@ -44,7 +44,6 @@ void LineTracerDistance::run()
 
   // 初期値を格納
   initialDistance = Mileage::calculateMileage(measurer.getRightCount(), measurer.getLeftCount());
-  currentDistance = initialDistance;
 
   // 走行距離が目標距離に到達するまで繰り返す
   while(true) {

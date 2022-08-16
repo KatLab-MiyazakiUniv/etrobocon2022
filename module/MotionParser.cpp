@@ -14,6 +14,7 @@ vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrig
   const int BUF_SIZE = 128;
   char buf[BUF_SIZE];  // log用にメッセージを一時保存する
   Logger logger;
+  int lineNum = 1;  // Warning用の行番号
 
   vector<Motion*> motionList;  // 動作インスタンスのリスト
 
@@ -55,7 +56,7 @@ vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrig
           isLeftEdge);                                                 // エッジ
 
       motionList.push_back(ld);          // 動作リストに追加
-    } else if(command == COMMAND::LC) {  // 色指定ライントレース動作の生成
+    } else if(command == COMMAND::LC) {  // 指定色ライントレース動作の生成
       LineTracerColor* lc = new LineTracerColor(
           ColorJudge::stringToColor(params[1]),                        // 目標色
           targetBrightness + atoi(params[2]),                          // 目標輝度 + 調整
@@ -64,12 +65,12 @@ vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrig
           isLeftEdge);                                                 // エッジ
 
       motionList.push_back(lc);          // 動作リストに追加
-    } else if(command == COMMAND::SD) {  // 距離指定極真動作の生成
+    } else if(command == COMMAND::SD) {  // 指定距離直進動作の生成
       StraightRunnerDistance* sd = new StraightRunnerDistance(atof(params[1]),   // 目標距離
                                                               atoi(params[2]));  // PWM値
 
       motionList.push_back(sd);          // 動作リストに追加
-    } else if(command == COMMAND::SC) {  // 色指定直進動作の生成
+    } else if(command == COMMAND::SC) {  // 指定色直進動作の生成
       StraightRunnerColor* sc
           = new StraightRunnerColor(ColorJudge::stringToColor(params[1]),  // 目標色
                                     atoi(params[2]));                      // PWM値
@@ -80,8 +81,8 @@ vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrig
                                   atoi(params[2]),          // PWM値
                                   convertBool(params[3]));  // 回頭方向
 
-      motionList.push_back(rt);                                    // 動作リストに追加
-    } else if(command == COMMAND::TD) {                            // 旋回動作の生成
+      motionList.push_back(rt);          // 動作リストに追加
+    } else if(command == COMMAND::TD) {  // 距離指定旋回動作の生成
       TurningDistance* td = new TurningDistance(atof(params[1]),   // 目標距離
                                                 atoi(params[2]),   // 左モータのPWM値
                                                 atoi(params[3]));  // 右モータのPWM値
@@ -96,12 +97,11 @@ vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrig
       Sleeping* sl = new Sleeping(atoi(params[1]));
 
       motionList.push_back(sl);  // 動作リストに追加
-    } else {
-      sprintf(buf, "Command '%s' does not exist", params[0]);
+    } else {                     // 未定義のコマンドの場合
+      sprintf(buf, "%s:%d: '%s' is undefined command", filePath, lineNum, params[0]);
       logger.logWarning(buf);
-      NoneMotion* nm = new NoneMotion();
-      motionList.push_back(nm);  // 動作リストに追加
     }
+    lineNum++;  // 行番号をインクリメントする
   }
 
   // ファイルを閉じる
