@@ -35,7 +35,7 @@ void arm_task(intptr_t unused)
     currentCount = measurer.getArmMotorCount();
 
     // 回転量の最大値(最もアームが低い)を保持する
-    if(maxCount < currentCount){
+    if(maxCount < currentCount) {
       maxCount = currentCount;
     }
 
