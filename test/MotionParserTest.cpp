@@ -87,16 +87,4 @@ namespace etrobocon2022_test {
     EXPECT_EQ(expectedList, actualList);  // ファイルを読み込めないためリストは空のまま
   }
 
-  TEST(MotionParserTest, testyoudakara_kesiwasurerunayo)
-  {
-    constexpr char* filePath = "../test/test_data/CommandParserTestData.csv";
-    int targetBrightness = 45;
-    bool isLeftEdge = true;
-    std::vector<Motion*> actualList
-        = MotionParser::createMotions(filePath, targetBrightness, isLeftEdge);
-
-    for(const auto a : actualList) {
-      a->logRunning();
-    }
-  }
 }  // namespace etrobocon2022_test
