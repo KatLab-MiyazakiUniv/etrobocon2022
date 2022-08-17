@@ -1,10 +1,10 @@
 /**
- * @file PartsofGameMotion.cpp
+ * @file PartsOfGameMotion.cpp
  * @brief ゲームエリア内動作パラメータ調整用の仮コード
  * @author sap2368
  */
 
-#include "PartsofGameMotion.h"
+#include "PartsOfGameMotion.h"
 
 using namespace std;
 
@@ -17,12 +17,15 @@ void PartsofGameMotion::mp2ip(bool& isLeftEdge, int targetBrightness)
 {
   //中点から指定した色のノードまでライントレース
   lineTracer.runToColor(COLOR::GREEN, targetBrightness, 60, PidGain(0.1, 0.08, 0.08));
+
+  //交差点まで調整
+  straightRunner.run(20, 60);
 }
 
 void PartsofGameMotion::mp2b()
 {
   //中点からブロックの位置まで直進
-  straightRunner.run(120, 70);
+  straightRunner.run(90, 70);
 }
 
 void PartsofGameMotion::mp2mp()
@@ -32,6 +35,9 @@ void PartsofGameMotion::mp2mp()
 
   //中点(黒線)から中点(黒線)まで直進
   straightRunner.runToColor(COLOR::BLACK, 70);
+
+  //黒線手前で停止してしまうため黒線まで調整
+  straightRunner.run(25, 70)
 }
 
 void PartsofGameMotion::b2ip()
@@ -49,14 +55,11 @@ void PartsofGameMotion::b2mp()
   straightRunner.runToColor(COLOR::BLACK, 70);
 
   //手前で止まってしまうため黒線にタイヤの中心が来るように調整
-  straightRunner.run(20, 70);
+  straightRunner.run(10, 70);
 }
 
 void PartsofGameMotion::ip2mp(bool& isLeftEdge, int targetBrightness)
 {
-  //ノードの色を認識してしまう場合があるため直進
-  straightRunner.run(15, 70);
-
   //中点までライントレース
   lineTracer.run(80, targetBrightness, 60, PidGain(0.1, 0.08, 0.08));
 }
@@ -76,7 +79,7 @@ void PartsofGameMotion::reverse_action(bool& isLeftEdge, int targetBrightness)
   lineTracer.runToColor(COLOR::GREEN, targetBrightness, -40, PidGain(0.1, 0.08, 0.08));
 
   //色を認識した段階では行き過ぎてしまうため黒線の交点がタイヤの中心になるよう調整
-  straightRunner.run(15, 40);
+  straightRunner.run(15, 60);
 }
 
 void PartsofGameMotion::Vadjustment()

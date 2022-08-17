@@ -1,5 +1,5 @@
 /**
- * @file PartsofGameMotion.cpp
+ * @file PartsOfGameMotion.cpp
  * @brief ゲームエリア内動作パラメータ調整用の仮コード
  * @author sap2368
  */
