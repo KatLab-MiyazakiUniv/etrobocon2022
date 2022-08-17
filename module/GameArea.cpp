@@ -23,7 +23,7 @@ void GameArea::runGameArea(const bool isLeftCourse, bool& isLeftEdge, const int 
   // 端点サークルまでの動作インスタンスのリストを生成する
   toEndPointMotions = MotionParser::createMotions(toEndPointPath, targetBrightness, isLeftEdge);
 
-  // 動作実行のメッセージ
+  // 動作実行のメッセージログを出す
   snprintf(buf, BUF_SIZE, "\nRun the commands in '%s'\n", toEndPointPath);
   logger.logHighlight(buf);
   // 各動作を実行する

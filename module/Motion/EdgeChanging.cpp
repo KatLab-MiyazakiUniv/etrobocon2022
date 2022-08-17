@@ -23,6 +23,7 @@ void EdgeChanging::logRunning()
   const char* isLeftEdgeStr = isLeftEdge ? "true" : "false";
   const char* nextEdgeStr = nextEdge ? "true" : "false";
 
-  snprintf(buf, BUF_SIZE, "Run EdgeChanging (isLeftEdge: %s, nextEdge: %s)", isLeftEdgeStr, nextEdgeStr);
+  snprintf(buf, BUF_SIZE, "Run EdgeChanging (isLeftEdge: %s, nextEdge: %s)", isLeftEdgeStr,
+           nextEdgeStr);
   logger.log(buf);
 }

@@ -8,7 +8,7 @@
 using namespace std;
 
 ColorLineTracing::ColorLineTracing(COLOR _targetColor, int _targetBrightness, int _pwm,
-                                 const PidGain& _gain, bool& _isLeftEdge)
+                                   const PidGain& _gain, bool& _isLeftEdge)
   : targetColor(_targetColor),
     targetBrightness(_targetBrightness),
     pwm(_pwm),

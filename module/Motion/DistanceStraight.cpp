@@ -30,7 +30,7 @@ void DistanceStraight::run()
   // 目標距離の値が0以下の場合はwarningを出して終了する
   if(targetDistance <= 0) {
     snprintf(buf, BUF_SIZE, "The targetDistance value passed to DistanceStraight is %.2f",
-            targetDistance);
+             targetDistance);
     logger.logWarning(buf);
     return;
   }
@@ -96,6 +96,7 @@ void DistanceStraight::logRunning()
   const int BUF_SIZE = 128;
   char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
 
-  snprintf(buf, BUF_SIZE, "Run DistanceStraight (targetDistance: %.2f, pwm: %d)", targetDistance, pwm);
+  snprintf(buf, BUF_SIZE, "Run DistanceStraight (targetDistance: %.2f, pwm: %d)", targetDistance,
+           pwm);
   logger.log(buf);
 }

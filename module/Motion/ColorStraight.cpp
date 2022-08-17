@@ -7,10 +7,7 @@
 #include "ColorStraight.h"
 using namespace std;
 
-ColorStraight::ColorStraight(COLOR _targetColor, int _pwm)
-  : targetColor(_targetColor), pwm(_pwm)
-{
-}
+ColorStraight::ColorStraight(COLOR _targetColor, int _pwm) : targetColor(_targetColor), pwm(_pwm) {}
 
 void ColorStraight::run()
 {
@@ -90,6 +87,6 @@ void ColorStraight::logRunning()
   char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
 
   snprintf(buf, BUF_SIZE, "Run ColorStraight (targetColor: %s, pwm: %d)",
-          ColorJudge::colorToString(targetColor), pwm);
+           ColorJudge::colorToString(targetColor), pwm);
   logger.log(buf);
 }

@@ -8,7 +8,7 @@
 using namespace std;
 
 DistanceLineTracing::DistanceLineTracing(double _targetDistance, int _targetBrightness, int _pwm,
-                                       const PidGain& _gain, bool& _isLeftEdge)
+                                         const PidGain& _gain, bool& _isLeftEdge)
   : targetDistance(_targetDistance),
     targetBrightness(_targetBrightness),
     pwm(_pwm),

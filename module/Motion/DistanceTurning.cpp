@@ -24,7 +24,8 @@ void DistanceTurning::run()
   }
   // 目標距離の値が0以下の場合はwarningを出して終了する
   if(targetDistance <= 0) {
-    snprintf(buf, BUF_SIZE, "The targetDistance value passed to DistanceTurning is %.2f", targetDistance);
+    snprintf(buf, BUF_SIZE, "The targetDistance value passed to DistanceTurning is %.2f",
+             targetDistance);
     logger.logWarning(buf);
     return;
   }
@@ -67,6 +68,6 @@ void DistanceTurning::logRunning()
   char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
 
   snprintf(buf, BUF_SIZE, "Run DistanceTurning (targetDistance: %.2f, leftPwm: %d, rightPwm: %d)",
-          targetDistance, leftPwm, rightPwm);
+           targetDistance, leftPwm, rightPwm);
   logger.log(buf);
 }
