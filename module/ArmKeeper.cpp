@@ -9,7 +9,7 @@
 void ArmKeeper::start()
 {
   // 角度を変えるために最低限必要なPWM値
-  static constexpr int MIN_PWM = 15;
+  static constexpr int MIN_PWM = 30;
 
   Measurer measurer;
   Controller controller;
