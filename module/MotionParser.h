@@ -12,22 +12,22 @@
 #include <string.h>
 #include "Logger.h"
 #include "Motion.h"
-#include "LineTracerDistance.h"
-#include "LineTracerColor.h"
-#include "StraightRunnerDistance.h"
-#include "StraightRunnerColor.h"
+#include "DistanceLineTracing.h"
+#include "ColorLineTracing.h"
+#include "DistanceStraight.h"
+#include "ColorStraight.h"
 #include "Rotation.h"
-#include "TurningDistance.h"
-#include "EdgeChanger.h"
+#include "DistanceTurning.h"
+#include "EdgeChanging.h"
 #include "Sleeping.h"
 
 enum class COMMAND {
-  LD,  // 指定距離ライントレース
-  LC,  // 指定色ライントレース
-  SD,  // 指定距離直進
-  SC,  // 指定色直進
+  DL,  // 指定距離ライントレース
+  CL,  // 指定色ライントレース
+  DS,  // 指定距離直進
+  CS,  // 指定色直進
   RT,  // 回頭
-  TD,  // 旋回
+  DT,  // 旋回
   EC,  // エッジ切り替え
   SL,  // 自タスクスリープ
   NONE

@@ -1,35 +1,35 @@
 /**
- * @file   StraightRunnerColor.cpp
+ * @file   ColorStraight.cpp
  * @brief  指定色直進動作
  * @author sugaken0528 kawanoichi mutotaka0426
  */
 
-#include "StraightRunnerColor.h"
+#include "ColorStraight.h"
 using namespace std;
 
-StraightRunnerColor::StraightRunnerColor(COLOR _targetColor, int _pwm)
+ColorStraight::ColorStraight(COLOR _targetColor, int _pwm)
   : targetColor(_targetColor), pwm(_pwm)
 {
 }
 
-void StraightRunnerColor::run()
+void ColorStraight::run()
 {
   const int BUF_SIZE = 256;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
 
   // pwm値が0の場合は終了する
   if(pwm == 0) {
-    logger.logWarning("The pwm value passed to StraightRunnerColor is 0");
+    logger.logWarning("The pwm value passed to ColorStraight is 0");
     return;
   }
   // pwmの絶対値がMIN_PWMより小さい場合はwarningを出す
   if(abs(pwm) < MIN_PWM) {
-    sprintf(buf, "The pwm value passed to StraightRunnerColor is %d", pwm);
+    snprintf(buf, BUF_SIZE, "The pwm value passed to ColorStraight is %d", pwm);
     logger.logWarning(buf);
   }
   // 目標の色がNoneのときwarningを出して終了する
   if(targetColor == COLOR::NONE) {
-    logger.logWarning("The targetColor passed to StraightRunnerColor is NONE");
+    logger.logWarning("The targetColor passed to ColorStraight is NONE");
     return;
   }
 
@@ -84,12 +84,12 @@ void StraightRunnerColor::run()
   controller.stopMotor();
 }
 
-void StraightRunnerColor::logRunning()
+void ColorStraight::logRunning()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
 
-  sprintf(buf, "Run StraightRunnerColor (targetColor: %s, pwm: %d)",
+  snprintf(buf, BUF_SIZE, "Run ColorStraight (targetColor: %s, pwm: %d)",
           ColorJudge::colorToString(targetColor), pwm);
   logger.log(buf);
 }

@@ -1,27 +1,27 @@
 /**
- * @file   StraightRunnerDistance.h
- * @brief  指定距離直進動作
+ * @file   ColorStraight.h
+ * @brief  指定色直進動作
  * @author sugaken0528 kawanoichi mutotaka0426
  */
 
-#ifndef STRAIGHT_RUNNER_DISTANCE_H
-#define STRAIGHT_RUNNER_DISTANCE_H
+#ifndef COLOR_STRAIGHT_H
+#define COLOR_STRAIGHT_H
 
 #include "Motion.h"
 #include "Pid.h"
-#include "Mileage.h"
+#include "ColorJudge.h"
 
-class StraightRunnerDistance : public Motion {
+class ColorStraight : public Motion {
  public:
   /**
    * コンストラクタ
-   * @param _targetDistance 目標距離 0~∞
+   * @param _targetDistance 指定色
    * @param _pwm PWM値 -100~100
    */
-  StraightRunnerDistance(double _targetDistance, int _pwm);
+  ColorStraight(COLOR _targetColor, int _pwm);
 
   /**
-   * @brief 指定距離だけ直進する
+   * @brief 指定色まで直進する
    */
   void run();
 
@@ -33,7 +33,7 @@ class StraightRunnerDistance : public Motion {
  private:
   static constexpr double ACCELE_PWM = 0.3;  // 加速するPWM値
   static constexpr int MIN_PWM = 40;  // 静止時から走行体がモーターを動かせないPWM値
-  double targetDistance;              // 目標距離 0~∞
+  COLOR targetColor;                  // 指定色
   int pwm;                            // PWM値 -100~100
 };
 

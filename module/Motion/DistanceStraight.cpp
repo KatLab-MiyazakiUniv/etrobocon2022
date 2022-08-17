@@ -1,35 +1,35 @@
 /**
- * @file   StraightRunnerDistance.cpp
+ * @file   DistanceStraight.cpp
  * @brief  指定距離直進動作
  * @author sugaken0528 kawanoichi mutotaka0426
  */
 
-#include "StraightRunnerDistance.h"
+#include "DistanceStraight.h"
 using namespace std;
 
-StraightRunnerDistance::StraightRunnerDistance(double _targetDistance, int _pwm)
+DistanceStraight::DistanceStraight(double _targetDistance, int _pwm)
   : targetDistance(_targetDistance), pwm(_pwm)
 {
 }
 
-void StraightRunnerDistance::run()
+void DistanceStraight::run()
 {
   const int BUF_SIZE = 256;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
 
   // pwmが0の場合は終了する
   if(pwm == 0) {
-    logger.logWarning("The pwm value passed to StraightRunnerDistance is 0");
+    logger.logWarning("The pwm value passed to DistanceStraight is 0");
     return;
   }
   // pwmの絶対値がMIN_PWMより小さい場合はwarningを出す
   if(abs(pwm) < MIN_PWM) {
-    sprintf(buf, "The pwm value passed to StraightRunnerDistance is less than %d", MIN_PWM);
+    snprintf(buf, BUF_SIZE, "The pwm value passed to DistanceStraight is less than %d", MIN_PWM);
     logger.logWarning(buf);
   }
   // 目標距離の値が0以下の場合はwarningを出して終了する
   if(targetDistance <= 0) {
-    sprintf(buf, "The targetDistance value passed to StraightRunnerDistance is %.2f",
+    snprintf(buf, BUF_SIZE, "The targetDistance value passed to DistanceStraight is %.2f",
             targetDistance);
     logger.logWarning(buf);
     return;
@@ -91,11 +91,11 @@ void StraightRunnerDistance::run()
   controller.stopMotor();
 }
 
-void StraightRunnerDistance::logRunning()
+void DistanceStraight::logRunning()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
 
-  sprintf(buf, "Run StraightRunnerDistance (targetDistance: %.2f, pwm: %d)", targetDistance, pwm);
+  snprintf(buf, BUF_SIZE, "Run DistanceStraight (targetDistance: %.2f, pwm: %d)", targetDistance, pwm);
   logger.log(buf);
 }

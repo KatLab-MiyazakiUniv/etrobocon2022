@@ -1,10 +1,10 @@
 /**
- *  @file   StraightRunnerDistanceTest.cpp
- j  @brief  StraightRunnerDistanceクラスのテスト
+ *  @file   DistanceStraightTest.cpp
+ j  @brief  DistanceStraightクラスのテスト
  *  @author sugaken0528 mutotaka0426
  */
 
-#include "StraightRunnerDistance.h"
+#include "DistanceStraight.h"
 #include <gtest/gtest.h>
 #include "Controller.h"
 #include "Measurer.h"
@@ -13,11 +13,11 @@ using namespace std;
 
 namespace etrobocon2022_test {
 
-  TEST(StraightRunnerDistanceTest, run)
+  TEST(DistanceStraightTest, run)
   {
     double targetDistance = 350;
     int pwm = 50;
-    StraightRunnerDistance sd(targetDistance, pwm);
+    DistanceStraight ds(targetDistance, pwm);
     Measurer measurer;
 
     // 初期値
@@ -35,7 +35,7 @@ namespace etrobocon2022_test {
     double distanceError = Mileage::calculateMileage(100 * 0.05, 100 * 0.05);  // 許容誤差
     double expectedError = 1;  // タイヤの走行距離の誤差の期待値
 
-    sd.run();  // 直進を実行
+    ds.run();  // 直進を実行
 
     // 関数実行後の走行距離
     leftCount = measurer.getLeftCount();
@@ -58,11 +58,11 @@ namespace etrobocon2022_test {
     EXPECT_GE(expectedError, actualError);
   }
 
-  TEST(StraightRunnerDistanceTest, runFullPwm)
+  TEST(DistanceStraightTest, runFullPwm)
   {
     double targetDistance = 350;
     int pwm = 100;
-    StraightRunnerDistance sd(targetDistance, pwm);
+    DistanceStraight ds(targetDistance, pwm);
     Measurer measurer;
 
     // 初期値
@@ -80,7 +80,7 @@ namespace etrobocon2022_test {
     double distanceError = Mileage::calculateMileage(100 * 0.05, 100 * 0.05);  // 許容誤差
     double expectedError = 1;  // タイヤの走行距離の誤差の期待値
 
-    sd.run();  // 直進を実行
+    ds.run();  // 直進を実行
 
     // 関数実行後の走行距離
     leftCount = measurer.getLeftCount();
@@ -103,11 +103,11 @@ namespace etrobocon2022_test {
     EXPECT_GE(expectedError, actualError);
   }
 
-  TEST(StraightRunnerDistanceTest, runMinusDistance)
+  TEST(DistanceStraightTest, runMinusDistance)
   {
     double targetDistance = -350;
     int pwm = 100;
-    StraightRunnerDistance sd(targetDistance, pwm);
+    DistanceStraight ds(targetDistance, pwm);
     Measurer measurer;
 
     // 初期値
@@ -118,12 +118,11 @@ namespace etrobocon2022_test {
 
     // Warning文
     string expectedOutput = "\x1b[36m";  // 文字色をシアンに
-    expectedOutput
-        += "Warning: The targetDistance value passed to StraightRunnerDistance is -350.00";
+    expectedOutput += "Warning: The targetDistance value passed to DistanceStraight is -350.00";
     expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
 
     testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
-    sd.run();                            // 直進を実行
+    ds.run();                            // 直進を実行
     string actualOutput = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
     // 関数実行後の走行距離
@@ -135,11 +134,11 @@ namespace etrobocon2022_test {
     EXPECT_EQ(expectedDistance, actualDistance);  // 直進前後で走行距離に変化はない
   }
 
-  TEST(StraightRunnerDistanceTest, runBack)
+  TEST(DistanceStraightTest, runBack)
   {
     double targetDistance = 350;
     int pwm = -50;
-    StraightRunnerDistance sd(targetDistance, pwm);
+    DistanceStraight ds(targetDistance, pwm);
     Measurer measurer;
 
     // 初期値
@@ -157,7 +156,7 @@ namespace etrobocon2022_test {
     double distanceError = Mileage::calculateMileage(-100 * 0.05, -100 * 0.05);  // 許容誤差
     double expectedError = 1;  // タイヤの走行距離の誤差の期待値
 
-    sd.run();  // 直進を実行
+    ds.run();  // 直進を実行
 
     // 関数実行後の走行距離
     leftCount = measurer.getLeftCount();
@@ -180,11 +179,11 @@ namespace etrobocon2022_test {
     EXPECT_GE(expectedError, actualError);
   }
 
-  TEST(StraightRunnerDistanceTest, runBackFullPwm)
+  TEST(DistanceStraightTest, runBackFullPwm)
   {
     double targetDistance = 350;
     int pwm = -100;
-    StraightRunnerDistance sd(targetDistance, pwm);
+    DistanceStraight ds(targetDistance, pwm);
     Measurer measurer;
 
     // 初期値
@@ -202,7 +201,7 @@ namespace etrobocon2022_test {
     double distanceError = Mileage::calculateMileage(-100 * 0.05, -100 * 0.05);  // 許容誤差
     double expectedError = 1;  // タイヤの走行距離の誤差の期待値
 
-    sd.run();  // 直進を実行
+    ds.run();  // 直進を実行
 
     // 関数実行後の走行距離
     leftCount = measurer.getLeftCount();
@@ -225,11 +224,11 @@ namespace etrobocon2022_test {
     EXPECT_GE(expectedError, actualError);
   }
 
-  TEST(StraightRunnerDistanceTest, runZeroPwm)
+  TEST(DistanceStraightTest, runZeroPwm)
   {
     double targetDistance = 350;
     int pwm = 0;
-    StraightRunnerDistance sd(targetDistance, pwm);
+    DistanceStraight ds(targetDistance, pwm);
     Measurer measurer;
 
     // 初期値
@@ -240,11 +239,11 @@ namespace etrobocon2022_test {
 
     // Warning文
     string expectedOutput = "\x1b[36m";  // 文字色をシアンに
-    expectedOutput += "Warning: The pwm value passed to StraightRunnerDistance is 0";
+    expectedOutput += "Warning: The pwm value passed to DistanceStraight is 0";
     expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
 
     testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
-    sd.run();                            // 直進を実行
+    ds.run();                            // 直進を実行
     string actualOutput = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
     // 関数実行後の走行距離
@@ -256,11 +255,11 @@ namespace etrobocon2022_test {
     EXPECT_EQ(expectedDistance, actualDistance);  // 直進前後で走行距離に変化はない
   }
 
-  TEST(StraightRunnerDistanceTest, runMinusDistanceZeroPwm)
+  TEST(DistanceStraightTest, runMinusDistanceZeroPwm)
   {
     double targetDistance = -350;
     int pwm = 0;
-    StraightRunnerDistance sd(targetDistance, pwm);
+    DistanceStraight ds(targetDistance, pwm);
     Measurer measurer;
 
     // 初期値
@@ -271,11 +270,11 @@ namespace etrobocon2022_test {
 
     // Warning文
     string expectedOutput = "\x1b[36m";  // 文字色をシアンに
-    expectedOutput += "Warning: The pwm value passed to StraightRunnerDistance is 0";
+    expectedOutput += "Warning: The pwm value passed to DistanceStraight is 0";
     expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
 
     testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
-    sd.run();                            // 直進を実行
+    ds.run();                            // 直進を実行
     string actualOutput = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
     // 関数実行後の走行距離

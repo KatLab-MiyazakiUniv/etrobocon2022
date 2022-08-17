@@ -1,23 +1,23 @@
 /**
- *  @file   StraightRunnerColorTest.cpp
- *  @brief  StraightRunnerColorクラスのテスト
+ *  @file   ColorStraightTest.cpp
+ *  @brief  ColorStraightクラスのテスト
  *  @author sugaken0528 mutotaka0426
  */
 
 #include <gtest/gtest.h>
 #include "Measurer.h"
 #include "Mileage.h"
-#include "StraightRunnerColor.h"
+#include "ColorStraight.h"
 
 using namespace std;
 
 namespace etrobocon2022_test {
   // 最初の色取得で指定色を取得するテストケース
-  TEST(StraightRunnerColorTest, runToGetFirst)
+  TEST(ColorStraightTest, runToGetFirst)
   {
     COLOR targetColor = COLOR::GREEN;
     int pwm = 100;
-    StraightRunnerColor sc(targetColor, pwm);
+    ColorStraight cs(targetColor, pwm);
     Measurer measurer;
 
     // 初期値から期待する走行距離を求める
@@ -26,7 +26,7 @@ namespace etrobocon2022_test {
     int expected = Mileage::calculateMileage(initialRightCount, initialLeftCount);
 
     srand(9037);  // 最初に緑を取得する乱数シード
-    sc.run();     // 緑まで直進を実行
+    cs.run();     // 緑まで直進を実行
 
     // 直進後の走行距離
     int rightCount = measurer.getRightCount();
@@ -37,11 +37,11 @@ namespace etrobocon2022_test {
   }
 
   // 少し走ってから指定色を取得するテストケース
-  TEST(StraightRunnerColorTest, run)
+  TEST(ColorStraightTest, run)
   {
     COLOR targetColor = COLOR::BLUE;
     int pwm = 100;
-    StraightRunnerColor sc(targetColor, pwm);
+    ColorStraight cs(targetColor, pwm);
     Measurer measurer;
 
     // 初期値から期待する走行距離を求める
@@ -57,7 +57,7 @@ namespace etrobocon2022_test {
     int error = Mileage::calculateMileage(100 * 0.05 * 10, 100 * 0.05 * 10);  // 許容誤差
 
     srand(89);  // 最初10回が青を取得しない乱数シード
-    sc.run();   // 青まで直進を実行
+    cs.run();   // 青まで直進を実行
 
     // 直進後の走行距離
     int rightCount = measurer.getRightCount();
@@ -69,11 +69,11 @@ namespace etrobocon2022_test {
   }
 
   // 少し走ってから指定色を取得するテストケース
-  TEST(StraightRunnerColorTest, runBack)
+  TEST(ColorStraightTest, runBack)
   {
     COLOR targetColor = COLOR::RED;
     int pwm = -100;
-    StraightRunnerColor sc(targetColor, pwm);
+    ColorStraight cs(targetColor, pwm);
     Measurer measurer;
 
     // 初期値から期待する走行距離を求める
@@ -89,7 +89,7 @@ namespace etrobocon2022_test {
     int error = Mileage::calculateMileage(-100 * 0.05 * 10, -100 * 0.05 * 10);  // 許容誤差
 
     srand(0);  // 最初10回が赤を取得しない乱数シード
-    sc.run();  // 赤まで直進を実行
+    cs.run();  // 赤まで直進を実行
 
     // 直進後の走行距離
     int rightCount = measurer.getRightCount();
@@ -100,11 +100,11 @@ namespace etrobocon2022_test {
     EXPECT_LE(expected + error, actual);  // 直進後の走行距離が許容誤差以内である
   }
 
-  TEST(StraightRunnerColorTest, runZeroPWM)
+  TEST(ColorStraightTest, runZeroPWM)
   {
     COLOR targetColor = COLOR::YELLOW;
     int pwm = 0;
-    StraightRunnerColor sc(targetColor, pwm);
+    ColorStraight cs(targetColor, pwm);
     Measurer measurer;
 
     // 初期値から期待する走行距離を求める
@@ -114,12 +114,12 @@ namespace etrobocon2022_test {
 
     // Warning文
     string expectedOutput = "\x1b[36m";  // 文字色をシアンに
-    expectedOutput += "Warning: The pwm value passed to StraightRunnerColor is 0";
+    expectedOutput += "Warning: The pwm value passed to ColorStraight is 0";
     expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
 
     srand(0);                            // 最初に黄を取得しない乱数シード
     testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
-    sc.run();                            // 黄まで直進を実行
+    cs.run();                            // 黄まで直進を実行
     string actualOutput = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
     // 直進後の走行距離
@@ -131,11 +131,11 @@ namespace etrobocon2022_test {
     EXPECT_EQ(expected, actual);              // 直進前後で走行距離に変化はない
   }
 
-  TEST(StraightRunnerColorTest, runNoneColor)
+  TEST(ColorStraightTest, runNoneColor)
   {
     COLOR targetColor = COLOR::NONE;
     int pwm = 100;
-    StraightRunnerColor sc(targetColor, pwm);
+    ColorStraight cs(targetColor, pwm);
     Measurer measurer;
 
     // 初期値から期待する走行距離を求める
@@ -145,11 +145,11 @@ namespace etrobocon2022_test {
 
     // Warning文
     string expectedOutput = "\x1b[36m";  // 文字色をシアンに
-    expectedOutput += "Warning: The targetColor passed to StraightRunnerColor is NONE";
+    expectedOutput += "Warning: The targetColor passed to ColorStraight is NONE";
     expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
 
     testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
-    sc.run();                            // 黄まで直進を実行
+    cs.run();                            // 黄まで直進を実行
     string actualOutput = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
     // 直進後の走行距離

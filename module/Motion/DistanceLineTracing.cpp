@@ -1,13 +1,13 @@
 /**
- * @file   LineTracerDistance.cpp
+ * @file   DistanceLineTracing.cpp
  * @brief  指定距離ライントレース動作
  * @author mutotaka0426 kodama0720
  */
 
-#include "LineTracerDistance.h"
+#include "DistanceLineTracing.h"
 using namespace std;
 
-LineTracerDistance::LineTracerDistance(double _targetDistance, int _targetBrightness, int _pwm,
+DistanceLineTracing::DistanceLineTracing(double _targetDistance, int _targetBrightness, int _pwm,
                                        const PidGain& _gain, bool& _isLeftEdge)
   : targetDistance(_targetDistance),
     targetBrightness(_targetBrightness),
@@ -17,10 +17,10 @@ LineTracerDistance::LineTracerDistance(double _targetDistance, int _targetBright
 {
 }
 
-void LineTracerDistance::run()
+void DistanceLineTracing::run()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
 
   double initialDistance = 0;  // 実行前の走行距離
   double currentDistance = 0;  // 現在の走行距離
@@ -30,11 +30,12 @@ void LineTracerDistance::run()
 
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
-    logger.logWarning("The pwm value passed to LineTracerDistance is 0");
+    logger.logWarning("The pwm value passed to DistanceLineTracing is 0");
     return;
   }
   if(targetDistance <= 0) {
-    sprintf(buf, "The targetDistance value passed to LineTracerDistance is %.2f", targetDistance);
+    snprintf(buf, BUF_SIZE, "The targetDistance value passed to DistanceLineTracing is %.2f",
+             targetDistance);
     logger.logWarning(buf);
     return;
   }
@@ -66,15 +67,15 @@ void LineTracerDistance::run()
   controller.stopMotor();
 }
 
-void LineTracerDistance::logRunning()
+void DistanceLineTracing::logRunning()
 {
   const int BUF_SIZE = 256;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
   const char* str = isLeftEdge ? "true" : "false";
 
-  sprintf(buf,
-          "Run LineTracerDistance (targetColor: %.2f, targetBrightness: %.2f, pwm: %d, gain: "
-          "(%.2f,%.2f,%.2f), isLeftEdge: %s)",
-          targetDistance, targetBrightness, pwm, gain.kp, gain.ki, gain.kd, str);
+  snprintf(buf, BUF_SIZE,
+           "Run DistanceLineTracing (targetDistance: %.2f, targetBrightness: %d, pwm: %d, gain: "
+           "(%.2f,%.2f,%.2f), isLeftEdge: %s)",
+           targetDistance, targetBrightness, pwm, gain.kp, gain.ki, gain.kd, str);
   logger.log(buf);
 }

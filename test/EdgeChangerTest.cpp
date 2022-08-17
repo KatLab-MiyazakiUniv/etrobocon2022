@@ -1,20 +1,20 @@
 /**
- * @file   EdgeChangerTest.cpp
- * @brief  EdgeChangerクラスのテスト
+ * @file   EdgeChangingTest.cpp
+ * @brief  EdgeChangingクラスのテスト
  * @author mutotaka0426
  */
 
-#include "EdgeChanger.h"
+#include "EdgeChanging.h"
 #include <gtest/gtest.h>
 #include <cmath>
 
 namespace etrobocon2022_test {
 
-  TEST(EdgeChanger, runFalseToFalse)
+  TEST(EdgeChanging, runFalseToFalse)
   {
-    bool isLeftEdge = false;  // run()を実行することでこの変数が切り替わる
+    bool isLeftEdge = false;  // run()を実行することでこの変数が切り替わる（ecに参照渡しするため）
     bool nextEdge = false;
-    EdgeChanger ec(isLeftEdge, nextEdge);
+    EdgeChanging ec(isLeftEdge, nextEdge);
 
     ec.run();
 
@@ -24,11 +24,11 @@ namespace etrobocon2022_test {
     EXPECT_EQ(expected, actual);
   }
 
-  TEST(EdgeChanger, runFalseToTrue)
+  TEST(EdgeChanging, runFalseToTrue)
   {
-    bool isLeftEdge = false;  // run()を実行することでこの変数が切り替わる
+    bool isLeftEdge = false;  // run()を実行することでこの変数が切り替わる（ecに参照渡しするため）
     bool nextEdge = true;
-    EdgeChanger ec(isLeftEdge, nextEdge);
+    EdgeChanging ec(isLeftEdge, nextEdge);
 
     ec.run();
 
@@ -38,11 +38,11 @@ namespace etrobocon2022_test {
     EXPECT_EQ(expected, actual);
   }
 
-  TEST(EdgeChanger, runTrueToFalse)
+  TEST(EdgeChanging, runTrueToFalse)
   {
-    bool isLeftEdge = true;  // run()を実行することでこの変数が切り替わる
+    bool isLeftEdge = true;  // run()を実行することでこの変数が切り替わる（ecに参照渡しするため）
     bool nextEdge = false;
-    EdgeChanger ec(isLeftEdge, nextEdge);
+    EdgeChanging ec(isLeftEdge, nextEdge);
 
     ec.run();
 
@@ -52,11 +52,11 @@ namespace etrobocon2022_test {
     EXPECT_EQ(expected, actual);
   }
 
-  TEST(EdgeChanger, runTrueToTrue)
+  TEST(EdgeChanging, runTrueToTrue)
   {
-    bool isLeftEdge = true;  // run()を実行することでこの変数が切り替わる
+    bool isLeftEdge = true;  // run()を実行することでこの変数が切り替わる（ecに参照渡しするため）
     bool nextEdge = true;
-    EdgeChanger ec(isLeftEdge, nextEdge);
+    EdgeChanging ec(isLeftEdge, nextEdge);
 
     ec.run();
 

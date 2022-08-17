@@ -12,7 +12,7 @@
 void EtRobocon2022::start()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
   Logger logger;
 
   bool isLeftCourse = true;
@@ -29,9 +29,9 @@ void EtRobocon2022::start()
   // 合図を送るまで待機する
   calibrator.waitForStart();
 
-  // スタートのメッセージ
+  // スタートのメッセージログを出す
   const char* course = isLeftCourse ? "Left" : "Right";
-  sprintf(buf, "\nRun on the %s Course\n", course);
+  snprintf(buf, BUF_SIZE, "\nRun on the %s Course\n", course);
   logger.logHighlight(buf);
 
   // ライントレースエリアを走行する

@@ -22,11 +22,10 @@ namespace etrobocon2022_test {
     LineTraceArea::runLineTraceArea(isLeftCourse, isLeftEdge, targetBrightness);
     string output = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
-    bool expected = true;
     // find("str")はstrが見つからない場合string::nposを返す
     bool actual = output.find("Warning") == string::npos && output.find("Error") == string::npos;
 
-    EXPECT_EQ(expected, actual);  // WarningやErrorが出ていないかテスト
+    EXPECT_TRUE(actual);  // WarningやErrorが出ていないかテスト
   }
 
   TEST(LineTraceAreaTest, runRightCourse)
@@ -39,10 +38,9 @@ namespace etrobocon2022_test {
     LineTraceArea::runLineTraceArea(isLeftCourse, isLeftEdge, targetBrightness);
     string output = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
-    bool expected = true;
     // find("str")はstrが見つからない場合string::nposを返す
     bool actual = output.find("Warning") == string::npos && output.find("Error") == string::npos;
 
-    EXPECT_EQ(expected, actual);  // WarningやErrorが出ていないかテスト
+    EXPECT_TRUE(actual);  // WarningやErrorが出ていないかテスト
   }
 }  // namespace etrobocon2022_test

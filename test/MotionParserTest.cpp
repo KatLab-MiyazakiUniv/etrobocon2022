@@ -31,21 +31,21 @@ namespace etrobocon2022_test {
      * 順にインスタンス化したものをexpectedListに追加する
      */
     std::vector<Motion*> expectedList;
-    LineTracerDistance* ld = new LineTracerDistance(1080, targetBrightness + 10, 70,
-                                                    PidGain(0.2, 0.8, 0.1), isLeftEdge);
-    expectedList.push_back(ld);
-    LineTracerColor* lc = new LineTracerColor(COLOR::RED, targetBrightness + 0, 30,
-                                              PidGain(0.1, 0.2, 0.3), isLeftEdge);
-    expectedList.push_back(lc);
-    StraightRunnerDistance* sd = new StraightRunnerDistance(100.2, 100);
-    expectedList.push_back(sd);
-    StraightRunnerColor* sc = new StraightRunnerColor(COLOR::GREEN, 100);
-    expectedList.push_back(sc);
+    DistanceLineTracing* dl = new DistanceLineTracing(1080, targetBrightness + 10, 70,
+                                                      PidGain(0.2, 0.8, 0.1), isLeftEdge);
+    expectedList.push_back(dl);
+    ColorLineTracing* cl = new ColorLineTracing(COLOR::RED, targetBrightness + 0, 30,
+                                                PidGain(0.1, 0.2, 0.3), isLeftEdge);
+    expectedList.push_back(cl);
+    DistanceStraight* ds = new DistanceStraight(100.2, 100);
+    expectedList.push_back(ds);
+    ColorStraight* cs = new ColorStraight(COLOR::GREEN, 100);
+    expectedList.push_back(cs);
     Rotation* rt = new Rotation(90, 80, false);
     expectedList.push_back(rt);
-    TurningDistance* td = new TurningDistance(350, 50, 60);
-    expectedList.push_back(td);
-    EdgeChanger* ec = new EdgeChanger(isLeftEdge, false);
+    DistanceTurning* dt = new DistanceTurning(350, 50, 60);
+    expectedList.push_back(dt);
+    EdgeChanging* ec = new EdgeChanging(isLeftEdge, false);
     expectedList.push_back(ec);
     Sleeping* sl = new Sleeping(1000);
     expectedList.push_back(sl);

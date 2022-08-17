@@ -16,17 +16,17 @@ Rotation::Rotation(int _angle, int _pwm, bool _isClockwise)
 void Rotation::run()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
 
   // pwm値が0以下の場合はwarningを出して終了する
   if(pwm <= 0) {
-    sprintf(buf, "The pwm value passed to Rotation is %d", pwm);
+    snprintf(buf, BUF_SIZE, "The pwm value passed to Rotation is %d", pwm);
     logger.logWarning(buf);
     return;
   }
   // angleが0以下の場合はwarningを出して終了する
   if(angle <= 0 || angle >= 360) {
-    sprintf(buf, "The angle value passed to Rotation is %d", angle);
+    snprintf(buf, BUF_SIZE, "The angle value passed to Rotation is %d", angle);
     logger.logWarning(buf);
     return;
   }
@@ -74,9 +74,9 @@ void Rotation::run()
 void Rotation::logRunning()
 {
   const int BUF_SIZE = 256;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
   const char* str = isClockwise ? "true" : "false";
 
-  sprintf(buf, "Run Rotation (angle: %d, pwm: %d, isClockwise: %s)", angle, pwm, str);
+  snprintf(buf, BUF_SIZE, "Run Rotation (angle: %d, pwm: %d, isClockwise: %s)", angle, pwm, str);
   logger.log(buf);
 }

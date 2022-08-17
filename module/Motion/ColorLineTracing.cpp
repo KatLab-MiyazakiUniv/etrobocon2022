@@ -1,13 +1,13 @@
 /**
- * @file   LineTracerColor.cpp
+ * @file   ColorLineTracing.cpp
  * @brief  指定色ライントレース動作
  * @author mutotaka0426 kodama0720
  */
 
-#include "LineTracerColor.h"
+#include "ColorLineTracing.h"
 using namespace std;
 
-LineTracerColor::LineTracerColor(COLOR _targetColor, int _targetBrightness, int _pwm,
+ColorLineTracing::ColorLineTracing(COLOR _targetColor, int _targetBrightness, int _pwm,
                                  const PidGain& _gain, bool& _isLeftEdge)
   : targetColor(_targetColor),
     targetBrightness(_targetBrightness),
@@ -17,7 +17,7 @@ LineTracerColor::LineTracerColor(COLOR _targetColor, int _targetBrightness, int 
 {
 }
 
-void LineTracerColor::run()
+void ColorLineTracing::run()
 {
   int currentPid = 0;
   int sign = 0;
@@ -27,12 +27,12 @@ void LineTracerColor::run()
 
   // pwm値が0の場合はwarningを出して終了する
   if(pwm == 0) {
-    logger.logWarning("The pwm value passed to LineTracerColor is 0");
+    logger.logWarning("The pwm value passed to ColorLineTracing is 0");
     return;
   }
   // 目標の色がNoneのときwarningを出して終了する
   if(targetColor == COLOR::NONE) {
-    logger.logWarning("The targetColor passed to LineTracerColor is NONE");
+    logger.logWarning("The targetColor passed to ColorLineTracing is NONE");
     return;
   }
 
@@ -65,16 +65,16 @@ void LineTracerColor::run()
   controller.stopMotor();
 }
 
-void LineTracerColor::logRunning()
+void ColorLineTracing::logRunning()
 {
   const int BUF_SIZE = 256;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
   const char* str = isLeftEdge ? "true" : "false";
 
-  sprintf(buf,
-          "Run LineTracerColor (targetColor: %s, targetBrightness: %.2f, pwm: %d, gain: "
-          "(%.2f,%.2f,%.2f), isLeftEdge: %s)",
-          ColorJudge::colorToString(targetColor), targetBrightness, pwm, gain.kp, gain.ki, gain.kd,
-          str);
+  snprintf(buf, BUF_SIZE,
+           "Run ColorLineTracing (targetColor: %s, targetBrightness: %d, pwm: %d, gain: "
+           "(%.2f,%.2f,%.2f), isLeftEdge: %s)",
+           ColorJudge::colorToString(targetColor), targetBrightness, pwm, gain.kp, gain.ki, gain.kd,
+           str);
   logger.log(buf);
 }

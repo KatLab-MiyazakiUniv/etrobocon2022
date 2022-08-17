@@ -1,30 +1,30 @@
 /**
- * @file   TurningDistance.cpp
+ * @file   DistanceTurning.cpp
  * @brief  指定距離旋回動作
  * @author mutotaka0426
  */
 
-#include "TurningDistance.h"
+#include "DistanceTurning.h"
 using namespace std;
 
-TurningDistance::TurningDistance(double _targetDistance, int _leftPwm, int _rightPwm)
+DistanceTurning::DistanceTurning(double _targetDistance, int _leftPwm, int _rightPwm)
   : targetDistance(_targetDistance), leftPwm(_leftPwm), rightPwm(_rightPwm)
 {
 }
 
-void TurningDistance::run()
+void DistanceTurning::run()
 {
   const int BUF_SIZE = 256;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
 
   // pwmが0の場合は終了する
   if(leftPwm == 0 && rightPwm == 0) {
-    logger.logWarning("The pwm value passed to TurningDistance is 0");
+    logger.logWarning("The pwm value passed to DistanceTurning is 0");
     return;
   }
   // 目標距離の値が0以下の場合はwarningを出して終了する
   if(targetDistance <= 0) {
-    sprintf(buf, "The targetDistance value passed to TurningDistance is %.2f", targetDistance);
+    snprintf(buf, BUF_SIZE, "The targetDistance value passed to DistanceTurning is %.2f", targetDistance);
     logger.logWarning(buf);
     return;
   }
@@ -61,12 +61,12 @@ void TurningDistance::run()
   controller.stopMotor();
 }
 
-void TurningDistance::logRunning()
+void DistanceTurning::logRunning()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
 
-  sprintf(buf, "Run TurningDistance (targetDistance: %.2f, leftPwm: %d, rightPwm: %d)",
+  snprintf(buf, BUF_SIZE, "Run DistanceTurning (targetDistance: %.2f, leftPwm: %d, rightPwm: %d)",
           targetDistance, leftPwm, rightPwm);
   logger.log(buf);
 }

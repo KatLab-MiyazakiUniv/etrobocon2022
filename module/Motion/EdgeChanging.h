@@ -1,22 +1,22 @@
 /**
- * @file   EdgeChanger.h
+ * @file   EdgeChanging.h
  * @brief  エッジ切り替え
  * @author mutotaka0426
  */
 
-#ifndef EDGE_CHANGER_H
-#define EDGE_CHANGER_H
+#ifndef EDGE_CHANGING_H
+#define EDGE_CHANGING_H
 
 #include "Motion.h"
 
-class EdgeChanger : public Motion {
+class EdgeChanging : public Motion {
  public:
   /**
    * コンストラクタ
    * @param _isLeftEdge エッジの左右判定(true:左エッジ, false:右エッジ)
    * @param _nextEdge 切り替え後のエッジ(true:左エッジ，false:右エッジ)
    */
-  EdgeChanger(bool& _isLeftEdge, bool _nextEdge);
+  EdgeChanging(bool& _isLeftEdge, bool _nextEdge);
 
   /**
    * @brief エッジを切り替える

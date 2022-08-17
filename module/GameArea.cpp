@@ -11,7 +11,7 @@ using namespace std;
 void GameArea::runGameArea(const bool isLeftCourse, bool& isLeftEdge, const int targetBrightness)
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
   Logger logger;
 
   // ファイルから受け取る動作リスト
@@ -24,7 +24,7 @@ void GameArea::runGameArea(const bool isLeftCourse, bool& isLeftEdge, const int 
   toEndPointMotions = MotionParser::createMotions(toEndPointPath, targetBrightness, isLeftEdge);
 
   // 動作実行のメッセージ
-  sprintf(buf, "\nRun the commands in '%s'\n", toEndPointPath);
+  snprintf(buf, BUF_SIZE, "\nRun the commands in '%s'\n", toEndPointPath);
   logger.logHighlight(buf);
   // 各動作を実行する
   for(const auto& eMotion : toEndPointMotions) {
@@ -37,8 +37,8 @@ void GameArea::runGameArea(const bool isLeftCourse, bool& isLeftEdge, const int 
   // ゲームエリア攻略の動作インスタンスのリストを生成する
   gameAreaMotions = MotionParser::createMotions(gameAreaPath, targetBrightness, isLeftEdge);
 
-  // 動作実行のメッセージ
-  sprintf(buf, "\nRun the commands in '%s'\n", gameAreaPath);
+  // 動作実行のメッセージログを出す
+  snprintf(buf, BUF_SIZE, "\nRun the commands in '%s'\n", gameAreaPath);
   logger.logHighlight(buf);
   // 各動作を実行する
   for(const auto& gMotion : gameAreaMotions) {

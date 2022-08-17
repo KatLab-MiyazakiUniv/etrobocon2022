@@ -1,10 +1,10 @@
 /**
- *  @file   TurningDistanceTest.cpp
- j  @brief  TurningDistanceクラスのテスト
+ *  @file   DistanceTurningTest.cpp
+ j  @brief  DistanceTurningクラスのテスト
  *  @author mutotaka0426
  */
 
-#include "TurningDistance.h"
+#include "DistanceTurning.h"
 #include <gtest/gtest.h>
 #include <gtest/internal/gtest-port.h>
 #include "Controller.h"
@@ -14,12 +14,12 @@ using namespace std;
 
 namespace etrobocon2022_test {
 
-  TEST(TurningDistanceTest, runRightPivot)
+  TEST(DistanceTurningTest, runRightPivot)
   {
     double targetDistance = 350;
     int leftPwm = 100;
     int rightPwm = 0;
-    TurningDistance td(targetDistance, leftPwm, rightPwm);
+    DistanceTurning dt(targetDistance, leftPwm, rightPwm);
     Measurer measurer;
 
     // 初期値
@@ -32,7 +32,7 @@ namespace etrobocon2022_test {
     double error
         = Mileage::calculateMileage(abs(leftPwm * 0.05), abs(rightPwm * 0.05));  // 許容誤差
 
-    td.run();  // 旋回を実行
+    dt.run();  // 旋回を実行
 
     // 関数実行後の走行距離
     int leftCount = abs(initialLeftCount - measurer.getLeftCount());
@@ -44,12 +44,12 @@ namespace etrobocon2022_test {
     EXPECT_GE(expected + error, actual);
   }
 
-  TEST(TurningDistanceTest, runLeftPivot)
+  TEST(DistanceTurningTest, runLeftPivot)
   {
     double targetDistance = 350;
     int leftPwm = 0;
     int rightPwm = 100;
-    TurningDistance td(targetDistance, leftPwm, rightPwm);
+    DistanceTurning dt(targetDistance, leftPwm, rightPwm);
     Measurer measurer;
 
     // 初期値
@@ -62,7 +62,7 @@ namespace etrobocon2022_test {
     double error
         = Mileage::calculateMileage(abs(leftPwm * 0.05), abs(rightPwm * 0.05));  // 許容誤差
 
-    td.run();  // 旋回を実行
+    dt.run();  // 旋回を実行
 
     // 関数実行後の走行距離
     int leftCount = abs(initialLeftCount - measurer.getLeftCount());
@@ -74,12 +74,12 @@ namespace etrobocon2022_test {
     EXPECT_GE(expected + error, actual);
   }
 
-  TEST(TurningDistanceTest, runBackRight)
+  TEST(DistanceTurningTest, runBackRight)
   {
     double targetDistance = 1000;
     int leftPwm = -100;
     int rightPwm = -80;
-    TurningDistance td(targetDistance, leftPwm, rightPwm);
+    DistanceTurning dt(targetDistance, leftPwm, rightPwm);
     Measurer measurer;
 
     // 初期値
@@ -92,7 +92,7 @@ namespace etrobocon2022_test {
     double error
         = Mileage::calculateMileage(abs(leftPwm * 0.05), abs(rightPwm * 0.05));  // 許容誤差
 
-    td.run();  // 旋回を実行
+    dt.run();  // 旋回を実行
 
     // 関数実行後の走行距離
     int leftCount = abs(initialLeftCount - measurer.getLeftCount());
@@ -104,12 +104,12 @@ namespace etrobocon2022_test {
     EXPECT_GE(expected + error, actual);
   }
 
-  TEST(TurningDistanceTest, runBackLeft)
+  TEST(DistanceTurningTest, runBackLeft)
   {
     double targetDistance = 1000;
     int leftPwm = -80;
     int rightPwm = -100;
-    TurningDistance td(targetDistance, leftPwm, rightPwm);
+    DistanceTurning dt(targetDistance, leftPwm, rightPwm);
     Measurer measurer;
 
     // 初期値
@@ -122,7 +122,7 @@ namespace etrobocon2022_test {
     double error
         = Mileage::calculateMileage(abs(leftPwm * 0.05), abs(rightPwm * 0.05));  // 許容誤差
 
-    td.run();  // 旋回を実行
+    dt.run();  // 旋回を実行
 
     // 関数実行後の走行距離
     int leftCount = abs(initialLeftCount - measurer.getLeftCount());
@@ -134,12 +134,12 @@ namespace etrobocon2022_test {
     EXPECT_GE(expected + error, actual);
   }
 
-  TEST(TurningDistanceTest, runZeroPwm)
+  TEST(DistanceTurningTest, runZeroPwm)
   {
     double targetDistance = 1000;
     int leftPwm = 0;
     int rightPwm = 0;
-    TurningDistance td(targetDistance, leftPwm, rightPwm);
+    DistanceTurning dt(targetDistance, leftPwm, rightPwm);
     Measurer measurer;
 
     // 初期値
@@ -150,11 +150,11 @@ namespace etrobocon2022_test {
 
     // Warning文
     string expectedOutput = "\x1b[36m";  // 文字色をシアンに
-    expectedOutput += "Warning: The pwm value passed to TurningDistance is 0";
+    expectedOutput += "Warning: The pwm value passed to DistanceTurning is 0";
     expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
 
     testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
-    td.run();                            // 旋回を実行
+    dt.run();                            // 旋回を実行
     string actualOutput = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
     // 関数実行後の走行距離
@@ -166,12 +166,12 @@ namespace etrobocon2022_test {
     EXPECT_EQ(expected, actual);              // 走行距離のテスト
   }
 
-  TEST(TurningDistanceTest, runMinusDistance)
+  TEST(DistanceTurningTest, runMinusDistance)
   {
     double targetDistance = -350;
     int leftPwm = 100;
     int rightPwm = 100;
-    TurningDistance td(targetDistance, leftPwm, rightPwm);
+    DistanceTurning dt(targetDistance, leftPwm, rightPwm);
     Measurer measurer;
 
     // 初期値
@@ -182,11 +182,11 @@ namespace etrobocon2022_test {
 
     // Warning文
     string expectedOutput = "\x1b[36m";  // 文字色をシアンに
-    expectedOutput += "Warning: The targetDistance value passed to TurningDistance is -350.00";
+    expectedOutput += "Warning: The targetDistance value passed to DistanceTurning is -350.00";
     expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
 
     testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
-    td.run();                            // 旋回を実行
+    dt.run();                            // 旋回を実行
     string actualOutput = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
     // 関数実行後の走行距離
