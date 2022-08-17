@@ -17,6 +17,7 @@ void ArmKeeper::start()
   // 0はRasPike起動時のアームの角度(モータの回転量)
   int maxCount = 0;
   int currentCount = measurer.getArmMotorCount();
+  // currentCountより小さい値で初期化
   int prevCount = currentCount - 1;
   int pwm = 0;
   while(true) {
