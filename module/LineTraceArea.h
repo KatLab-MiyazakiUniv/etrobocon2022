@@ -31,7 +31,7 @@ class LineTraceArea {
 
  private:
   // データファイルのパス
-  static constexpr char* leftSourceFileName = "etrobocon2022/datafiles/LineTraceLeftParams.csv";
+  static constexpr char* leftSourceFileName = "etrobocon2022/datafiles/Left_02_0817.csv";
   static constexpr char* rightSourceFileName = "etrobocon2022/datafiles/LineTraceRightParams.csv";
 
   LineTraceArea();  // インスタンス化を禁止する
