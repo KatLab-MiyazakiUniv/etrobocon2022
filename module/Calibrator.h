@@ -50,6 +50,11 @@ class Calibrator {
   Logger logger;
 
   /**
+   * SPIKEの電圧を表示する
+   */
+  void showVoltage();
+
+  /**
    * 左右ボタンでLRコースを選択してisLeftCourseをセットする
    */
   void selectCourse();

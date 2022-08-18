@@ -13,22 +13,33 @@ Calibrator::Calibrator()
 
 void Calibrator::run()
 {
-  const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
-
-  // ev3apiの出力と入り混じるので10ミリ秒スリープを入れる
-  controller.sleep();
-
-  // SPIKEの電圧を取得しログを出す
-  double voltage = measurer.getVoltage();
-  snprintf(buf, BUF_SIZE, "SPIKE voltage is %.3lf[V]\n", voltage);
-  logger.logHighlight(buf);
+  // SPIKEの電圧を表示する
+  showVoltage();
 
   // 左右ボタンでコースのLRを選択する
   selectCourse();
 
   // 黒と白の輝度を測定して目標輝度を求める
   measureTargetBrightness();
+}
+
+void Calibrator::showVoltage()
+{
+  constexpr double MAX_VOLTAGE = 8.393;  // SPIKEの電圧の最大値
+  const int BUF_SIZE = 128;
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
+
+  // SPIKEの電圧を取得しログを出す
+  double voltage = measurer.getVoltage();
+  snprintf(buf, BUF_SIZE, "SPIKE voltage is %.3f[V] (max voltage: %.3f[V])", voltage, MAX_VOLTAGE);
+  logger.logHighlight(buf);
+
+  // SPIKEの電圧が最大値の半分以下になったらWarningを出す
+  if(voltage <= MAX_VOLTAGE / 2) {
+    logger.logWarning("Voltage is low\n");
+  } else {
+    logger.log("");  // Warninがなかった時に改行だけ入れる
+  }
 }
 
 void Calibrator::selectCourse()

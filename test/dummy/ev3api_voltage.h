@@ -7,6 +7,8 @@
 #ifndef EV3API_VOLTAGE_H
 #define EV3API_VOLTAGE_H
 
+#include <stdlib.h>
+
 /**
  * @brief SPIKEの電圧を取得
  * @return SPIKEの電圧[mV]
