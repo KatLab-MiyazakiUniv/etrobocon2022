@@ -19,7 +19,7 @@ void EdgeChanging::run()
 void EdgeChanging::logRunning()
 {
   const int BUF_SIZE = 256;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
   const char* isLeftEdgeStr = isLeftEdge ? "true" : "false";
   const char* nextEdgeStr = nextEdge ? "true" : "false";
 

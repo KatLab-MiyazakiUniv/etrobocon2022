@@ -12,7 +12,7 @@
 void EtRobocon2022::start()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
   Logger logger;
 
   bool isLeftCourse = true;

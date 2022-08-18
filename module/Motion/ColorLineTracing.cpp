@@ -68,7 +68,7 @@ void ColorLineTracing::run()
 void ColorLineTracing::logRunning()
 {
   const int BUF_SIZE = 256;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
   const char* str = isLeftEdge ? "true" : "false";
 
   snprintf(buf, BUF_SIZE,

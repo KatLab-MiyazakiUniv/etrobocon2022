@@ -12,7 +12,7 @@ ColorStraight::ColorStraight(COLOR _targetColor, int _pwm) : targetColor(_target
 void ColorStraight::run()
 {
   const int BUF_SIZE = 256;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
 
   // pwm値が0の場合は終了する
   if(pwm == 0) {
@@ -84,7 +84,7 @@ void ColorStraight::run()
 void ColorStraight::logRunning()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
 
   snprintf(buf, BUF_SIZE, "Run ColorStraight (targetColor: %s, pwm: %d)",
            ColorJudge::colorToString(targetColor), pwm);

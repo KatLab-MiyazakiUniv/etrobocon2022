@@ -16,7 +16,7 @@ Rotation::Rotation(int _angle, int _pwm, bool _isClockwise)
 void Rotation::run()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
 
   // pwm値が0以下の場合はwarningを出して終了する
   if(pwm <= 0) {
@@ -74,7 +74,7 @@ void Rotation::run()
 void Rotation::logRunning()
 {
   const int BUF_SIZE = 256;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
   const char* str = isClockwise ? "true" : "false";
 
   snprintf(buf, BUF_SIZE, "Run Rotation (angle: %d, pwm: %d, isClockwise: %s)", angle, pwm, str);

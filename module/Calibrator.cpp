@@ -26,7 +26,7 @@ void Calibrator::run()
 void Calibrator::selectCourse()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
   bool _isLeftCourse = true;
 
   logger.log("Select a Course");
@@ -60,7 +60,7 @@ void Calibrator::selectCourse()
 void Calibrator::measureTargetBrightness()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
   // 黒と白の輝度（初期化の値はロボコン部屋で取得した値）
   int blackBrightness = BLACK_BRIGHTNESS;
   int whiteBrightness = WHITE_BRIGHTNESS;
@@ -96,7 +96,7 @@ void Calibrator::measureTargetBrightness()
 void Calibrator::waitForStart()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];               // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];               // log用にメッセージを一時保持する領域
   constexpr int startDistance = 5;  // 手などでスタート合図を出す距離[cm]
 
   logger.log("On standby.\n");

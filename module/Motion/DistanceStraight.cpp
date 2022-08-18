@@ -15,7 +15,7 @@ DistanceStraight::DistanceStraight(double _targetDistance, int _pwm)
 void DistanceStraight::run()
 {
   const int BUF_SIZE = 256;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
 
   // pwmが0の場合は終了する
   if(pwm == 0) {
@@ -94,7 +94,7 @@ void DistanceStraight::run()
 void DistanceStraight::logRunning()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
 
   snprintf(buf, BUF_SIZE, "Run DistanceStraight (targetDistance: %.2f, pwm: %d)", targetDistance,
            pwm);

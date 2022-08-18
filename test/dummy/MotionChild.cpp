@@ -33,8 +33,8 @@ void MotionChild::run()
 void MotionChild::logRunning()
 {
   const int BUF_SIZE = 256;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
 
-  sprintf(buf, "Run MotionChild (targetDistance: %.2f, pwm: %d)", targetDistance, pwm);
+  snprintf(buf, BUF_SIZE, "Run MotionChild (targetDistance: %.2f, pwm: %d)", targetDistance, pwm);
   logger.log(buf);
 }

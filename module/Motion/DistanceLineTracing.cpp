@@ -20,7 +20,7 @@ DistanceLineTracing::DistanceLineTracing(double _targetDistance, int _targetBrig
 void DistanceLineTracing::run()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
 
   double initialDistance = 0;  // 実行前の走行距離
   double currentDistance = 0;  // 現在の走行距離
@@ -70,7 +70,7 @@ void DistanceLineTracing::run()
 void DistanceLineTracing::logRunning()
 {
   const int BUF_SIZE = 256;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
   const char* str = isLeftEdge ? "true" : "false";
 
   snprintf(buf, BUF_SIZE,

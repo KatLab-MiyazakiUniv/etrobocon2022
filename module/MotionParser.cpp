@@ -12,7 +12,7 @@ vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrig
                                             bool& isLeftEdge)
 {
   const int BUF_SIZE = 512;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
   Logger logger;
   int lineNum = 1;  // Warning用の行番号
 
@@ -27,12 +27,9 @@ vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrig
     return motionList;
   }
 
-  // 各行の文字を一時的に保持する領域
-  char row[BUF_SIZE];
-  // 区切り文字
-  const char separator = ',';
+  char row[BUF_SIZE];          // 各行の文字を一時的に保持する領域
+  const char separator = ',';  // 行ごとにパラメータを読み込む
 
-  // 行ごとにパラメータを読み込む
   while(fgets(row, BUF_SIZE, fp) != NULL) {
     vector<char*> params;
     // separatorを区切り文字にしてrowを分解し，paramに代入する

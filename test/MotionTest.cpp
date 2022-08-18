@@ -45,8 +45,9 @@ namespace etrobocon2022_test {
     MotionChild motionChild(targetDistance, pwm);
 
     const int BUF_SIZE = 256;
-    char expected[BUF_SIZE];  // log用にメッセージを一時保存する
-    sprintf(expected, "Run MotionChild (targetDistance: %.2f, pwm: %d)\n", targetDistance, pwm);
+    char expected[BUF_SIZE];  // log用にメッセージを一時保持する領域
+    snprintf(expected, BUF_SIZE, "Run MotionChild (targetDistance: %.2f, pwm: %d)\n",
+             targetDistance, pwm);
 
     testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
     motionChild.logRunning();

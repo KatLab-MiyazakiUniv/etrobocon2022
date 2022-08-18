@@ -15,7 +15,7 @@ DistanceTurning::DistanceTurning(double _targetDistance, int _leftPwm, int _righ
 void DistanceTurning::run()
 {
   const int BUF_SIZE = 256;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
 
   // pwmが0の場合は終了する
   if(leftPwm == 0 && rightPwm == 0) {
@@ -65,7 +65,7 @@ void DistanceTurning::run()
 void DistanceTurning::logRunning()
 {
   const int BUF_SIZE = 128;
-  char buf[BUF_SIZE];  // log用にメッセージを一時保存する領域
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
 
   snprintf(buf, BUF_SIZE, "Run DistanceTurning (targetDistance: %.2f, leftPwm: %d, rightPwm: %d)",
            targetDistance, leftPwm, rightPwm);
