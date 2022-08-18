@@ -27,10 +27,10 @@ void GameArea::runGameArea(const bool isLeftCourse, bool& isLeftEdge, const int 
   snprintf(buf, BUF_SIZE, "\nRun the commands in '%s'\n", toEndPointPath);
   logger.logHighlight(buf);
   // 各動作を実行する
-  //for(const auto& eMotion : toEndPointMotions) {
-    //eMotion->logRunning();
-    //eMotion->run();
-  //}
+  for(const auto& eMotion : toEndPointMotions) {
+    eMotion->logRunning();
+    eMotion->run();
+  }
 
   // ゲームエリア攻略のコマンドファイルを読み込む
   const char* gameAreaPath = isLeftCourse ? gameAreaLeft : gameAreaRight;

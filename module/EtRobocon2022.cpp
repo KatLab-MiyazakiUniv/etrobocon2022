@@ -22,13 +22,13 @@ void EtRobocon2022::start()
   Calibrator calibrator;
 
   // キャリブレーションする
-  //calibrator.run();
-  //isLeftCourse = calibrator.getIsLeftCourse();
-  //isLeftEdge = isLeftCourse;
-  //targetBrightness = calibrator.getTargetBrightness();
+  calibrator.run();
+  isLeftCourse = calibrator.getIsLeftCourse();
+  isLeftEdge = isLeftCourse;
+  targetBrightness = calibrator.getTargetBrightness();
 
   // 合図を送るまで待機する
-  //calibrator.waitForStart();
+  calibrator.waitForStart();
 
   // スタートのメッセージログを出す
   const char* course = isLeftCourse ? "Left" : "Right";
@@ -36,7 +36,7 @@ void EtRobocon2022::start()
   logger.logHighlight(buf);
 
   // ライントレースエリアを走行する
-  // LineTraceArea::runLineTraceArea(isLeftCourse, isLeftEdge, targetBrightness);
+  LineTraceArea::runLineTraceArea(isLeftCourse, isLeftEdge, targetBrightness);
 
   // ゲームエリアを攻略する
   GameArea::runGameArea(isLeftCourse, isLeftEdge, targetBrightness);

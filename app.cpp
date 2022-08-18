@@ -18,6 +18,6 @@ void main_task(intptr_t unused)
 // アームを一定に保つタスク
 void arm_task(intptr_t unused)
 {
-  ArmKeeper::start();
+  // ArmKeeper::start();
   ext_tsk();
 }
