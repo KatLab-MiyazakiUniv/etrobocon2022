@@ -13,6 +13,14 @@ Calibrator::Calibrator()
 
 void Calibrator::run()
 {
+  const int BUF_SIZE = 128;
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
+
+  // SPIKEの電圧を取得しログを出す
+  double voltage = measurer.getVoltage();
+  snprintf(buf, BUF_SIZE, "SPIKE voltage is %lf[V]\n", voltage);
+  logger.logHighlight(buf);
+
   // ev3apiの出力と入り混じるので10ミリ秒スリープを入れる
   controller.sleep();
 

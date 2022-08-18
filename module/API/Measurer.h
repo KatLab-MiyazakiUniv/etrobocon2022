@@ -75,6 +75,12 @@ class Measurer {
    */
   int getForwardDistance();
 
+  /**
+   * SPIKEの電圧を取得
+   * @return SPIKEの電圧[v]
+   */
+  double getVoltage();
+
  private:
   ev3api::ColorSensor colorSensor;
   ev3api::SonarSensor sonarSensor;
