@@ -1,7 +1,7 @@
 /**
  * @file Measurer.cpp
  * @brief 計測に用いる関数をまとめたラッパークラス
- * @author KakinokiKanta mutotaka0426
+ * @author KakinokiKanta mutotaka0426 sugaken0528
  */
 
 #include "Measurer.h"

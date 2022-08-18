@@ -1,7 +1,7 @@
 /**
  * @file Calibrator.cpp
  * @brief キャリブレーションからスタートまでを担当するクラス
- * @author mutotaka0426
+ * @author mutotaka0426 sugaken0528
  */
 
 #include "Calibrator.h"
@@ -18,7 +18,7 @@ void Calibrator::run()
 
   // SPIKEの電圧を取得しログを出す
   double voltage = measurer.getVoltage();
-  snprintf(buf, BUF_SIZE, "SPIKE voltage is %lf[V]\n", voltage);
+  snprintf(buf, BUF_SIZE, "SPIKE voltage is %.3lf[V]\n", voltage);
   logger.logHighlight(buf);
 
   // ev3apiの出力と入り混じるので10ミリ秒スリープを入れる

@@ -7,6 +7,10 @@
 #ifndef EV3API_VOLTAGE_H
 #define EV3API_VOLTAGE_H
 
+/**
+ * @brief SPIKEの電圧を取得
+ * @return SPIKEの電圧[mV]
+ */
 float ev3_battery_voltage_mV();
 
 #endif

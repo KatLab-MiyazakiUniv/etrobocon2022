@@ -1,7 +1,7 @@
 /**
  * @file Measurer.h
  * @brief 計測に用いる関数をまとめたラッパークラス
- * @author KakinokiKanta mutotaka0426
+ * @author KakinokiKanta mutotaka0426 sugaken0528
  */
 
 #ifndef MEASURER_H
@@ -77,7 +77,7 @@ class Measurer {
 
   /**
    * SPIKEの電圧を取得
-   * @return SPIKEの電圧[v]
+   * @return SPIKEの電圧[V]
    */
   double getVoltage();
 
