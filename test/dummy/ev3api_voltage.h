@@ -11,6 +11,6 @@
  * @brief SPIKEの電圧を取得
  * @return SPIKEの電圧[mV]
  */
-float ev3_battery_voltage_mV();
+int ev3_battery_voltage_mV();
 
 #endif

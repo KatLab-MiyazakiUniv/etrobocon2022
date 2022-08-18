@@ -6,7 +6,7 @@
 
 #include "ev3api_voltage.h"
 
-float ev3_battery_voltage_mV()
+int ev3_battery_voltage_mV()
 {
   // SPIKEの電圧の標準値[mV]
   return 7300;

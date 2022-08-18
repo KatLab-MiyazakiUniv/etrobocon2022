@@ -84,5 +84,5 @@ int Measurer::getForwardDistance()
 // SPIKEの電圧を取得
 double Measurer::getVoltage()
 {
-  return ev3_battery_voltage_mV() / 1000;
+  return (double)ev3_battery_voltage_mV() / 1000.0;
 }
