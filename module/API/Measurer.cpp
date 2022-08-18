@@ -1,7 +1,7 @@
 /**
  * @file Measurer.cpp
  * @brief 計測に用いる関数をまとめたラッパークラス
- * @author KakinokiKanta mutotaka0426
+ * @author KakinokiKanta mutotaka0426 sugaken0528
  */
 
 #include "Measurer.h"
@@ -79,4 +79,10 @@ int Measurer::getForwardDistance()
   if(distance == -1) distance = 1000;
 
   return distance;
+}
+
+// SPIKEの電圧を取得
+double Measurer::getVoltage()
+{
+  return (double)ev3_battery_voltage_mV() / 1000.0;
 }
