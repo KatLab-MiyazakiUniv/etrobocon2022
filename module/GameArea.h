@@ -10,6 +10,7 @@
 #include <vector>
 #include "MotionParser.h"
 #include "Logger.h"
+#include "Controller.h"
 
 class GameArea {
  public:
