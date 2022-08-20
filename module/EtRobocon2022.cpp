@@ -18,9 +18,9 @@ void EtRobocon2022::start()
   Logger logger;
 
   bool isLeftCourse = true;
-  bool isLeftEdge = true;
-  //int targetBrightness = (WHITE_BRIGHTNESS + BLACK_BRIGHTNESS) / 2;
-  int targetBrightness = 48;
+  bool isLeftEdge = false;
+  int targetBrightness = (WHITE_BRIGHTNESS + BLACK_BRIGHTNESS) / 2;
+  //int targetBrightness = 46;
   Calibrator calibrator;
 
   unsigned int sec;
@@ -52,11 +52,14 @@ void EtRobocon2022::start()
   logger.logHighlight(buf);
 
 
-
   // ライントレースエリアを走行する
   LineTraceArea::runLineTraceArea(isLeftCourse, isLeftEdge, targetBrightness);
 
-    /* 処理開始後の時間とクロックを取得 */
+
+  // ゲームエリアを攻略する
+  GameArea::runGameArea(isLeftCourse, isLeftEdge, targetBrightness);
+
+      /* 処理開始後の時間とクロックを取得 */
     clock_gettime(CLOCK_REALTIME, &end_time);
 
     /* 処理中の経過時間を計算 */
@@ -70,7 +73,4 @@ void EtRobocon2022::start()
     printf(
         "time:%f\n", d_sec
     );
-
-  // ゲームエリアを攻略する
-  GameArea::runGameArea(isLeftCourse, isLeftEdge, targetBrightness);
 }
