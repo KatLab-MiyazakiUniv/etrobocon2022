@@ -30,7 +30,6 @@ void ArmFalling::run()
 
   // アームを水平にする処理を有効化
   ArmKeeper::setArmFlag(true);
-
 }
 
 void ArmFalling::logRunning()

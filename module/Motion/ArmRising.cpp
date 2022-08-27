@@ -30,7 +30,6 @@ void ArmRising::run()
 
   //アームモータの停止
   controller.stopArmMotor();
-
 }
 
 void ArmRising::logRunning()
