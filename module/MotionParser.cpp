@@ -100,8 +100,8 @@ vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrig
     } else if(command == COMMAND::AF) {  // アームを下げる
       ArmFalling* af = new ArmFalling(atoi(params[1]), atoi(params[2]));
 
-      motionList.push_back(af);          // 動作リストに追加
-    } else {                             // 未定義のコマンドの場合
+      motionList.push_back(af);  // 動作リストに追加
+    } else {                     // 未定義のコマンドの場合
       snprintf(buf, BUF_SIZE, "%s:%d: '%s' is undefined command", filePath, lineNum, params[0]);
       logger.logWarning(buf);
     }
