@@ -1,7 +1,7 @@
 /**
  * @file ArmKeeper.h
  * @brief アームを水平に保つクラス
- * @author miyashita64
+ * @author miyashita64 KakinokiKanta
  */
 
 #ifndef ARM_KEEPER_H
@@ -13,13 +13,13 @@
 class ArmKeeper {
  public:
   static void start();
-  static void setArmFlag(bool _armFlag);
+  static void setKeepFlag(bool _keepFlag);
 
  private:
   ArmKeeper();  // インスタンス化を禁止する
 
   // アームを水平に維持するかのフラグ(true:調整する/false:調整しない)
-  static bool armFlag;
+  static bool keepFlag;
 };
 
 #endif

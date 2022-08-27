@@ -15,7 +15,7 @@ void ArmRising::run()
   int initCount = measurer.getArmMotorCount();
 
   // アームを水平にする処理を無効化
-  ArmKeeper::setArmFlag(false);
+  ArmKeeper::setKeepFlag(false);
 
   while(true) {
     int currentCount = measurer.getArmMotorCount();

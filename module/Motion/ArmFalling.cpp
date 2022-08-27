@@ -29,7 +29,7 @@ void ArmFalling::run()
   controller.stopArmMotor();
 
   // アームを水平にする処理を有効化
-  ArmKeeper::setArmFlag(true);
+  ArmKeeper::setKeepFlag(true);
 }
 
 void ArmFalling::logRunning()

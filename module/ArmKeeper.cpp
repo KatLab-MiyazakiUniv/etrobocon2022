@@ -1,12 +1,12 @@
 /**
  * @file ArmKeeper.cpp
  * @brief アームを水平に保つクラス
- * @author miyashita64
+ * @author miyashita64 KakinokiKanta
  */
 
 #include "ArmKeeper.h"
 
-bool ArmKeeper::armFlag = true;
+bool ArmKeeper::keepFlag = true;
 
 void ArmKeeper::start()
 {
@@ -23,7 +23,7 @@ void ArmKeeper::start()
   int prevCount = currentCount - 1;
   int pwm = 0;
   while(true) {
-    if(armFlag) {
+    if(keepFlag) {
       // 現在のアームの角度を取得する
       currentCount = measurer.getArmMotorCount();
 
@@ -43,7 +43,7 @@ void ArmKeeper::start()
 }
 
 // フラグのセット
-void ArmKeeper::setArmFlag(bool _armFlag)
+void ArmKeeper::setKeepFlag(bool _keepFlag)
 {
-  armFlag = _armFlag;
+  keepFlag = _keepFlag;
 };
