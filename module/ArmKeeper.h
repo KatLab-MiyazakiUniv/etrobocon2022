@@ -13,6 +13,13 @@
 class ArmKeeper {
  public:
   static void start();
+  static void setArmFlag(bool _armFlag);
+
+ private:
+  ArmKeeper();  // インスタンス化を禁止する
+
+  // アームを水平に維持するかのフラグ(true:調整する/false:調整しない)
+  static bool armFlag;
 };
 
 #endif

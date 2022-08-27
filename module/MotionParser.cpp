@@ -92,7 +92,15 @@ vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrig
     } else if(command == COMMAND::SL) {  // 自タスクスリープの生成
       Sleeping* sl = new Sleeping(atoi(params[1]));
 
-      motionList.push_back(sl);  // 動作リストに追加
+      motionList.push_back(sl);          // 動作リストに追加
+    } else if(command == COMMAND::AR) {  // アームを上げる
+      ArmRising* ar = new ArmRising(atoi(params[1]), atoi(params[2]));
+
+      motionList.push_back(ar);  // 動作リストに追加
+    } else if(command == COMMAND::AF) {  // アームを下げる
+      ArmFalling* ar = new ArmFalling(atoi(params[1]), atoi(params[2]));
+
+      motionList.push_back(ar);  // 動作リストに追加
     } else {                     // 未定義のコマンドの場合
       snprintf(buf, BUF_SIZE, "%s:%d: '%s' is undefined command", filePath, lineNum, params[0]);
       logger.logWarning(buf);
@@ -124,6 +132,10 @@ COMMAND MotionParser::convertCommand(char* str)
     return COMMAND::EC;
   } else if(strcmp(str, "SL") == 0) {  // 文字列がSLの場合
     return COMMAND::SL;
+  } else if(strcmp(str, "AR") == 0) {  // 文字列がARの場合
+    return COMMAND::AR;
+  } else if(strcmp(str, "AF") == 0) {  // 文字列がAFの場合
+    return COMMAND::AF;
   } else {  //想定していない文字列が来た場合
     return COMMAND::NONE;
   }
