@@ -23,7 +23,7 @@ void ArmKeeper::start()
   int prevCount = currentCount - 1;
   int pwm = 0;
   while(true) {
-    if(armFlag){
+    if(armFlag) {
       // 現在のアームの角度を取得する
       currentCount = measurer.getArmMotorCount();
 
