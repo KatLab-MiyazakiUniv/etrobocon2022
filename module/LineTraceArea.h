@@ -36,7 +36,7 @@ class LineTraceArea {
   static constexpr char* lineTraceAreaLeft
       = "etrobocon2022/datafiles/Linetrace_Left_02_02_0819.csv";
   static constexpr char* lineTraceAreaRight
-      = "etrobocon2022/datafiles/linetrace_Right_02_02_0819.csv";
+      = "etrobocon2022/datafiles/Linetrace_Right_02_02_0819.csv";
 
   LineTraceArea();  // インスタンス化を禁止する
 };
