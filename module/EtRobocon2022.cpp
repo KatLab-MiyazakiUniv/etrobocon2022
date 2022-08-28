@@ -39,4 +39,7 @@ void EtRobocon2022::start()
 
   // ゲームエリアを攻略する
   GameArea::runGameArea(isLeftCourse, isLeftEdge, targetBrightness);
+
+  // 走行終了のメッセージログを出す
+  logger.logHighlight("The run has been completed\n");
 }
