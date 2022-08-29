@@ -5,7 +5,7 @@
  */
 
 #include "ArmFalling.h"
-#include "ArmKeeper.h"
+
 using namespace std;
 
 ArmFalling::ArmFalling(int _angle, int _pwm) : angle(_angle), pwm(_pwm) {}
@@ -28,8 +28,7 @@ void ArmFalling::run()
   //アームモータの停止
   controller.stopArmMotor();
 
-  // アームを水平にする処理を有効化
-  ArmKeeper::setKeepFlag(true);
+
 }
 
 void ArmFalling::logRunning()

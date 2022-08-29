@@ -5,7 +5,7 @@
  */
 
 #include "ArmRising.h"
-#include "ArmKeeper.h"
+
 using namespace std;
 
 ArmRising::ArmRising(int _angle, int _pwm) : angle(_angle), pwm(_pwm) {}
@@ -14,8 +14,6 @@ void ArmRising::run()
 {
   int initCount = measurer.getArmMotorCount();
 
-  // アームを水平にする処理を無効化
-  ArmKeeper::setKeepFlag(false);
 
   while(true) {
     int currentCount = measurer.getArmMotorCount();
