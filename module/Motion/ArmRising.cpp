@@ -14,7 +14,6 @@ void ArmRising::run()
 {
   int initCount = measurer.getArmMotorCount();
 
-
   while(true) {
     int currentCount = measurer.getArmMotorCount();
 
