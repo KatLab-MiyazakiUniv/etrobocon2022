@@ -24,12 +24,11 @@ class GameArea {
 
  private:
   // 端点サークルまでのコマンドファイルのパス
-  static constexpr char* toEndPointLeft = "etrobocon2022/datafiles/ToEndPoint_Left_02_02_0819.csv";
-  static constexpr char* toEndPointRight
-      = "etrobocon2022/datafiles/ToEndPoint_Right_02_02_0819.csv";
+  static constexpr char* toEndPointLeft = "etrobocon2022/datafiles/ToEndPointLeft.csv";
+  static constexpr char* toEndPointRight = "etrobocon2022/datafiles/ToEndPointRight.csv";
   // ゲームエリアのコマンドファイルのパス
-  static constexpr char* gameAreaLeft = "etrobocon2022/datafiles/Game_Left_02_0819.csv";
-  static constexpr char* gameAreaRight = "etrobocon2022/datafiles/Game_Right_02_0819.csv";
+  static constexpr char* gameAreaLeft = "etrobocon2022/datafiles/GameAreaLeft.csv";
+  static constexpr char* gameAreaRight = "etrobocon2022/datafiles/GameAreaRight.csv";
 
   GameArea();  // インスタンス化を禁止する
 };

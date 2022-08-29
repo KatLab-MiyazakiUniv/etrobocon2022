@@ -33,10 +33,8 @@ class LineTraceArea {
 
  private:
   // ライントレースエリアのコマンドファイルのパス
-  static constexpr char* lineTraceAreaLeft
-      = "etrobocon2022/datafiles/Linetrace_Left_02_02_0819.csv";
-  static constexpr char* lineTraceAreaRight
-      = "etrobocon2022/datafiles/Linetrace_Right_02_02_0819.csv";
+  static constexpr char* lineTraceAreaLeft = "etrobocon2022/datafiles/LinetraceAreaLeft.csv";
+  static constexpr char* lineTraceAreaRight = "etrobocon2022/datafiles/LinetraceAreaRight.csv";
 
   LineTraceArea();  // インスタンス化を禁止する
 };
