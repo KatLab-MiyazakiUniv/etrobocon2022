@@ -28,7 +28,6 @@ void ArmFalling::run()
   //アームモータの停止
   controller.stopArmMotor();
 
-
 }
 
 void ArmFalling::logRunning()
