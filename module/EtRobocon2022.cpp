@@ -21,7 +21,7 @@ void EtRobocon2022::start()
   Calibrator calibrator;
 
   // サーバを起動する
-  system("bash ./serve.sh &");
+  system("bash ./etrobocon2022/scripts/serve.sh &");
 
   // キャリブレーションする
   calibrator.run();
@@ -33,7 +33,7 @@ void EtRobocon2022::start()
   calibrator.waitForStart();
 
   // 開始合図を送る
-  system("bash ./start.sh");
+  system("bash ./etrobocon2022/scripts/start.sh");
 
   // スタートのメッセージログを出す
   const char* course = isLeftCourse ? "Left" : "Right";
