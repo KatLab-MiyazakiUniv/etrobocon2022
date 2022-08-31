@@ -51,7 +51,8 @@ namespace etrobocon2022_test {
     expectedList.push_back(sl);
     ArmRising* ar = new ArmRising(10, 100);
     expectedList.push_back(ar);
-
+    ArmFalling* af = new ArmFalling(10, 100);
+    expectedList.push_back(af);
     // Warning文
     string expectedOutput = "\x1b[36m";  // 文字色をシアンに
     expectedOutput += "Warning: ../test/test_data/CommandParserTestData.csv:10: ";

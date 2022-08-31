@@ -1,5 +1,5 @@
 /**
- * @file ArmFalling.h
+ * @file ArmRising.h
  * @brief アームを上げるクラス
  * @author mutotaka0426 KakinokiKanta
  */
