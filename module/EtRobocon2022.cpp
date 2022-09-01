@@ -20,6 +20,9 @@ void EtRobocon2022::start()
   int targetBrightness = (WHITE_BRIGHTNESS + BLACK_BRIGHTNESS) / 2;
   Calibrator calibrator;
 
+  // サーバを起動する
+  system("bash ./etrobocon2022/scripts/serve.sh &");
+
   // キャリブレーションする
   calibrator.run();
   isLeftCourse = calibrator.getIsLeftCourse();
@@ -28,6 +31,9 @@ void EtRobocon2022::start()
 
   // 合図を送るまで待機する
   calibrator.waitForStart();
+
+  // カメラシステムに開始合図を送る
+  system("bash ./etrobocon2022/scripts/start.sh");
 
   // スタートのメッセージログを出す
   const char* course = isLeftCourse ? "Left" : "Right";
