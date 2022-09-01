@@ -32,7 +32,7 @@ void EtRobocon2022::start()
   // 合図を送るまで待機する
   calibrator.waitForStart();
 
-  // 開始合図を送る
+  // カメラシステムに開始合図を送る
   system("bash ./etrobocon2022/scripts/start.sh");
 
   // スタートのメッセージログを出す

@@ -4,10 +4,12 @@
 PORT=8080
 MESSAGE_FILE_PATH="message.txt"
 
-message=""
-echo -n "Wait" > $MESSAGE_FILE_PATH
+message="Wait"
+echo -n "$message" > $MESSAGE_FILE_PATH
 
 while [ "$message" != "Start" ]; do
     message="$(cat $MESSAGE_FILE_PATH)"
     echo -n "$message" | nc -l -p $PORT -w 1
 done
+
+rm $MESSAGE_FILE_PATH

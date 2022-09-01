@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo -n Start > message.txt
+echo -n "Start" > message.txt
