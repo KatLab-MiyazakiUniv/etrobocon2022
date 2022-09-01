@@ -13,11 +13,13 @@ class ArmFalling : public Motion {
  public:
   /**
    * コンストラクタ
+   * @param _angle アームを下げる角度 0~60
+   * @param _pwm PWM値 0~40
    */
   ArmFalling(int _angle, int _pwm);
 
   /**
-   * @brief 実行する
+   * @brief アームを下げる
    */
   void run();
 

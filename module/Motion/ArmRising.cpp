@@ -14,6 +14,19 @@ void ArmRising::run()
 {
   int initCount = measurer.getArmMotorCount();
 
+  // pwm値が0以下の場合はwarningを出して終了する
+  if(pwm <= 0) {
+    snprintf(buf, BUF_SIZE, "The pwm value passed to Rotation is %d", pwm);
+    logger.logWarning(buf);
+    return;
+  }
+  // angleが0以下の場合はwarningを出して終了する
+  if(angle <= 0 || angle >= 360) {
+    snprintf(buf, BUF_SIZE, "The angle value passed to Rotation is %d", angle);
+    logger.logWarning(buf);
+    return;
+  }
+
   while(true) {
     int currentCount = measurer.getArmMotorCount();
 
