@@ -20,6 +20,8 @@
 #include "DistanceTurning.h"
 #include "EdgeChanging.h"
 #include "Sleeping.h"
+#include "ArmRising.h"
+#include "ArmFalling.h"
 
 enum class COMMAND {
   DL,  // 指定距離ライントレース
@@ -30,6 +32,8 @@ enum class COMMAND {
   DT,  // 旋回
   EC,  // エッジ切り替え
   SL,  // 自タスクスリープ
+  AR,  // アームを上げる
+  AF,  // アームを下げる
   NONE
 };
 
