@@ -103,7 +103,7 @@ namespace etrobocon2022_test {
     double expected = angle;  // 指定した角度を期待値とする
 
     // 一回のsetPWM()でダミーのモータカウントに加算される値はpwm * 0.05
-    double error = pwm * 0.05;  // 許容誤差[deg]
+    double error = 60 * 0.05;  // 許容誤差[deg]
 
     // Warning文
     string expectedOutput = "\x1b[36m";  // 文字色をシアンに
