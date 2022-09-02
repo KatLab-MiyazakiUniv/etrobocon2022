@@ -29,8 +29,8 @@ class ArmFalling : public Motion {
   void logRunning();
 
  private:
-  int angle;  // 回転角度(deg) 0~360
-  int pwm;    // PWM値 0~100
+  int angle;  // 回転角度(deg) 0~60
+  int pwm;    // PWM値 0~40
 };
 
 #endif

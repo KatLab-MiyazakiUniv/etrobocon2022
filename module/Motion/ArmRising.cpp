@@ -19,28 +19,28 @@ void ArmRising::run()
 
   // pwm値が0以下の場合はwarningを出して終了する
   if(pwm <= 0) {
-    snprintf(buf, BUF_SIZE, "The pwm value passed to ArmFalling is %d", pwm);
+    snprintf(buf, BUF_SIZE, "The pwm value passed to ArmRising is %d", pwm);
     logger.logWarning(buf);
     return;
   }
 
   // pwmが40より大きい場合はwarningを出してpwmを40にする
   if(pwm > 40) {
-    snprintf(buf, BUF_SIZE, "The pwm value passed to ArmFalling is %d", pwm);
+    snprintf(buf, BUF_SIZE, "The pwm value passed to ArmRising is %d", pwm);
     logger.logWarning(buf);
     pwm = 40;
   }
 
   // angleが0以下の場合はwarningを出して終了する
   if(angle <= 0) {
-    snprintf(buf, BUF_SIZE, "The angle value passed to ArmFalling is %d", angle);
+    snprintf(buf, BUF_SIZE, "The angle value passed to ArmRising is %d", angle);
     logger.logWarning(buf);
     return;
   }
 
   // angleが60より大きい場合はwarningを出してangleを60にする
   if(angle > 60) {
-    snprintf(buf, BUF_SIZE, "The angle value passed to ArmFalling is %d", angle);
+    snprintf(buf, BUF_SIZE, "The angle value passed to ArmRising is %d", angle);
     logger.logWarning(buf);
     angle = 60;
   }
