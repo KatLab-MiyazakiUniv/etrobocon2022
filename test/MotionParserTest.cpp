@@ -49,10 +49,13 @@ namespace etrobocon2022_test {
     expectedList.push_back(ec);
     Sleeping* sl = new Sleeping(1000);
     expectedList.push_back(sl);
-
+    ArmRising* ar = new ArmRising(10, 100);
+    expectedList.push_back(ar);
+    ArmFalling* af = new ArmFalling(10, 90);
+    expectedList.push_back(af);
     // Warning文
     string expectedOutput = "\x1b[36m";  // 文字色をシアンに
-    expectedOutput += "Warning: ../test/test_data/CommandParserTestData.csv:9: ";
+    expectedOutput += "Warning: ../test/test_data/CommandParserTestData.csv:11: ";
     expectedOutput += "'UNDEFINED' is undefined command";
     expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
 
