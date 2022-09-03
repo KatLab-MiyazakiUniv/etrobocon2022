@@ -27,19 +27,19 @@ vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrig
     return motionList;
   }
 
-  char row[BUF_SIZE];          // 各行の文字を一時的に保持する領域
-  const char separator = ',';  // 行ごとにパラメータを読み込む
+  char row[BUF_SIZE];           // 各行の文字を一時的に保持する領域
+  const char* separator = ",";  // 行ごとにパラメータを読み込む
 
   while(fgets(row, BUF_SIZE, fp) != NULL) {
     vector<char*> params;
     // separatorを区切り文字にしてrowを分解し，paramに代入する
-    char* param = strtok(row, &separator);
+    char* param = strtok(row, separator);
     while(param != NULL) {
       // paramをパラメータとして保持する
       params.push_back(param);
       // 次のパラメータをparamに代入する
       // strtok()は第1引数にNULLを与えると、前回の続きのアドレスから処理が開始される
-      param = strtok(NULL, &separator);
+      param = strtok(NULL, separator);
     }
 
     // 取得したパラメータから動作インスタンスを生成する
