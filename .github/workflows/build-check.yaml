@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
 
+      - name: Try CI
+        run: |
+          exit 1  # CI失敗時にSlackへ通知する処理のテストを行うためにわざと失敗する
+
       # ${{ github.workspace }} を使用するために必要
       - name: Checkout
         uses: actions/checkout@v1
