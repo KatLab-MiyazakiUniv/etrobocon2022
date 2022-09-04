@@ -39,7 +39,7 @@ jobs:
                 "elements": [
                   {
                     "type": "mrkdwn",
-                    "text": "Repository: <${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}>\nBranch: ${{ github.ref_name }}\nWorkflow: `${{ github.workflow }}`\nAuthor: <https://github.com/${{ github.event.sender.login }}|@${{ github.event.sender.login }}>"
+                    "text": "Repository: <${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}>\nBranch: `${{ github.ref_name }}`\nWorkflow: `${{ github.workflow }}`\nAuthor: <https://github.com/${{ github.event.sender.login }}|@${{ github.event.sender.login }}>"
                   }
                 ]
               }
