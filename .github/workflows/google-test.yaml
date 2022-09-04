@@ -8,10 +8,6 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - name: Try CI
-      run: |
-        exit 1  # CI失敗時にSlackへ通知する処理のテストを行うためにわざと失敗する
-
     - uses: actions/checkout@v2
 
     - name: test
