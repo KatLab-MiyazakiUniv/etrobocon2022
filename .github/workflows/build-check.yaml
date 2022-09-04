@@ -64,3 +64,39 @@ jobs:
           docker run -e APP_NAME=${{ env.APP_NAME }} \
                      -v ${{ github.workspace }}:/tmp/${{ env.APP_NAME }}:rw \
                      ghcr.io/katlab-miyazakiuniv/${{ env.IMAGE }}:${{ env.TAG }}
+
+      # 参考資料
+      # - Slack が提供する GitHub Action "slack-send" を使って GitHub から Slack に通知する - Qiita
+      #     https://qiita.com/seratch/items/28d09eacada09134c96c
+      # - GitHub Actionsで1つ以上のジョブが失敗した場合にSlackに通知する
+      #     https://zenn.dev/ntoy/articles/3e7521cd39a75b
+      # NOTE:
+      #   "Repository: <${{ [以下略]"の部分は、良い感じに改行する方法を見つけられなかった...
+      - name: Failure Notification
+        if: failure()
+        uses: slackapi/slack-github-action@v1.21.0
+        with:
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":warning: CI結果: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ job.status }}>"
+                  }
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "Repository: <${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}>\nBranch: ${{ github.ref_name }}\nAuthor: <https://github.com/${{ github.event.sender.login }}|@${{ github.event.sender.login }}>"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
