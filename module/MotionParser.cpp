@@ -71,11 +71,11 @@ vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrig
       ColorStraight* cs = new ColorStraight(ColorJudge::stringToColor(params[1]),  // 目標色
                                             atoi(params[2]));                      // PWM値
 
-      motionList.push_back(cs);                             // 動作リストに追加
-    } else if(command == COMMAND::RT) {                     // 回頭動作の生成
-      Rotation* rt = new Rotation(atoi(params[1]),          // 回転角度
-                                  atoi(params[2]),          // PWM値
-                                  convertBool(params[3]));  // 回頭方向
+      motionList.push_back(cs);                                        // 動作リストに追加
+    } else if(command == COMMAND::RT) {                                // 回頭動作の生成
+      Rotation* rt = new Rotation(atoi(params[1]),                     // 回転角度
+                                  atoi(params[2]),                     // PWM値
+                                  convertBool(params[0], params[3]));  // 回頭方向
 
       motionList.push_back(rt);          // 動作リストに追加
     } else if(command == COMMAND::DT) {  // 距離指定旋回動作の生成
@@ -86,7 +86,7 @@ vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrig
       motionList.push_back(dt);                        // 動作リストに追加
     } else if(command == COMMAND::EC) {                // エッジ切り替えの生成
       EdgeChanging* ec = new EdgeChanging(isLeftEdge,  // エッジ
-                                          convertBool(params[1]));  // 切り替え後のエッジ
+                                          convertBool(params[0], params[1]));  // 切り替え後のエッジ
 
       motionList.push_back(ec);          // 動作リストに追加
     } else if(command == COMMAND::SL) {  // 自タスクスリープの生成
@@ -141,16 +141,29 @@ COMMAND MotionParser::convertCommand(char* str)
   }
 }
 
-bool MotionParser::convertBool(char* str)
+bool MotionParser::convertBool(char* command, char* binaryParameter)
 {
   Logger logger;
 
-  if(strcmp(str, "true") == 0) {  // 文字列がtrueの場合
-    return true;
-  } else if(strcmp(str, "false") == 0) {  // 文字列がfalseの場合
-    return false;
-  } else {  //想定していない文字列が来た場合
-    logger.logWarning("String before conversion must be 'true' or 'false'");
-    return true;
+  if(strcmp(command, "RT") == 0) {                   //  コマンドがRTの場合
+    if(strcmp(binaryParameter, "clockwise") == 0) {  // パラメータがclockwiseの場合
+      return true;
+    } else if(strcmp(binaryParameter, "unclockwise") == 0) {  // パラメータがunclockwiseの場合
+      return false;
+    } else {  //想定していないパラメータが来た場合
+      logger.logWarning("Parameter before conversion must be 'clockwise' or 'unclockwise'");
+      return true;
+    }
+  }
+
+  if(strcmp(command, "EC") == 0) {              //  コマンドがECの場合
+    if(strcmp(binaryParameter, "left") == 0) {  // パラメータがleftの場合
+      return true;
+    } else if(strcmp(binaryParameter, "right") == 0) {  // パラメータがrightの場合
+      return false;
+    } else {  //想定していないパラメータが来た場合
+      logger.logWarning("Parameter before conversion must be 'left' or 'right'");
+      return true;
+    }
   }
 }
