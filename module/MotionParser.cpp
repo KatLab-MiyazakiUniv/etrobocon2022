@@ -1,7 +1,7 @@
 /**
  * @file   MotionParser.cpp
  * @brief  動作コマンドファイルを解析するクラス
- * @author mutotaka0426 kawanoichi sap2368 miyashita64
+ * @author mutotaka0426 kawanoichi sap2368 miyashita64 sugaken0528
  */
 
 #include "MotionParser.h"
@@ -148,10 +148,10 @@ bool MotionParser::convertBool(char* command, char* binaryParameter)
   if(strcmp(command, "RT") == 0) {                   //  コマンドがRTの場合
     if(strcmp(binaryParameter, "clockwise") == 0) {  // パラメータがclockwiseの場合
       return true;
-    } else if(strcmp(binaryParameter, "unclockwise") == 0) {  // パラメータがunclockwiseの場合
+    } else if(strcmp(binaryParameter, "anticlockwise") == 0) {  // パラメータがanticlockwiseの場合
       return false;
     } else {  //想定していないパラメータが来た場合
-      logger.logWarning("Parameter before conversion must be 'clockwise' or 'unclockwise'");
+      logger.logWarning("Parameter before conversion must be 'clockwise' or 'anticlockwise'");
       return true;
     }
   }
