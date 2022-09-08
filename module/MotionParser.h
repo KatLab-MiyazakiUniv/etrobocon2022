@@ -1,7 +1,7 @@
 /**
  * @file   MotionParser.h
  * @brief  動作コマンドファイルを解析するクラス
- * @author mutotaka0426 miyashita64
+ * @author mutotaka0426 miyashita64 sugaken0528
  */
 
 #ifndef MOTION_PARSER_H

@@ -1,7 +1,7 @@
 /**
  * @file   Motion.h
  * @brief  動作の親クラス
- * @author kodama0720 mutotaka0426 sugaken0528
+ * @author kodama0720 mutotaka0426
  */
 
 #ifndef MOTION_H
