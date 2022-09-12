@@ -1,7 +1,7 @@
 /**
  * @file Calibrator.cpp
  * @brief キャリブレーションからスタートまでを担当するクラス
- * @author mutotaka0426
+ * @author mutotaka0426 sugaken0528
  */
 
 #include "Calibrator.h"
@@ -13,8 +13,8 @@ Calibrator::Calibrator()
 
 void Calibrator::run()
 {
-  // ev3apiの出力と入り混じるので10ミリ秒スリープを入れる
-  controller.sleep();
+  // SPIKEの電圧を表示する
+  showVoltage();
 
   // 左右ボタンでコースのLRを選択する
   selectCourse();
@@ -23,9 +23,29 @@ void Calibrator::run()
   measureTargetBrightness();
 }
 
+void Calibrator::showVoltage()
+{
+  constexpr double MAX_VOLTAGE = 8.393;  // SPIKEの電圧の最大値
+  const int BUF_SIZE = 128;
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
+
+  // SPIKEの電圧を取得しログを出す
+  double voltage = measurer.getVoltage();
+  snprintf(buf, BUF_SIZE, "SPIKE voltage is %.3f[V] (max voltage: %.3f[V])", voltage, MAX_VOLTAGE);
+  logger.logHighlight(buf);
+
+  // SPIKEの電圧が最大値の半分以下になったらWarningを出す
+  if(voltage <= MAX_VOLTAGE / 2) {
+    logger.logWarning("Voltage is low\n");
+  } else {
+    logger.log("");  // Warninがなかった時に改行だけ入れる
+  }
+}
+
 void Calibrator::selectCourse()
 {
-  char buf[50];  // log用にメッセージを一時保存する
+  const int BUF_SIZE = 128;
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
   bool _isLeftCourse = true;
 
   logger.log("Select a Course");
@@ -50,7 +70,7 @@ void Calibrator::selectCourse()
 
   isLeftCourse = _isLeftCourse;
   const char* course = isLeftCourse ? "Left" : "Right";
-  sprintf(buf, "\nWill Run on the %s Course\n", course);
+  snprintf(buf, BUF_SIZE, "\nWill Run on the %s Course\n", course);
   logger.logHighlight(buf);
 
   controller.sleep(1000);  // 1秒スリープ
@@ -58,7 +78,8 @@ void Calibrator::selectCourse()
 
 void Calibrator::measureTargetBrightness()
 {
-  char buf[50];  // log用にメッセージを一時保存する
+  const int BUF_SIZE = 128;
+  char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
   // 黒と白の輝度（初期化の値はロボコン部屋で取得した値）
   int blackBrightness = BLACK_BRIGHTNESS;
   int whiteBrightness = WHITE_BRIGHTNESS;
@@ -70,7 +91,7 @@ void Calibrator::measureTargetBrightness()
     controller.sleep();  // 10ミリ秒スリープ
   }
   blackBrightness = measurer.getBrightness();
-  sprintf(buf, ">> Black Brightness Value is %d", blackBrightness);
+  snprintf(buf, BUF_SIZE, ">> Black Brightness Value is %d", blackBrightness);
   logger.log(buf);
   controller.sleep(1000);  // 1秒スリープ
 
@@ -81,23 +102,24 @@ void Calibrator::measureTargetBrightness()
     controller.sleep();  // 10ミリ秒スリープ
   }
   whiteBrightness = measurer.getBrightness();
-  sprintf(buf, ">> White Brightness Value is %d", whiteBrightness);
+  snprintf(buf, BUF_SIZE, ">> White Brightness Value is %d", whiteBrightness);
   logger.log(buf);
   controller.sleep(1000);  // 1秒スリープ
 
   // 黒と白の平均値を目標輝度とする
   targetBrightness = (whiteBrightness + blackBrightness) / 2;
-  sprintf(buf, "\nTarget Brightness is %d", targetBrightness);
+  snprintf(buf, BUF_SIZE, "\nTarget Brightness is %d", targetBrightness);
   logger.log(buf);
 }
 
 void Calibrator::waitForStart()
 {
-  char buf[50];                     // log用にメッセージを一時保存する
+  const int BUF_SIZE = 128;
+  char buf[BUF_SIZE];               // log用にメッセージを一時保持する領域
   constexpr int startDistance = 5;  // 手などでスタート合図を出す距離[cm]
 
   logger.log("On standby.\n");
-  sprintf(buf, "Signal within %dcm from Sonar Sensor.", startDistance);
+  snprintf(buf, BUF_SIZE, "Signal within %dcm from Sonar Sensor.", startDistance);
   logger.log(buf);
 
   // startDistance以内の距離に物体がない間待機する

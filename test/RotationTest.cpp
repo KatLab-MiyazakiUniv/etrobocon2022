@@ -1,751 +1,239 @@
 /**
- * @file Rotation.cpp
- * @brief Roationクラスをテストする
- * @author sugaken0528 KakinokiKanta
+ * @file   RotationTest.cpp
+ * @brief  Roationクラスのテスト
+ * @author sugaken0528 KakinokiKanta mutotaka0426
  */
 
 #include "Rotation.h"
 #include <gtest/gtest.h>
 #include <cmath>
+#include <gtest/internal/gtest-port.h>
+
+using namespace std;
 
 namespace etrobocon2022_test {
 
-  constexpr double TRANSFORM = 2.0 * RADIUS / TREAD;
-
-  //左回頭のテスト
-
-  TEST(RotationTest, rotateLeft)
-  {
-    Measurer measurer;
-    Rotation rotation;
-    double expectedLeft, expectedRight;
-    double actualLeft, actualRight;
-    double leftMotorCount;
-    double rightMotorCount;
-    double targetDistance;
-    double error = (M_PI * TREAD / 360) * 3;  //誤差3度
-    int angle, pwm;
-
-    // 90度左回頭の回頭誤差が３度未満かテスト
-    angle = 90;
-    pwm = 30;
-    targetDistance = M_PI * TREAD * abs(angle) / 360;
-    // 期待する走行距離
-    expectedRight = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
-    // 回頭
-    rotation.rotateLeft(angle, pwm);
-    // 関数実行後の走行距離
-    actualRight = Mileage::calculateWheelMileage(measurer.getRightCount());
-    // 誤差のテスト
-    EXPECT_LE(expectedRight, actualRight);
-    EXPECT_GE(expectedRight + error, actualRight);
-
-    // 180度左回頭の回頭誤差が３度未満かテスト
-    angle = 180;
-    pwm = 30;
-    targetDistance = M_PI * TREAD * abs(angle) / 360;
-
-    expectedRight = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
-
-    rotation.rotateLeft(angle, pwm);
-
-    actualRight = Mileage::calculateWheelMileage(measurer.getRightCount());
-
-    EXPECT_LE(expectedRight, actualRight);
-    EXPECT_GE(expectedRight + error, actualRight);
-
-    // 360度左回頭の回頭誤差が３度未満かテスト
-    angle = 360;
-    pwm = 30;
-    targetDistance = M_PI * TREAD * abs(angle) / 360;
-
-    expectedRight = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
-
-    rotation.rotateLeft(angle, pwm);
-
-    actualRight = Mileage::calculateWheelMileage(measurer.getRightCount());
-
-    EXPECT_LE(expectedRight, actualRight);
-    EXPECT_GE(expectedRight + error, actualRight);
-  }
-
-  TEST(RotationTest, rotateLeft_zero)
-  {
-    Measurer measurer;
-    Rotation rotation;
-    double expectedLeft, expectedRight;
-    double actualLeft, actualRight;
-    double leftMotorCount;
-    double rightMotorCount;
-    double targetDistance;
-    double error = (M_PI * TREAD / 360) * 3;  //誤差3度
-    int angle, pwm;
-
-    // 0度左回頭のテスト
-    angle = 0;
-    pwm = 30;
-    targetDistance = M_PI * TREAD * abs(angle) / 360;
-
-    expectedRight = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
-
-    rotation.rotateLeft(angle, pwm);
-
-    actualRight = Mileage::calculateWheelMileage(measurer.getRightCount());
-
-    EXPECT_DOUBLE_EQ(expectedRight, actualRight);
-  }
-
-  TEST(RotationTest, rotateLeft_maxpwm)
-  {
-    Measurer measurer;
-    Rotation rotation;
-    double expectedLeft, expectedRight;
-    double actualLeft, actualRight;
-    double leftMotorCount;
-    double rightMotorCount;
-    double targetDistance;
-    double error = (M_PI * TREAD / 360) * 3;  //誤差3度
-    int angle, pwm;
-
-    // PWM値が100の時のテスト
-    angle = 90;
-    pwm = 100;
-    targetDistance = M_PI * TREAD * abs(angle) / 360;
-
-    expectedRight = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
-
-    rotation.rotateLeft(angle, pwm);
-
-    actualRight = Mileage::calculateWheelMileage(measurer.getRightCount());
-
-    EXPECT_LE(expectedRight, actualRight);
-    EXPECT_GE(expectedRight + error, actualRight);
-  }
-
-  TEST(RotationTest, rotateLeft_minus)
-  {
-    Measurer measurer;
-    Rotation rotation;
-    double expectedLeft, expectedRight;
-    double actualLeft, actualRight;
-    double leftMotorCount;
-    double rightMotorCount;
-    double targetDistance;
-    double error = (M_PI * TREAD / 360) * 3;  //誤差3度
-    int angle, pwm;
-
-    // 回転角度がマイナス
-    angle = -90;
-    pwm = 100;
-    targetDistance = M_PI * TREAD * abs(angle) / 360;
-
-    expectedRight = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
-
-    rotation.rotateLeft(angle, pwm);
-
-    actualRight = Mileage::calculateWheelMileage(measurer.getRightCount());
-
-    EXPECT_LE(expectedRight, actualRight);
-    EXPECT_GE(expectedRight + error, actualRight);
-
-    // PWM値がマイナス
-    angle = 90;
-    pwm = -100;
-    targetDistance = M_PI * TREAD * abs(angle) / 360;
-
-    expectedRight = Mileage::calculateWheelMileage(measurer.getRightCount()) + targetDistance;
-
-    rotation.rotateLeft(angle, pwm);
-
-    actualRight = Mileage::calculateWheelMileage(measurer.getRightCount());
-
-    EXPECT_LE(expectedRight, actualRight);
-    EXPECT_GE(expectedRight + error, actualRight);
-  }
+  // @see https://github.com/KatLab-MiyazakiUniv/etrobocon2022/blob/main/docs/odometry.md
+  constexpr double TRANSFORM = 2.0 * RADIUS / TREAD;  // 回頭角度を求める式の係数
 
   //右回頭のテスト
-
-  TEST(RotationTest, rotateRight)
-  {
-    Measurer measurer;
-    Controller controller;
-    Rotation rotation;
-    double expectedLeft, expectedRight;
-    double actualLeft, actualRight;
-    double leftMotorCount;
-    double rightMotorCount;
-    double targetDistance;
-    double error = (M_PI * TREAD / 360) * 3;  //誤差3度
-    int angle, pwm;
-
-    // 90度右回頭の回頭誤差が３度未満かテスト
-    angle = 90;
-    pwm = 30;
-    targetDistance = M_PI * TREAD * abs(angle) / 360;
-
-    expectedLeft = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
-
-    rotation.rotateRight(angle, pwm);
-
-    actualLeft = Mileage::calculateWheelMileage(measurer.getLeftCount());
-
-    EXPECT_LE(expectedLeft, actualLeft);
-    EXPECT_GE(expectedLeft + error, actualLeft);
-
-    // 180度右回頭の回頭誤差が３度未満かテスト
-    angle = 180;
-    pwm = 30;
-    targetDistance = M_PI * TREAD * abs(angle) / 360;
-
-    expectedLeft = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
-
-    rotation.rotateRight(angle, pwm);
-
-    actualLeft = Mileage::calculateWheelMileage(measurer.getLeftCount());
-
-    EXPECT_LE(expectedLeft, actualLeft);
-    EXPECT_GE(expectedLeft + error, actualLeft);
-  }
-
-  TEST(RotationTest, rotateRight_zero)
-  {
-    Measurer measurer;
-    Rotation rotation;
-    double expectedLeft, expectedRight;
-    double actualLeft, actualRight;
-    double leftMotorCount;
-    double rightMotorCount;
-    double targetDistance;
-    double error = (M_PI * TREAD / 360) * 3;  //誤差3度
-    int angle, pwm;
-
-    // 0度右回頭のテスト
-    angle = 0;
-    pwm = 30;
-    targetDistance = M_PI * TREAD * abs(angle) / 360;
-
-    expectedLeft = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
-
-    rotation.rotateRight(angle, pwm);
-
-    actualLeft = Mileage::calculateWheelMileage(measurer.getLeftCount());
-
-    EXPECT_DOUBLE_EQ(expectedLeft, actualLeft);
-  }
-
-  TEST(RotationTest, rotateRight_maxpwm)
-  {
-    Measurer measurer;
-    Rotation rotation;
-    double expectedLeft, expectedRight;
-    double actualLeft, actualRight;
-    double leftMotorCount;
-    double rightMotorCount;
-    double targetDistance;
-    double error = (M_PI * TREAD / 360) * 3;  //誤差3度
-    int angle, pwm;
-
-    // PWM値が100の時のテスト
-    angle = 90;
-    pwm = 100;
-    targetDistance = M_PI * TREAD * abs(angle) / 360;
-
-    expectedLeft = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
-
-    rotation.rotateRight(angle, pwm);
-
-    actualLeft = Mileage::calculateWheelMileage(measurer.getLeftCount());
-
-    EXPECT_LE(expectedLeft, actualLeft);
-    EXPECT_GE(expectedLeft + error, actualLeft);
-  }
-
-  TEST(RotationTest, rotateRight_minus)
-  {
-    Measurer measurer;
-    Rotation rotation;
-    double expectedLeft, expectedRight;
-    double actualLeft, actualRight;
-    double leftMotorCount;
-    double rightMotorCount;
-    double targetDistance;
-    double error = (M_PI * TREAD / 360) * 3;  //誤差3度
-    int angle, pwm;
-
-    // 回転角度がマイナス
-    angle = -90;
-    pwm = 100;
-    targetDistance = M_PI * TREAD * abs(angle) / 360;
-
-    expectedLeft = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
-
-    rotation.rotateRight(angle, pwm);
-
-    actualLeft = Mileage::calculateWheelMileage(measurer.getLeftCount());
-
-    EXPECT_LE(expectedLeft, actualLeft);
-    EXPECT_GE(expectedLeft + error, actualLeft);
-
-    // PWM値がマイナス
-    angle = 90;
-    pwm = -100;
-    targetDistance = M_PI * TREAD * abs(angle) / 360;
-
-    expectedLeft = Mileage::calculateWheelMileage(measurer.getLeftCount()) + targetDistance;
-
-    rotation.rotateRight(angle, pwm);
-
-    actualLeft = Mileage::calculateWheelMileage(measurer.getLeftCount());
-
-    EXPECT_LE(expectedLeft, actualLeft);
-    EXPECT_GE(expectedLeft + error, actualLeft);
-  }
-
-  //左軸前方向ピボットターン
-
-  TEST(RotationTest, leftFrontZero)
-  {
-    int angle = 0;
-    double expected = 0;
-    double actual;
-    Rotation rotation;
-    Measurer measurer;
-    int initialRightMotorCount = measurer.getRightCount();
-    int initialLeftMotorCount = measurer.getLeftCount();
-
-    rotation.turnForwardLeftPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
-
-    actual = TRANSFORM * motorCount;
-    ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 5.0, actual);
-  }
-
-  TEST(RotationTest, leftFront45)
-  {
-    int angle = 45;
-    double expected = 45;
-    double actual;
-    Rotation rotation;
-    Measurer measurer;
-    int initialRightMotorCount = measurer.getRightCount();
-    int initialLeftMotorCount = measurer.getLeftCount();
-
-    rotation.turnForwardLeftPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
-
-    actual = TRANSFORM * motorCount;
-    ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 5.0, actual);
-  }
-
-  TEST(RotationTest, leftFront90)
+  TEST(RotationTest, runRight)
   {
     int angle = 90;
-    double expected = 90;
-    double actual;
-    Rotation rotation;
+    int pwm = 100;
+    bool isClockwise = true;
+    Rotation rotation(angle, pwm, isClockwise);
     Measurer measurer;
+
+    double expected = angle;  // 指定した回頭角度を期待値とする
+
+    // 一回のsetPWM()でダミーのモータカウントに加算される値はpwm * 0.05
+    double error = pwm * 0.05 * TRANSFORM;  // 許容誤差[deg]
+
+    // 回頭前のモータカウント
     int initialRightMotorCount = measurer.getRightCount();
     int initialLeftMotorCount = measurer.getLeftCount();
 
-    rotation.turnForwardLeftPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
+    testing::internal::CaptureStdout();                      // 標準出力キャプチャ開始
+    rotation.run();                                          // 右回頭を実行
+    string output = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
-    actual = TRANSFORM * motorCount;
-    ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 5.0, actual);
+    // 回頭後に各モータが回転した角度
+    int rightMotorCount = abs(measurer.getRightCount() - initialRightMotorCount);
+    int leftMotorCount = abs(measurer.getLeftCount() - initialLeftMotorCount);
+    double actual = ((rightMotorCount + leftMotorCount) * TRANSFORM) / 2;
+
+    EXPECT_LE(expected, actual);
+    EXPECT_GE(expected + error, actual);
   }
 
-  TEST(RotationTest, leftFront135)
-  {
-    int angle = 135;
-    double expected = 135;
-    double actual;
-    Rotation rotation;
-    Measurer measurer;
-    int initialRightMotorCount = measurer.getRightCount();
-    int initialLeftMotorCount = measurer.getLeftCount();
-
-    rotation.turnForwardLeftPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
-
-    actual = TRANSFORM * motorCount;
-    ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 5.0, actual);
-  }
-
-  TEST(RotationTest, leftFront180)
+  //左回頭のテスト
+  TEST(RotationTest, runLeft)
   {
     int angle = 180;
-    double expected = 180;
-    double actual;
-    Rotation rotation;
+    int pwm = 100;
+    bool isClockwise = false;
+    Rotation rotation(angle, pwm, isClockwise);
     Measurer measurer;
+
+    double expected = angle;  // 指定した回頭角度を期待値とする
+
+    // 一回のsetPWM()でダミーのモータカウントに加算される値はpwm * 0.05
+    double error = pwm * 0.05 * TRANSFORM;  // 許容誤差[deg]
+
+    // 回頭前のモータカウント
     int initialRightMotorCount = measurer.getRightCount();
     int initialLeftMotorCount = measurer.getLeftCount();
 
-    rotation.turnForwardLeftPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
+    rotation.run();  // 左回頭を実行
 
-    actual = TRANSFORM * motorCount;
-    ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 5.0, actual);
+    // 回頭後に各モータが回転した角度
+    int rightMotorCount = abs(measurer.getRightCount() - initialRightMotorCount);
+    int leftMotorCount = abs(measurer.getLeftCount() - initialLeftMotorCount);
+
+    double actual = ((rightMotorCount + leftMotorCount) * TRANSFORM) / 2;
+
+    EXPECT_LE(expected, actual);
+    EXPECT_GE(expected + error, actual);
   }
 
-  //右軸前方向ピボットターン
-
-  TEST(RotationTest, rightFrontZero)
-  {
-    int angle = 0;
-    double expected = 0;
-    double actual;
-    Rotation rotation;
-    Measurer measurer;
-    int initialRightMotorCount = measurer.getRightCount();
-    int initialLeftMotorCount = measurer.getLeftCount();
-
-    rotation.turnForwardRightPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
-
-    actual = TRANSFORM * motorCount;
-    ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 5.0, actual);
-  }
-
-  TEST(RotationTest, rightFront45)
+  TEST(RotationTest, runZeroPWM)
   {
     int angle = 45;
-    double expected = 45;
-    double actual;
-    Rotation rotation;
+    int pwm = 0;
+    bool isClockwise = true;
+    Rotation rotation(angle, pwm, isClockwise);
     Measurer measurer;
+
+    double expected = 0;  // 回頭しない
+
+    // Warning文
+    string expectedOutput = "\x1b[36m";  // 文字色をシアンに
+    expectedOutput += "Warning: The pwm value passed to Rotation is 0";
+    expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
+
+    // 回頭前のモータカウント
     int initialRightMotorCount = measurer.getRightCount();
     int initialLeftMotorCount = measurer.getLeftCount();
 
-    rotation.turnForwardRightPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
+    testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
+    rotation.run();                      // 右回頭を実行
+    string actualOutput = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
-    actual = TRANSFORM * motorCount;
-    ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 5.0, actual);
+    // 回頭後に各モータが回転した角度
+    int rightMotorCount = abs(measurer.getRightCount() - initialRightMotorCount);
+    int leftMotorCount = abs(measurer.getLeftCount() - initialLeftMotorCount);
+    double actual = ((rightMotorCount + leftMotorCount) * TRANSFORM) / 2;
+
+    EXPECT_EQ(expectedOutput, actualOutput);  // 標準出力でWarningを出している
+    EXPECT_EQ(expected, actual);              // 回頭の前後で角度に変化はない
   }
 
-  TEST(RotationTest, rightFront90)
+  TEST(RotationTest, runMinusPWM)
   {
-    int angle = 90;
-    double expected = 90;
-    double actual;
-    Rotation rotation;
+    int angle = 45;
+    int pwm = -100;
+    bool isClockwise = true;
+    Rotation rotation(angle, pwm, isClockwise);
     Measurer measurer;
+
+    double expected = 0;  // 回頭しない
+
+    // Warning文
+    string expectedOutput = "\x1b[36m";  // 文字色をシアンに
+    expectedOutput += "Warning: The pwm value passed to Rotation is " + to_string(pwm);
+    expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
+
+    // 回頭前のモータカウント
     int initialRightMotorCount = measurer.getRightCount();
     int initialLeftMotorCount = measurer.getLeftCount();
 
-    rotation.turnForwardRightPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
+    testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
+    rotation.run();                      // 右回頭を実行
+    string actualOutput = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
-    actual = TRANSFORM * motorCount;
-    ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 5.0, actual);
+    // 回頭後に各モータが回転した角度
+    int rightMotorCount = abs(measurer.getRightCount() - initialRightMotorCount);
+    int leftMotorCount = abs(measurer.getLeftCount() - initialLeftMotorCount);
+    double actual = ((rightMotorCount + leftMotorCount) * TRANSFORM) / 2;
+
+    EXPECT_EQ(expectedOutput, actualOutput);  // 標準出力でWarningを出している
+    EXPECT_EQ(expected, actual);              // 回頭の前後で角度に変化はない
   }
 
-  TEST(RotationTest, rightFront135)
-  {
-    int angle = 135;
-    double expected = 135;
-    double actual;
-    Rotation rotation;
-    Measurer measurer;
-    int initialRightMotorCount = measurer.getRightCount();
-    int initialLeftMotorCount = measurer.getLeftCount();
-
-    rotation.turnForwardRightPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
-
-    actual = TRANSFORM * motorCount;
-    ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 5.0, actual);
-  }
-
-  TEST(RotationTest, rightFront180)
-  {
-    int angle = 180;
-    double expected = 180;
-    double actual;
-    Rotation rotation;
-    Measurer measurer;
-    int initialRightMotorCount = measurer.getRightCount();
-    int initialLeftMotorCount = measurer.getLeftCount();
-
-    rotation.turnForwardRightPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (currentRightMotorCount + currentLeftMotorCount) / 2;
-
-    actual = TRANSFORM * motorCount;
-    ASSERT_LE(expected, actual);
-    ASSERT_GE(expected + 5.0, actual);
-  }
-
-  //左軸後ろピボットターン
-
-  TEST(RotationTest, leftBacktZero)
+  TEST(RotationTest, runZeroAngle)
   {
     int angle = 0;
-    double expected = std::abs(angle);
-    double actual;
-    Rotation rotation;
+    int pwm = 100;
+    bool isClockwise = true;
+    Rotation rotation(angle, pwm, isClockwise);
     Measurer measurer;
+
+    double expected = 0;  // 回頭しない
+
+    // Warning文
+    string expectedOutput = "\x1b[36m";  // 文字色をシアンに
+    expectedOutput += "Warning: The angle value passed to Rotation is 0";
+    expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
+
+    // 回頭前のモータカウント
     int initialRightMotorCount = measurer.getRightCount();
     int initialLeftMotorCount = measurer.getLeftCount();
 
-    rotation.turnBackLeftPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
+    testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
+    rotation.run();                      // 右回頭を実行
+    string actualOutput = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
-    actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 5.0, actual);
-    ASSERT_LE(expected - 5.0, actual);
+    // 回頭後に各モータが回転した角度
+    int rightMotorCount = abs(measurer.getRightCount() - initialRightMotorCount);
+    int leftMotorCount = abs(measurer.getLeftCount() - initialLeftMotorCount);
+    double actual = ((rightMotorCount + leftMotorCount) * TRANSFORM) / 2;
+
+    EXPECT_EQ(expectedOutput, actualOutput);  // 標準出力でWarningを出している
+    EXPECT_EQ(expected, actual);              // 回頭の前後で角度に変化はない
   }
 
-  TEST(RotationTest, leftBack45)
-  {
-    int angle = -45;
-    double expected = std::abs(angle);
-    double actual;
-    Rotation rotation;
-    Measurer measurer;
-    int initialRightMotorCount = measurer.getRightCount();
-    int initialLeftMotorCount = measurer.getLeftCount();
-
-    rotation.turnBackLeftPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
-
-    actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 5.0, actual);
-    ASSERT_LE(expected - 5.0, actual);
-  }
-
-  TEST(RotationTest, leftBack90)
-  {
-    int angle = -90;
-    double expected = std::abs(angle);
-    double actual;
-    Rotation rotation;
-    Measurer measurer;
-    int initialRightMotorCount = measurer.getRightCount();
-    int initialLeftMotorCount = measurer.getLeftCount();
-
-    rotation.turnBackLeftPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
-
-    actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 5.0, actual);
-    ASSERT_LE(expected - 5.0, actual);
-  }
-
-  TEST(RotationTest, leftBack135)
-  {
-    int angle = -135;
-    double expected = std::abs(angle);
-    double actual;
-    Rotation rotation;
-    Measurer measurer;
-    int initialRightMotorCount = measurer.getRightCount();
-    int initialLeftMotorCount = measurer.getLeftCount();
-
-    rotation.turnBackLeftPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
-
-    actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 5.0, actual);
-    ASSERT_LE(expected - 5.0, actual);
-  }
-
-  TEST(RotationTest, leftBack180)
+  TEST(RotationTest, runMinusAngle)
   {
     int angle = -180;
-    double expected = std::abs(angle);
-    double actual;
-    Rotation rotation;
+    int pwm = 100;
+    bool isClockwise = true;
+    Rotation rotation(angle, pwm, isClockwise);
     Measurer measurer;
+
+    double expected = 0;  // 回頭しない
+
+    // Warning文
+    string expectedOutput = "\x1b[36m";  // 文字色をシアンに
+    expectedOutput += "Warning: The angle value passed to Rotation is " + to_string(angle);
+    expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
+
+    // 回頭前のモータカウント
     int initialRightMotorCount = measurer.getRightCount();
     int initialLeftMotorCount = measurer.getLeftCount();
 
-    rotation.turnBackLeftPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
+    testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
+    rotation.run();                      // 右回頭を実行
+    string actualOutput = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
-    actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 5.0, actual);
-    ASSERT_LE(expected - 5.0, actual);
+    // 回頭後に各モータが回転した角度
+    int rightMotorCount = abs(measurer.getRightCount() - initialRightMotorCount);
+    int leftMotorCount = abs(measurer.getLeftCount() - initialLeftMotorCount);
+    double actual = ((rightMotorCount + leftMotorCount) * TRANSFORM) / 2;
+
+    EXPECT_EQ(expectedOutput, actualOutput);  // 標準出力でWarningを出している
+    EXPECT_EQ(expected, actual);              // 回頭の前後で角度に変化はない
   }
 
-  //右軸後ろピボットターン
-
-  TEST(RotationTest, rightBacktZero)
+  TEST(RotationTest, runOverAngle)
   {
-    int angle = 0;
-    double expected = std::abs(angle);
-    double actual;
-    Rotation rotation;
+    int angle = 360;
+    int pwm = 100;
+    bool isClockwise = true;
+    Rotation rotation(angle, pwm, isClockwise);
     Measurer measurer;
+
+    double expected = 0;  // 回頭しない
+
+    // Warning文
+    string expectedOutput = "\x1b[36m";  // 文字色をシアンに
+    expectedOutput += "Warning: The angle value passed to Rotation is " + to_string(angle);
+    expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
+
+    // 回頭前のモータカウント
     int initialRightMotorCount = measurer.getRightCount();
     int initialLeftMotorCount = measurer.getLeftCount();
 
-    rotation.turnBackRightPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
+    testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
+    rotation.run();                      // 右回頭を実行
+    string actualOutput = testing::internal::GetCapturedStdout();  // キャプチャ終了
 
-    actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 5.0, actual);
-    ASSERT_LE(expected - 5.0, actual);
-  }
+    // 回頭後に各モータが回転した角度
+    int rightMotorCount = abs(measurer.getRightCount() - initialRightMotorCount);
+    int leftMotorCount = abs(measurer.getLeftCount() - initialLeftMotorCount);
+    double actual = ((rightMotorCount + leftMotorCount) * TRANSFORM) / 2;
 
-  TEST(RotationTest, rightBack45)
-  {
-    int angle = -45;
-    double expected = std::abs(angle);
-    double actual;
-    Rotation rotation;
-    Measurer measurer;
-    int initialRightMotorCount = measurer.getRightCount();
-    int initialLeftMotorCount = measurer.getLeftCount();
-
-    rotation.turnBackRightPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
-
-    actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 5.0, actual);
-    ASSERT_LE(expected - 5.0, actual);
-  }
-
-  TEST(RotationTest, rightBack90)
-  {
-    int angle = -90;
-    double expected = std::abs(angle);
-    double actual;
-    Rotation rotation;
-    Measurer measurer;
-    int initialRightMotorCount = measurer.getRightCount();
-    int initialLeftMotorCount = measurer.getLeftCount();
-
-    rotation.turnBackRightPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
-
-    actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 5.0, actual);
-    ASSERT_LE(expected - 5.0, actual);
-  }
-
-  TEST(RotationTest, rightBack135)
-  {
-    int angle = -135;
-    double expected = std::abs(angle);
-    double actual;
-    Rotation rotation;
-    Measurer measurer;
-    int initialRightMotorCount = measurer.getRightCount();
-    int initialLeftMotorCount = measurer.getLeftCount();
-
-    rotation.turnBackRightPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
-
-    actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 5.0, actual);
-    ASSERT_LE(expected - 5.0, actual);
-  }
-
-  TEST(RotationTest, rightBack180)
-  {
-    int angle = -180;
-    double expected = std::abs(angle);
-    double actual;
-    Rotation rotation;
-    Measurer measurer;
-    int initialRightMotorCount = measurer.getRightCount();
-    int initialLeftMotorCount = measurer.getLeftCount();
-
-    rotation.turnBackRightPivot(angle, 100);
-    double currentRightMotorCount
-        = measurer.getRightCount() - static_cast<double>(initialRightMotorCount);
-    double currentLeftMotorCount
-        = measurer.getLeftCount() - static_cast<double>(initialLeftMotorCount);
-    double motorCount = (std::abs(currentRightMotorCount) + std::abs(currentLeftMotorCount)) / 2;
-
-    actual = TRANSFORM * motorCount;
-    ASSERT_GE(expected + 5.0, actual);
-    ASSERT_LE(expected - 5.0, actual);
+    EXPECT_EQ(expectedOutput, actualOutput);  // 標準出力でWarningを出している
+    EXPECT_EQ(expected, actual);              // 回頭の前後で角度に変化はない
   }
 }  // namespace etrobocon2022_test

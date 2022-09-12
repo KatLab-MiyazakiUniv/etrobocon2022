@@ -28,6 +28,7 @@ namespace etrobocon2022_test {
   TEST(CalibratorTest, getIsLeftCourse)
   {
     Calibrator calibrator;
+    srand(2);  // voltageが7300が帰ってくるシード値
     calibrator.run();
 
     // 値がランダムに決定されるので標準出力で確認する

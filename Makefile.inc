@@ -24,7 +24,7 @@ APPL_DIRS += \
     $(mkfile_path)module \
     $(mkfile_path)module/API \
     $(mkfile_path)module/Motion \
-    $(mkfile_path)module/GameMotion \
+    $(mkfile_path)module/Calculator \
     $(mkfile_path)module/common
 
 # ヘッダファイルのあるディレクトリを指定する？
@@ -34,7 +34,9 @@ INCLUDES += \
     -I$(ETROBO_HRP3_WORKSPACE)/etroboc_common \
     -I$(mkfile_path)module/API \
     -I$(mkfile_path)module/Motion \
-    -I$(mkfile_path)module/GameMotion \
+    -I$(mkfile_path)module/Calculator \
     -I$(mkfile_path)module/common 
 
 COPTS += -std=gnu++11
+
+COPTS += -DMAKE_EV3

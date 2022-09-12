@@ -18,6 +18,7 @@ extern "C" {
 
 #ifndef TOPPERS_MACRO_ONLY
 extern void main_task(intptr_t exinf);  // メインタスク
+extern void arm_task(intptr_t exinf);   // アームを一定に保つタスク
 #endif                                  /* TOPPERS_MACRO_ONLY */
 
 #ifdef __cplusplus

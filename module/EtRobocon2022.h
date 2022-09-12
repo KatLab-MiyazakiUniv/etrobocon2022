@@ -1,6 +1,6 @@
 /**
- * @file EtRobocon2022.h
- * @brief 全体を制御するクラス
+ * @file   EtRobocon2022.h
+ * @brief  全体を制御するクラス
  * @author Takahiro55555
  */
 
@@ -9,6 +9,7 @@
 
 // ev3api.hを読み込むヘッダは.cppに記述する
 #include "SystemInfo.h"
+#include "Logger.h"
 
 class EtRobocon2022 {
  public:

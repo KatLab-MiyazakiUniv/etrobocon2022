@@ -1,86 +1,40 @@
 /**
- * @file Rotation.h
- * @brief 回頭・ピボットターンするクラス
- * @author sugaken0528
+ * @file   Rotation.h
+ * @brief  回頭動作
+ * @author sugaken0528 KakinokiKanta mutotaka0426
  */
 
 #ifndef ROTATION_H
 #define ROTATION_H
 
-#include <cmath>
-#include <algorithm>
-#include "Controller.h"
-#include "Measurer.h"
+#include "Motion.h"
 #include "Mileage.h"
 #include "SystemInfo.h"
-#include "Logger.h"
 
-/**
- * 回頭とピボットターンをするクラス
- */
-class Rotation {
+class Rotation : public Motion {
  public:
   /**
    * コンストラクタ
+   * @param _angle 回転角度(deg) 0~360
+   * @param _pwm PWM値 0~100
+   * @param _isClockwise 回頭方向 ture:時計回り, false:反時計回り
    */
-  Rotation();
+  Rotation(int _angle, int _pwm, bool _isClockwise);
 
   /**
-   * 左に回頭する関数
-   * @param angle 回転角度(deg) 0~360
-   * @param pwm PWM値 0~100
+   * @brief 回頭する
    */
-  void rotateLeft(int angle, int pwm);
+  void run();
 
   /**
-   * 右に回頭する関数
-   * @param angle 回転角度(deg) 0~360
-   * @param pwm PWM値 0~100
+   * @brief 実行のログを取る
    */
-  void rotateRight(int angle, int pwm);
-
-  /**
-   * 右タイヤを軸に前方へピボットターンする関数
-   * @param angle　回転角度(deg) 0~360
-   * @param pwm PWM値 0~100
-   */
-  void turnForwardRightPivot(int angle, int pwm);
-
-  /**
-   * 右タイヤを軸に後方へピボットターンする関数
-   * @param angle　回転角度(deg) 0~360
-   * @param pwm PWM値 0~100
-   */
-  void turnBackRightPivot(int angle, int pwm);
-
-  /**
-   * 左タイヤを軸に前方へピボットターンする関数
-   * @param angle　回転角度(deg) 0~360
-   * @param pwm PWM値 0~100
-   */
-  void turnForwardLeftPivot(int angle, int pwm);
-
-  /**
-   * 左タイヤを軸に後方へピボットターンする関数
-   * @param angle　回転角度(deg) 0~360
-   * @param pwm PWM値 0~100
-   */
-  void turnBackLeftPivot(int angle, int pwm);
+  void logRunning();
 
  private:
-  Controller controller;
-  Measurer measurer;
-  Logger logger;
-  const int ROTATE_MIN_PWM;  // 回頭の時のモーターパワーの最小値
-  const int PIVOT_FRONT_MIN_PWM;  //ピボットターン前方向の時のモーターパワーの最小値
-  const int PIVOT_BACK_MIN_PWM;  //ピボットターン後方向の時のモーターパワーの最小値
-
-  /**
-   *  @brief 指定角度回頭したときの片輪の回転角度を計算する
-   *  @param Angle [走行体が回頭する角度[deg]]
-   *  @return 片輪の回転角度(回転方向に関わらず正の数)
-   */
-  double calculateTireAngle(int angle);
+  int angle;         // 回転角度(deg) 0~360
+  int pwm;           // PWM値 0~100
+  bool isClockwise;  // 回頭方向 ture:時計回り, false:反時計回り
 };
 
 #endif
