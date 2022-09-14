@@ -16,6 +16,7 @@ void GameArea::runGameArea(const bool isLeftCourse, bool& isLeftEdge, const int 
 
   // ファイルから受け取る動作リスト
   vector<Motion*> toEndPointMotions;  // 端点サークルまでの動作リスト
+  vector<Motion*> carryBonusMotions;  // ボーナスブロック運搬までの動作リスト
   vector<Motion*> gameAreaMotions;    // ゲームエリア攻略の動作リスト
 
   // 端点サークルまでのコマンドファイルを読み込む
