@@ -32,6 +32,20 @@ void GameArea::runGameArea(const bool isLeftCourse, bool& isLeftEdge, const int 
     eMotion->run();
   }
 
+  // ボーナスブロック運搬までのコマンドファイルを読み込む
+  const char* carryBonusPath = isLeftCourse ? carryBonusLeft : carryBonusRight;
+  // ボーナスブロック運搬までの動作インスタンスのリストを生成する
+  carryBonusMotions = MotionParser::createMotions(carryBonusPath, targetBrightness, isLeftEdge);
+
+  // 動作実行のメッセージログを出す
+  snprintf(buf, BUF_SIZE, "\nRun the commands in '%s'\n", carryBonusPath);
+  logger.logHighlight(buf);
+  // 各動作を実行する
+  for(const auto& eMotion : carryBonusMotions) {
+    eMotion->logRunning();
+    eMotion->run();
+  }
+
   // ゲームエリア攻略のコマンドファイルを読み込む
   const char* gameAreaPath = isLeftCourse ? gameAreaLeft : gameAreaRight;
   // ゲームエリア攻略の動作インスタンスのリストを生成する
