@@ -16,6 +16,7 @@ void GameArea::runGameArea(const bool isLeftCourse, bool& isLeftEdge, const int 
 
   // ファイルから受け取る動作リスト
   vector<Motion*> toEndPointMotions;  // 端点サークルまでの動作リスト
+  vector<Motion*> carryBonusMotions;  // ボーナスブロック運搬の動作リスト
   vector<Motion*> gameAreaMotions;    // ゲームエリア攻略の動作リスト
 
   // 端点サークルまでのコマンドファイルを読み込む
@@ -30,6 +31,20 @@ void GameArea::runGameArea(const bool isLeftCourse, bool& isLeftEdge, const int 
   for(const auto& eMotion : toEndPointMotions) {
     eMotion->logRunning();
     eMotion->run();
+  }
+
+  // ボーナスブロック運搬のコマンドファイルを読み込む
+  const char* carryBonusPath = isLeftCourse ? carryBonusLeft : carryBonusRight;
+  // ボーナスブロック運搬の動作インスタンスのリストを生成する
+  carryBonusMotions = MotionParser::createMotions(carryBonusPath, targetBrightness, isLeftEdge);
+
+  // 動作実行のメッセージログを出す
+  snprintf(buf, BUF_SIZE, "\nRun the commands in '%s'\n", carryBonusPath);
+  logger.logHighlight(buf);
+  // 各動作を実行する
+  for(const auto& cMotion : carryBonusMotions) {
+    cMotion->logRunning();
+    cMotion->run();
   }
 
   // ゲームエリア攻略のコマンドファイルを読み込む
