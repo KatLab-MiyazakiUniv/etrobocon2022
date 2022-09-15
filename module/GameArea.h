@@ -25,7 +25,7 @@ class GameArea {
   // 端点サークルまでのコマンドファイルのパス
   static constexpr char* toEndPointLeft = "etrobocon2022/datafiles/ToEndPointLeft.csv";
   static constexpr char* toEndPointRight = "etrobocon2022/datafiles/ToEndPointRight.csv";
-  // ボーナスブロック運搬、復帰までのコマンドファイルのパス
+  // ボーナスブロック運搬のコマンドファイルのパス
   static constexpr char* carryBonusLeft = "etrobocon2022/datafiles/CarryBonusLeft.csv";
   static constexpr char* carryBonusRight = "etrobocon2022/datafiles/CarryBonusRight.csv";
   // ゲームエリアのコマンドファイルのパス
