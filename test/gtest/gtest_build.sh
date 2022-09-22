@@ -22,7 +22,7 @@ fi
 # NOTE: 実行とテストでカレントディレクトリが異なり，テストの際にファイルパスの指定ができないため，テスト用にdatafiles/ディレクトリを作成・コピーする
 mkdir -p build/etrobocon2022/datafiles
 cd build
-cp ../datafiles/* etrobocon2022/datafiles/
+cp ../datafiles/*.csv etrobocon2022/datafiles/
 
 cmake -DCMAKE_BUILD_TYPE=Coverage ..
 cmake --build .
