@@ -54,8 +54,8 @@ void ColorLineTracing::run()
     currentPid = pid.calculatePid(measurer.getBrightness()) * sign;
 
     // モータのPWM値をセット（0を超えないようにセット）
-    int rightPwm = pwm > 0 ? max(pwm - (int)currentPid, 0) : min(pwm - (int)currentPid, 0);
-    int leftPwm = pwm > 0 ? max(pwm + (int)currentPid, 0) : min(pwm + (int)currentPid, 0);
+    int rightPwm = pwm > 0 ? max(pwm - (int)currentPid, 0) : min(pwm + (int)currentPid, 0);
+    int leftPwm = pwm > 0 ? max(pwm + (int)currentPid, 0) : min(pwm - (int)currentPid, 0);
     controller.setRightMotorPwm(rightPwm);
     controller.setLeftMotorPwm(leftPwm);
     // 10ミリ秒待機
