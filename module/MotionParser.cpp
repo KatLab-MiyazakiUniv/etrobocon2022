@@ -145,6 +145,23 @@ bool MotionParser::convertBool(char* command, char* binaryParameter)
 {
   Logger logger;
 
+  int endIndex;                       // binaryParameterの末尾のインデックス
+  int len = strlen(binaryParameter);  // 文字列長
+  if(len > 0) {
+    endIndex = len - 1;
+  } else {
+    logger.logWarning("The parameter passed to MotionParser::convertBool is empty");
+    return true;
+  }
+  // 末尾の改行コードを削除（LF,CR,CR+LF対応）
+  if(binaryParameter[endIndex] == 0x0a) {  // LFの場合
+    binaryParameter[endIndex] = 0x00;      // NULL文字に置き換える
+    endIndex--;  // CR+LFの時のためにインデックスを一つ戻す
+  }
+  if(binaryParameter[endIndex] == 0x0d) {  // CRの場合
+    binaryParameter[endIndex] = 0x00;      // NULL文字に置き換える
+  }
+
   if(strcmp(command, "RT") == 0) {                   //  コマンドがRTの場合
     if(strcmp(binaryParameter, "clockwise") == 0) {  // パラメータがclockwiseの場合
       return true;

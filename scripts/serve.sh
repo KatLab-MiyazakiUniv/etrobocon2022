@@ -12,4 +12,6 @@ while [ "$message" != "Start" ]; do
     echo -n "$message" | nc -l -p $PORT -w 1
 done
 
+echo "End server"
+
 rm $MESSAGE_FILE_PATH
