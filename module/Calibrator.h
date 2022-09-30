@@ -7,7 +7,6 @@
 #ifndef CALIBRATOR_H
 #define CALIBRATOR_H
 
-#include <string>
 #include "Measurer.h"
 #include "Controller.h"
 #include "Logger.h"
