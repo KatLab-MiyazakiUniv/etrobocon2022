@@ -15,25 +15,26 @@ void EtRobocon2022::start()
   char buf[BUF_SIZE];  // log用にメッセージを一時保持する領域
   Logger logger;
 
-  bool isLeftCourse = true;
+  bool isLeftCourse = false;
   bool isLeftEdge = true;
   int targetBrightness = (WHITE_BRIGHTNESS + BLACK_BRIGHTNESS) / 2;
   Calibrator calibrator;
 
   // サーバを起動する
-  system("bash ./etrobocon2022/scripts/serve.sh &");
+  // system("bash ./etrobocon2022/scripts/serve.sh &");
 
   // キャリブレーションする
-  calibrator.run();
-  isLeftCourse = calibrator.getIsLeftCourse();
-  isLeftEdge = isLeftCourse;
-  targetBrightness = calibrator.getTargetBrightness();
+  // calibrator.run();
+  // isLeftCourse = calibrator.getIsLeftCourse();
+  // Rコース
+  isLeftEdge = false;
+  targetBrightness = 48;
 
   // 合図を送るまで待機する
   calibrator.waitForStart();
 
   // カメラシステムに開始合図を送る
-  system("bash ./etrobocon2022/scripts/start.sh");
+  // system("bash ./etrobocon2022/scripts/start.sh");
 
   // スタートのメッセージログを出す
   const char* course = isLeftCourse ? "Left" : "Right";
@@ -41,7 +42,7 @@ void EtRobocon2022::start()
   logger.logHighlight(buf);
 
   // ライントレースエリアを走行する
-  LineTraceArea::runLineTraceArea(isLeftCourse, isLeftEdge, targetBrightness);
+  // LineTraceArea::runLineTraceArea(isLeftCourse, isLeftEdge, targetBrightness);
 
   // ゲームエリアを攻略する
   GameArea::runGameArea(isLeftCourse, isLeftEdge, targetBrightness);

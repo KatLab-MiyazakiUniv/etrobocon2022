@@ -47,17 +47,17 @@ void GameArea::runGameArea(const bool isLeftCourse, bool& isLeftEdge, const int 
     cMotion->run();
   }
 
-  // ゲームエリア攻略のコマンドファイルを読み込む
-  const char* gameAreaPath = isLeftCourse ? gameAreaLeft : gameAreaRight;
-  // ゲームエリア攻略の動作インスタンスのリストを生成する
-  gameAreaMotions = MotionParser::createMotions(gameAreaPath, targetBrightness, isLeftEdge);
+  // // ゲームエリア攻略のコマンドファイルを読み込む
+  // const char* gameAreaPath = isLeftCourse ? gameAreaLeft : gameAreaRight;
+  // // ゲームエリア攻略の動作インスタンスのリストを生成する
+  // gameAreaMotions = MotionParser::createMotions(gameAreaPath, targetBrightness, isLeftEdge);
 
-  // 動作実行のメッセージログを出す
-  snprintf(buf, BUF_SIZE, "\nRun the commands in '%s'\n", gameAreaPath);
-  logger.logHighlight(buf);
-  // 各動作を実行する
-  for(const auto& gMotion : gameAreaMotions) {
-    gMotion->logRunning();
-    gMotion->run();
-  }
+  // // 動作実行のメッセージログを出す
+  // snprintf(buf, BUF_SIZE, "\nRun the commands in '%s'\n", gameAreaPath);
+  // logger.logHighlight(buf);
+  // // 各動作を実行する
+  // for(const auto& gMotion : gameAreaMotions) {
+  //   gMotion->logRunning();
+  //   gMotion->run();
+  // }
 }
