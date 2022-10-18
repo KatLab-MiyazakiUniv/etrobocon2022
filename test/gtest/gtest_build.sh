@@ -19,10 +19,12 @@ if [ -d $buildDir ]; then
     fi
 fi
 
-# NOTE: 実行とテストでカレントディレクトリが異なり，テストの際にファイルパスの指定ができないため，テスト用にdatafiles/ディレクトリを作成・コピーする
+# NOTE: 実行とテストでカレントディレクトリが異なり，テストの際にファイルパスの指定ができないため，テスト用にdatafiles/及びscripts/ディレクトリを作成・コピーする
 mkdir -p build/etrobocon2022/datafiles
+mkdir -p build/etrobocon2022/scripts
 cd build
 cp ../datafiles/*.csv etrobocon2022/datafiles/
+cp ../scripts/*.sh etrobocon2022/scripts/
 
 cmake -DCMAKE_BUILD_TYPE=Coverage ..
 cmake --build .

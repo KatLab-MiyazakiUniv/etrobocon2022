@@ -20,6 +20,9 @@ void EtRobocon2022::start()
   int targetBrightness = (WHITE_BRIGHTNESS + BLACK_BRIGHTNESS) / 2;
   Calibrator calibrator;
 
+  // 強制終了(CTRL+C)のシグナルを登録する
+  signal(SIGINT, sigint);
+
   // サーバを起動する
   system("bash ./etrobocon2022/scripts/serve.sh &");
 
@@ -48,4 +51,15 @@ void EtRobocon2022::start()
 
   // 走行終了のメッセージログを出す
   logger.logHighlight("The run has been completed\n");
+
+  // ログファイルを生成する
+  logger.outputToFile();
+}
+
+void EtRobocon2022::sigint(int _)
+{
+  Logger logger;
+  logger.log("Forced termination.");  // 強制終了のログを出力
+  logger.outputToFile();              // ログファイルを生成
+  _exit(0);                           //システムコールで強制終了
 }
