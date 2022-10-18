@@ -70,7 +70,7 @@ void Logger::outputToFile()
   ディレクトリを生成するためのヘッダdirect.hを使用できないため（多分），
   bashでlogfile.txtの名前をログ生成時刻に変更し，logfiles/に移動する
   */
-  system("bash ./etrobocon2022/scripts/organizeLogfile.sh &");
+  system("bash ./etrobocon2022/scripts/organizeLogfile.sh");
 }
 
 void Logger::initLogs()
