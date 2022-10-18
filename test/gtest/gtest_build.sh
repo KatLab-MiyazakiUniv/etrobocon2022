@@ -30,3 +30,5 @@ cmake -DCMAKE_BUILD_TYPE=Coverage ..
 cmake --build .
 export GTEST_COLOR=1
 ctest -VV
+
+rm -rf etrobocon2022/
