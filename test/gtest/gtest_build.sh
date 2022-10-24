@@ -25,7 +25,7 @@ mkdir -p build/etrobocon2022/scripts
 cd build
 cp ../datafiles/*.csv etrobocon2022/datafiles/
 cp ../scripts/*.sh etrobocon2022/scripts/
-chmod 744 .etrobocon2022/scripts/*.sh
+chmod 744 ./etrobocon2022/scripts/*.sh
 
 cmake -DCMAKE_BUILD_TYPE=Coverage ..
 cmake --build .
