@@ -39,10 +39,12 @@ void CorrectingRotation::run()
   if((fp = popen(cmd, "r")) == NULL) {
     // コマンドを実行できなかった場合Warningを出して終了する
     logger.logWarning("Could not open \"./etrobocon2022/scripts/rearCamera.sh\"");
+    pclose(fp);
     return;
   } else {
     // 実行結果をoutputにセット
     fgets(output, sizeof(output), fp);
+    pclose(fp);
   }
   double measuredAngle = stod(output);  // outputをdouble型に変換
   int tAngle = targetAngle;
