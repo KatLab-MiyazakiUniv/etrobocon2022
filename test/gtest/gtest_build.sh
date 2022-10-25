@@ -33,3 +33,4 @@ export GTEST_COLOR=1
 ctest -VV
 
 rm -rf etrobocon2022/
+rm result.txt

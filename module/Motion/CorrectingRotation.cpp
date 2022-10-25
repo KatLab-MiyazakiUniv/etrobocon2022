@@ -47,7 +47,6 @@ void CorrectingRotation::run()
   // 実行結果をoutputにセット
   fgets(output, sizeof(output), fp);
   fclose(fp);
-  system("rm result.txt");
 
   // シミュレータ環境でビルドが通らないコード（本当はこっちがいい）→→→→→→→→→→→→→→
   // FILE* fp;
@@ -56,7 +55,6 @@ void CorrectingRotation::run()
   // if((fp = popen(cmd, "r")) == NULL) {
   //   // コマンドを実行できなかった場合Warningを出して終了する
   //   logger.logWarning("Could not open \"./etrobocon2022/scripts/rear_camera.sh\"");
-  //   pclose(fp);
   //   return;
   // } else {
   //   // 実行結果をoutputにセット
