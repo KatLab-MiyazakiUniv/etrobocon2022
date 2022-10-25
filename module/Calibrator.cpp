@@ -17,10 +17,10 @@ void Calibrator::run()
   showVoltage();
 
   // 左右ボタンでコースのLRを選択する
-  selectCourse();
+  // selectCourse();
 
   // 黒と白の輝度を測定して目標輝度を求める
-  measureTargetBrightness();
+  // measureTargetBrightness();
 }
 
 void Calibrator::showVoltage()
