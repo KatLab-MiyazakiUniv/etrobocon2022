@@ -25,8 +25,8 @@ namespace etrobocon2022_test {
     Measurer measurer;
 
     // rearCamera.shで-4.1を返すように書き換える
-    system("echo \"#!/bin/bash\" > ./etrobocon2022/scripts/rearCamera.sh");
-    system("echo \"echo -4.1\" >> ./etrobocon2022/scripts/rearCamera.sh");
+    system("echo \"#!/bin/bash\" > ./etrobocon2022/scripts/rear_camera.sh");
+    system("echo \"echo -4.1\" >> ./etrobocon2022/scripts/rear_camera.sh");
 
     // 期待する車輪ごとの回頭角度(時計回り)
     double expectedLeft = 4;

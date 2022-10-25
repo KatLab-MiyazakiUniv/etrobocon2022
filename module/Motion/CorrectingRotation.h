@@ -7,7 +7,6 @@
 #ifndef CORRECTING_ROTATION_H
 #define CORRECTING_ROTATION_H
 
-#include <string>
 #include "Motion.h"
 #include "Mileage.h"
 #include "SystemInfo.h"

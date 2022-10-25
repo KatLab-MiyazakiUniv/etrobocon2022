@@ -32,21 +32,40 @@ void CorrectingRotation::run()
     return;
   }
 
-  // rearCamera.shより直線の角度を取得
-  FILE* fp;
-  char output[8];
-  char* cmd = "./etrobocon2022/scripts/rearCamera.sh";
-  if((fp = popen(cmd, "r")) == NULL) {
+  /* rear_camera.shより直線の角度を取得
+   * シミュレータ環境ではpopenが使えないため，
+   * ファイルに出力して読み込む
+   */
+  FILE* fp = fopen("result.txt", "r");
+  char output[8];  // rear_camera.shの出力結果を保持する領域
+  system("bash ./etrobocon2022/scripts/rear_camera.sh > result.txt");
+  if((fp = fopen("result.txt", "r")) == NULL) {
     // コマンドを実行できなかった場合Warningを出して終了する
-    logger.logWarning("Could not open \"./etrobocon2022/scripts/rearCamera.sh\"");
-    pclose(fp);
+    logger.logWarning("Could not open \"./result.txt\"");
     return;
-  } else {
-    // 実行結果をoutputにセット
-    fgets(output, sizeof(output), fp);
-    pclose(fp);
   }
-  double measuredAngle = stod(output);  // outputをdouble型に変換
+  // 実行結果をoutputにセット
+  fgets(output, sizeof(output), fp);
+  fclose(fp);
+  system("rm result.txt");
+
+  // シミュレータ環境でビルドが通らないコード（本当はこっちがいい）→→→→→→→→→→→→→→
+  // FILE* fp;
+  // char output[8];
+  // char* cmd = "./etrobocon2022/scripts/rear_camera.sh";
+  // if((fp = popen(cmd, "r")) == NULL) {
+  //   // コマンドを実行できなかった場合Warningを出して終了する
+  //   logger.logWarning("Could not open \"./etrobocon2022/scripts/rear_camera.sh\"");
+  //   pclose(fp);
+  //   return;
+  // } else {
+  //   // 実行結果をoutputにセット
+  //   fgets(output, sizeof(output), fp);
+  //   pclose(fp);
+  // }
+  // ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
+
+  double measuredAngle = atof(output);  // outputをdouble型に変換
   int tAngle = targetAngle;
 
   /*
