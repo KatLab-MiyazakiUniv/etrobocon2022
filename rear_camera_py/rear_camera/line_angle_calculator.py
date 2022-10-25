@@ -95,7 +95,7 @@ class LineAngleCalculator:
                 img_transformed, cnt, angle_2_y)
             debug_img_path = os.path.join(self.__debug_dir, debug_img_fname)
             cv2.imwrite(debug_img_path, debug_img)
-        return angle_2_y
+        return float(angle_2_y)
 
     def calc_contour_area_mm2(self, contour: np.ndarray, img_h: int, img_w: int) -> float:
         tmp_img_for_calc_contour_area_mm2 = np.zeros(
