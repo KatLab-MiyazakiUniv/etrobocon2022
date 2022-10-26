@@ -6,6 +6,14 @@ import numpy as np
 
 class CameraInterface:
     def __init__(self, camera_id: int = 0) -> None:
+        """カメラインターフェースのコンストラクタ.
+
+        WARNING:
+            ここでカメラデバイスを初期化すると、
+            デフォルト引数は定義時評価というPythonの仕様により、
+            カメラデバイスを同時に複数回初期化しようとしてエラーが発生する場合がある.
+            これは、複数個所でCameraInterfaceをデフォルト引数に設定している場合に生じる.
+        """
         self.__camera_id = camera_id
         self.__picam2 = None
 
