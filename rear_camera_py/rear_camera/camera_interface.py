@@ -18,7 +18,9 @@ class CameraInterface:
             ここでカメラデバイスを初期化すると、
             デフォルト引数は定義時評価というPythonの仕様により、
             カメラデバイスを同時に複数回初期化しようとしてエラーが発生する場合がある.
-            これは、複数個所でCameraInterfaceをデフォルト引数に設定している場合に生じる.
+            これは、複数個所でCameraInterfaceをデフォルト引数に設定している場合、
+            もしくは、1箇所デフォルト引数に設定した上で、
+            さらに処理中にCameraInterfaceをインスタンス化した際に発生する可能性がある.
         """
         self.__camera_id = camera_id
         self.__format = data_format
