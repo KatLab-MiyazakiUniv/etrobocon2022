@@ -37,10 +37,10 @@ void EtRobocon2022::start()
 
     // 回頭補正を行う
     if(i % 2 == 0){
-      CorrectingRotation cr(0, 60);
+      CorrectingRotation cr(0, 65);
       cr.run();
     }else{
-      CorrectingRotation cr(45, 60);
+      CorrectingRotation cr(45, 65);
       cr.run();
     }
   }
