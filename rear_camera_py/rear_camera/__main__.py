@@ -22,4 +22,4 @@ if args.calibrate:
     print("Calibrated")
 else:
     lac = LineAngleCalculator(camera, debug=args.debug)
-    print(lac.calc_yaw_angle())
+    print(lac.calc_yaw_angle(999))
