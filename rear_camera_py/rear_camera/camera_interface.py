@@ -1,11 +1,17 @@
-from typing import Union
+from typing import Tuple, Union
 
 import cv2
 from picamera2 import Picamera2
 import numpy as np
 
+
 class CameraInterface:
-    def __init__(self, camera_id: int = 0) -> None:
+    def __init__(
+        self,
+        camera_id: int = 0,
+        data_format: str = 'XRGB8888',
+        size: Tuple[int, int] = (1640, 1232)
+    ) -> None:
         """カメラインターフェースのコンストラクタ.
 
         WARNING:
@@ -15,6 +21,8 @@ class CameraInterface:
             これは、複数個所でCameraInterfaceをデフォルト引数に設定している場合に生じる.
         """
         self.__camera_id = camera_id
+        self.__format = data_format
+        self.__size = size
         self.__picam2 = None
 
     @property
@@ -25,7 +33,9 @@ class CameraInterface:
     def picam2(self) -> Picamera2:
         if self.__picam2 is None:
             picam2 = Picamera2(camera_num=self.__camera_id)
-            picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (1640, 1232)}))
+            conf = picam2.create_preview_configuration(
+                main={"format": self.__format, "size": self.__size})
+            picam2.configure(conf)
             picam2.start()
             self.__picam2 = picam2
         return self.__picam2
