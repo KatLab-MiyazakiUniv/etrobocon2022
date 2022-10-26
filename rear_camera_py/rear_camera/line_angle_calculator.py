@@ -1,6 +1,7 @@
 
 import json
 import os
+import time
 from typing import Tuple, Union
 
 import cv2
@@ -52,13 +53,18 @@ class LineAngleCalculator:
             os.makedirs(debug_dir)
         self.__debug_dir = debug_dir
 
-    def calc_yaw_angle(self, contours_area_size_min_threshold_mm2: int = 9999, debug_img_fname: str = "detected_angle.png") -> Union[float, None]:
+    def calc_yaw_angle(self, contours_area_size_min_threshold_mm2: int = 9999, debug_img_fname_prefix: str = "angle") -> Union[float, None]:
         img = self.__camera_interface.capture_image()
         if img is None:
             return None
-        return self.__detect_lines(img, contours_area_size_min_threshold_mm2, debug_img_fname)
+        return self.__detect_lines(img, contours_area_size_min_threshold_mm2, debug_img_fname_prefix)
 
-    def __detect_lines(self, img: np.ndarray, contours_area_size_min_threshold_mm2, debug_img_fname) -> Union[float, None]:
+    def __detect_lines(self, img: np.ndarray, contours_area_size_min_threshold_mm2, debug_img_fname_prefix) -> Union[float, None]:
+        if self.__debug:
+            debug_time = time.time()
+            img_fname = "%s_%f_captured.png" % (debug_img_fname_prefix, debug_time)
+            debug_img_path = os.path.join(self.__debug_dir, img_fname)
+            cv2.imwrite(debug_img_path, img)
         img_transformed = self.get_transformed_image(img)
         img_gray = cv2.cvtColor(img_transformed, cv2.COLOR_BGR2GRAY)
         img_gray[0:1, :] = 255
@@ -93,7 +99,8 @@ class LineAngleCalculator:
         if self.__debug:
             debug_img = self.draw_detected_lines_on_the_image(
                 img_transformed, cnt, angle_2_y)
-            debug_img_path = os.path.join(self.__debug_dir, debug_img_fname)
+            img_fname = "%s_%f_detected.png" % (debug_img_fname_prefix, debug_time)
+            debug_img_path = os.path.join(self.__debug_dir, img_fname)
             cv2.imwrite(debug_img_path, debug_img)
         return float(angle_2_y)
 
