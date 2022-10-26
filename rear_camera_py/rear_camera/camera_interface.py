@@ -26,11 +26,11 @@ class CameraInterface:
         self.__picam2 = None
 
     @property
-    def picam2(self) -> None:
+    def _picam2(self) -> None:
         pass
 
-    @picam2.getter
-    def picam2(self) -> Picamera2:
+    @_picam2.getter
+    def _picam2(self) -> Picamera2:
         if self.__picam2 is None:
             picam2 = Picamera2(camera_num=self.__camera_id)
             conf = picam2.create_preview_configuration(
@@ -41,4 +41,4 @@ class CameraInterface:
         return self.__picam2
 
     def capture_image(self) -> Union[np.ndarray, None]:
-        return self.picam2.capture_array()
+        return self._picam2.capture_array()
