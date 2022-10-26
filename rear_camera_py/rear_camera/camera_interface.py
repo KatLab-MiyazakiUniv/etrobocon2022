@@ -9,10 +9,12 @@ class CameraInterface:
     def __init__(
         self,
         camera_id: int = 0,
-        data_format: str = 'XRGB8888',
+        data_format: str = 'RGB888',
         size: Tuple[int, int] = (1640, 1232)
     ) -> None:
         """カメラインターフェースのコンストラクタ.
+
+        WARNING: キャリブレーション時と同じ解像度に設定しないとバグる.
 
         WARNING:
             ここでカメラデバイスを初期化すると、
