@@ -30,9 +30,20 @@ void EtRobocon2022::start()
   // 合図を送るまで待機する
   calibrator.waitForStart();
 
-  // 回頭補正を行う
-  CorrectingRotation cr(45, 60);
-  cr.run();
+  for( int i = 0; i < 8; i++){
+    // 回頭する
+    Rotation rt(45, 70, true);
+    rt.run();
+
+    // 回頭補正を行う
+    if(i % 2 == 0){
+      CorrectingRotation cr(0, 60);
+      cr.run();
+    }else{
+      CorrectingRotation cr(45, 60);
+      cr.run();
+    }
+  }
 
   // 走行終了のメッセージログを出す
   logger.logHighlight("The run has been completed\n");
