@@ -75,7 +75,7 @@ namespace etrobocon2022_test {
     if(output.find("Will Run on the Left Course") != string::npos) {
       expected = true;  // Lコース
     }
-    // Rightコースト出力されていた場合
+    // Rightコースと出力されていた場合
     else if(output.find("Will Run on the Right Course") != string::npos) {
       expected = false;  // Rコース
     }
