@@ -153,12 +153,12 @@ bool MotionParser::convertBool(char* command, char* binaryParameter)
   Logger logger;
 
   // 末尾の改行を削除
-  StringOperator::removeEOL(binaryParameter);
+  char* param = StringOperator::removeEOL(binaryParameter);
 
-  if(strcmp(command, "RT") == 0) {                   //  コマンドがRTの場合
-    if(strcmp(binaryParameter, "clockwise") == 0) {  // パラメータがclockwiseの場合
+  if(strcmp(command, "RT") == 0) {         //  コマンドがRTの場合
+    if(strcmp(param, "clockwise") == 0) {  // パラメータがclockwiseの場合
       return true;
-    } else if(strcmp(binaryParameter, "anticlockwise") == 0) {  // パラメータがanticlockwiseの場合
+    } else if(strcmp(param, "anticlockwise") == 0) {  // パラメータがanticlockwiseの場合
       return false;
     } else {  //想定していないパラメータが来た場合
       logger.logWarning("Parameter before conversion must be 'clockwise' or 'anticlockwise'");
@@ -166,10 +166,10 @@ bool MotionParser::convertBool(char* command, char* binaryParameter)
     }
   }
 
-  if(strcmp(command, "EC") == 0) {              //  コマンドがECの場合
-    if(strcmp(binaryParameter, "left") == 0) {  // パラメータがleftの場合
+  if(strcmp(command, "EC") == 0) {    //  コマンドがECの場合
+    if(strcmp(param, "left") == 0) {  // パラメータがleftの場合
       return true;
-    } else if(strcmp(binaryParameter, "right") == 0) {  // パラメータがrightの場合
+    } else if(strcmp(param, "right") == 0) {  // パラメータがrightの場合
       return false;
     } else {  //想定していないパラメータが来た場合
       logger.logWarning("Parameter before conversion must be 'left' or 'right'");

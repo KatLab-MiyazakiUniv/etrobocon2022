@@ -13,8 +13,9 @@ class StringOperator {
   /**
    * @brief 入力された文字列の末尾の改行を削除する
    * @param string 改行を消したい文字列
+   * @return 改行を消した文字列
    */
-  static void removeEOL(char* string);
+  static char* removeEOL(const char* string);
 
  private:
   StringOperator();  // インスタンス化を禁止する

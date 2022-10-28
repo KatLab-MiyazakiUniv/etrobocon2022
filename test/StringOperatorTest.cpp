@@ -12,11 +12,24 @@ namespace etrobocon2022_test {
 
   TEST(StringOperatorTest, removeEOL)
   {
-    char actual[64] = "StringOperator test\n";
-    char expected[64] = "StringOperator test";
+    char actual[32] = "StringOperator test\n";
+    char expected[32] = "StringOperator test";
 
     // actualの改行を削除
-    StringOperator::removeEOL(actual);
+    strcpy(actual, StringOperator::removeEOL(actual));
+
+    // 二つの文字列が等しいことをテスト
+    EXPECT_STREQ(expected, actual);
+  }
+
+  // 文字列リテラルを入力した場合
+  TEST(StringOperatorTest, removeEOLInLiteral)
+  {
+    char* actual = "StringOperator test\n";
+    char* expected = "StringOperator test";
+
+    // actualの改行を削除
+    actual = StringOperator::removeEOL(actual);
 
     // 二つの文字列が等しいことをテスト
     EXPECT_STREQ(expected, actual);

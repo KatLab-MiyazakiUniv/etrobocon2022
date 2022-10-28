@@ -50,7 +50,7 @@ void CorrectingRotation::run()
   fclose(fp);
 
   // outputから改行を削除
-  StringOperator::removeEOL(output);
+  strcpy(output, StringOperator::removeEOL(output));
 
   // 文字列がNoneの場合は黒線を認識できていないので，Warningを出して終了する
   if(strcmp(output, "None") == 0) {
