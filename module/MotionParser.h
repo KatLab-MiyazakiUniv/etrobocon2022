@@ -23,6 +23,7 @@
 #include "ArmRising.h"
 #include "ArmFalling.h"
 #include "CorrectingRotation.h"
+#include "StringOperator.h"
 
 enum class COMMAND {
   DL,  // 指定距離ライントレース

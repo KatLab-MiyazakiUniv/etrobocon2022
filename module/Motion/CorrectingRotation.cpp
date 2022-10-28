@@ -49,6 +49,15 @@ void CorrectingRotation::run()
   fgets(output, sizeof(output), fp);
   fclose(fp);
 
+  // outputから改行を削除
+  StringOperator::removeEOL(output);
+
+  // 文字列がNoneの場合は黒線を認識できていないので，Warningを出して終了する
+  if(strcmp(output, "None") == 0) {
+    logger.logWarning("Could not recognize black line");
+    return;
+  }
+
   double measuredAngle = atof(output);  // outputをdouble型に変換
   int tAngle = targetAngle;
 

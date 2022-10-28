@@ -441,4 +441,44 @@ namespace etrobocon2022_test {
 
     EXPECT_EQ(expectedOutput, actualOutput);  // 標準出力でWarningを出している
   }
+
+  // rear_camera.shがNoneを返した場合
+  TEST(CorrectingRotationTest, runReturnNone)
+  {
+    int targetAngle = 45;
+    int pwm = 60;
+    CorrectingRotation xRotation(targetAngle, pwm);
+    Measurer measurer;
+
+    // rearCamera.shでNoneを返すように書き換える
+    system("echo \"#!/bin/bash\" > ./etrobocon2022/scripts/rear_camera.sh");
+    system("echo \"echo \"None\"\" >> ./etrobocon2022/scripts/rear_camera.sh");
+
+    // Warning文
+    string expectedOutput = "\x1b[36m";  // 文字色をシアンに
+    expectedOutput += "Warning: Could not recognize black line";
+    expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
+
+    // 期待する車輪ごとの回頭角度
+    double expectedLeft = 0;
+    double expectedRight = 0;
+
+    // 回頭前のモータカウント
+    int initialRightMotorCount = measurer.getRightCount();
+    int initialLeftMotorCount = measurer.getLeftCount();
+
+    testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
+    xRotation.run();                     // 角度補正回頭を実行
+    string actualOutput = testing::internal::GetCapturedStdout();  // キャプチャ終了
+
+    // 回頭後に各モータが回転した角度
+    int actualLeft = (measurer.getLeftCount() - initialLeftMotorCount) * TRANSFORM;
+    int actualRight = (measurer.getRightCount() - initialRightMotorCount) * TRANSFORM;
+
+    // 補正の前後で角度に変化はない
+    EXPECT_EQ(expectedLeft, actualLeft);
+    EXPECT_EQ(expectedRight, actualRight);
+
+    EXPECT_EQ(expectedOutput, actualOutput);  // 標準出力でWarningを出している
+  }
 }  // namespace etrobocon2022_test

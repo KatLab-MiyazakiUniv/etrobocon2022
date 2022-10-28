@@ -9,6 +9,7 @@
 
 #include "Motion.h"
 #include "Mileage.h"
+#include "StringOperator.h"
 #include "SystemInfo.h"
 
 class CorrectingRotation : public Motion {
