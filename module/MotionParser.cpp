@@ -100,7 +100,12 @@ vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrig
     } else if(command == COMMAND::AF) {  // アームを下げる
       ArmFalling* af = new ArmFalling(atoi(params[1]), atoi(params[2]));
 
-      motionList.push_back(af);  // 動作リストに追加
+      motionList.push_back(af);          // 動作リストに追加
+    } else if(command == COMMAND::XR) {  // 角度補正回頭の追加
+      CorrectingRotation* xr = new CorrectingRotation(atoi(params[1]),   // 目標角度
+                                                      atoi(params[2]));  // PWM値
+
+      motionList.push_back(xr);  // 動作リストに追加
     } else {                     // 未定義のコマンドの場合
       snprintf(buf, BUF_SIZE, "%s:%d: '%s' is undefined command", filePath, lineNum, params[0]);
       logger.logWarning(buf);
@@ -136,6 +141,8 @@ COMMAND MotionParser::convertCommand(char* str)
     return COMMAND::AR;
   } else if(strcmp(str, "AF") == 0) {  // 文字列がAFの場合
     return COMMAND::AF;
+  } else if(strcmp(str, "XR") == 0) {  // 文字列がXRの場合
+    return COMMAND::XR;
   } else {  //想定していない文字列が来た場合
     return COMMAND::NONE;
   }

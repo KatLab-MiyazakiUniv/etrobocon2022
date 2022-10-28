@@ -22,6 +22,7 @@
 #include "Sleeping.h"
 #include "ArmRising.h"
 #include "ArmFalling.h"
+#include "CorrectingRotation.h"
 
 enum class COMMAND {
   DL,  // 指定距離ライントレース
@@ -34,6 +35,7 @@ enum class COMMAND {
   SL,  // 自タスクスリープ
   AR,  // アームを上げる
   AF,  // アームを下げる
+  XR,  // 角度補正回頭
   NONE
 };
 

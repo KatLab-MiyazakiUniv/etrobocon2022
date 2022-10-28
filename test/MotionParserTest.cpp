@@ -53,9 +53,11 @@ namespace etrobocon2022_test {
     expectedList.push_back(ar);
     ArmFalling* af = new ArmFalling(10, 90);
     expectedList.push_back(af);
+    CorrectingRotation* xr = new CorrectingRotation(0, 60);
+    expectedList.push_back(xr);
     // Warning文
     string expectedOutput = "\x1b[36m";  // 文字色をシアンに
-    expectedOutput += "Warning: ../test/test_data/CommandParserTestData.csv:11: ";
+    expectedOutput += "Warning: ../test/test_data/CommandParserTestData.csv:12: ";
     expectedOutput += "'UNDEFINED' is undefined command";
     expectedOutput += "\n\x1b[39m";  // 文字色をデフォルトに戻す
 
