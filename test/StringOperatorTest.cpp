@@ -1,5 +1,5 @@
 /**
- * @file   StringOperator.cpp
+ * @file   StringOperatorTest.cpp
  * @brief  StringOperatorクラスのテスト
  * @author mutotaka0426
  */

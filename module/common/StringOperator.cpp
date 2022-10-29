@@ -1,6 +1,6 @@
 /**
- * @file StringOperator.cpp
- * @brief 文字列を操作するstatic関数をを持つクラス
+ * @file   StringOperator.cpp
+ * @brief  文字列を操作するstatic関数を持つクラス
  * @author mutotaka0426
  */
 

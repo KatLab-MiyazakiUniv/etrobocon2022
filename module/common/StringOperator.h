@@ -1,6 +1,6 @@
 /**
- * @file StringOperator.h
- * @brief 文字列を操作するstatic関数をを持つクラス
+ * @file   StringOperator.h
+ * @brief  文字列を操作するstatic関数を持つクラス
  * @author mutotaka0426
  */
 #ifndef STRING_OPERATOR_H
