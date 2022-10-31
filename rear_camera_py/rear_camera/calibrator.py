@@ -24,9 +24,11 @@ class Calibrator:
         """コンストラクタ.
 
         Args:
-            camera_interface (CameraInterface, optional): リアカメラのCameraInterfaceインスタンス. Defaults to CameraInterface().
+            camera_interface (CameraInterface, optional): リアカメラのCameraInterfaceインスタンス.
+                                                          Defaults to CameraInterface().
             trans_mat_file (str, optional): 射影変換用パラメータファイル名. Defaults to "rear_camera_param.npy".
-            distance_file (str, optional): 射影変換後の画像座標と走行体の中心からの距離等の関係を保持するパラメータファイル名. Defaults to "rear_camera_distance_param.json".
+            distance_file (str, optional): 射影変換後の画像座標と走行体の中心からの距離等の関係を保持するパラメータファイル名.
+                                           Defaults to "rear_camera_distance_param.json".
         """
         self.__camera_interface = camera_interface
         self.__aruco_dictionary = aruco.getPredefinedDictionary(
@@ -41,10 +43,11 @@ class Calibrator:
             img (np.ndarray): キャリブレーション用画像.
 
         Raises:
-            RuntimeError: キャリブレーション用のArUcoマーカを検出できなかった場合に発生 
+            RuntimeError: キャリブレーション用のArUcoマーカを検出できなかった場合に発生.
 
         Returns:
-            Tuple[np.ndarray, float, float]: 各種パラメータ(射影変換パラメータ、pixとmmの縮尺パラメータ、画像中心点と4つのキャリブレーション用ArUcoマーカで結んだ中心点の距離[pix])
+            Tuple[np.ndarray, float, float]: 各種パラメータ(射影変換パラメータ、pixとmmの縮尺パラメータ、
+                                                画像中心点と4つのキャリブレーション用ArUcoマーカで結んだ中心点の距離[pix]).
         """
         corners, ids, _ = aruco.detectMarkers(
             img, self.__aruco_dictionary)
@@ -102,19 +105,24 @@ class Calibrator:
         with open(self.__distance_file, mode="w") as fp:
             json.dump(distance_data, fp)
 
-    def __get_marker_mean(self, ids: np.ndarray, corners: List[np.ndarray], target_id: int) -> Tuple[float, float]:
+    def __get_marker_mean(
+        self,
+        ids: np.ndarray,
+        corners: List[np.ndarray],
+        target_id: int
+    ) -> Tuple[float, float]:
         """指定したIDのArUcoマーカの中心座標を取得する関数.
 
         Args:
-            ids (np.ndarray): cornersのデータに対応するArUcoマーカのID
-            corners (List[np.ndarray]): 検出したArUcoマーカの角座標 
-            target_id (int): ArUcoマーカのID
+            ids (np.ndarray): cornersのデータに対応するArUcoマーカのID.
+            corners (List[np.ndarray]): 検出したArUcoマーカの角座標.
+            target_id (int): ArUcoマーカのID.
 
         Raises:
-            ValueError: 指定したIDのArUcoマーカが存在しなかった場合に発生
+            ValueError: 指定したIDのArUcoマーカが存在しなかった場合に発生.
 
         Returns:
-            Tuple[float, float]: ArUcoマーカの中心座標[pix]
+            Tuple[float, float]: ArUcoマーカの中心座標[pix].
         """
         for i, id in enumerate(ids):
             # マーカーのインデックス検索
