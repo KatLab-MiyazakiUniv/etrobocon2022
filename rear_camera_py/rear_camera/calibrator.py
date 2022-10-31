@@ -1,8 +1,10 @@
 """Arucoマーカを用いたリアカメラのキャリブレーションを行うモジュール.
+
+@author Takahiro55555
 """
 
 import json
-from typing import Tuple
+from typing import Tuple, List
 
 import cv2
 from cv2 import aruco
@@ -12,46 +14,44 @@ from rear_camera.camera_interface import CameraInterface
 
 
 class Calibrator:
-    def __init__(self, camera_interface: CameraInterface = CameraInterface(), trans_mat_file: str = "rear_camera_param.npy", distance_file: str = "rear_camera_distance_param.json") -> None:
+    """リアカメラのキャリブレーションを行うクラス."""
+
+    def __init__(
+        self, camera_interface: CameraInterface = CameraInterface(),
+        trans_mat_file: str = "rear_camera_param.npy",
+        distance_file: str = "rear_camera_distance_param.json"
+    ) -> None:
+        """コンストラクタ.
+
+        Args:
+            camera_interface (CameraInterface, optional): リアカメラのCameraInterfaceインスタンス. Defaults to CameraInterface().
+            trans_mat_file (str, optional): 射影変換用パラメータファイル名. Defaults to "rear_camera_param.npy".
+            distance_file (str, optional): 射影変換後の画像座標と走行体の中心からの距離等の関係を保持するパラメータファイル名. Defaults to "rear_camera_distance_param.json".
+        """
         self.__camera_interface = camera_interface
         self.__aruco_dictionary = aruco.getPredefinedDictionary(
             aruco.DICT_4X4_50)
         self.__trans_mat_file = trans_mat_file
         self.__distance_file = distance_file
 
-    def calc_param(self, img: np.ndarray) -> Tuple[np.ndarray, float, float]:
-        corners, ids, rejected_img_points = aruco.detectMarkers(
+    def _calc_param(self, img: np.ndarray) -> Tuple[np.ndarray, float, float]:
+        """各種パラメータを計算する関数.
+
+        Args:
+            img (np.ndarray): キャリブレーション用画像.
+
+        Raises:
+            RuntimeError: キャリブレーション用のArUcoマーカを検出できなかった場合に発生 
+
+        Returns:
+            Tuple[np.ndarray, float, float]: 各種パラメータ(射影変換パラメータ、pixとmmの縮尺パラメータ、画像中心点と4つのキャリブレーション用ArUcoマーカで結んだ中心点の距離[pix])
+        """
+        corners, ids, _ = aruco.detectMarkers(
             img, self.__aruco_dictionary)
         if ids is None:
             raise RuntimeError("Could not find markers.")
-        trans_mat, distance_from_center_52_5mm, height_offset_from_center = self.__get_transform_mat(
-            img, corners, ids)
-        return trans_mat, distance_from_center_52_5mm, height_offset_from_center
 
-    def calibrate(self):
-        img = self.__camera_interface.capture_image()
-        if img is None:
-            raise RuntimeError("Could not capture camera image.")
-        trans_mat, distance_from_center_52_5mm, height_offset_from_center = self.calc_param(
-            img)
-        np.save(self.__trans_mat_file, trans_mat)
-        distance_data = {
-            "distance_from_center_52_5mm": distance_from_center_52_5mm,
-            "height_offset_from_center": height_offset_from_center
-        }
-        with open(self.__distance_file, mode="w") as fp:
-            json.dump(distance_data, fp)
-
-    def __get_marker_mean(self, ids, corners, index: int):
-        for i, id in enumerate(ids):
-            # マーカーのインデックス検索
-            if (id[0] == index):
-                v = np.mean(corners[i][0], axis=0)  # マーカーの四隅の座標から中心の座標を取得する
-                return [v[0], v[1]]
-        raise ValueError("Index(%d) not found")
-
-    def __get_transform_mat(self, frame, corners, ids):
-        h, w = frame.shape[:2]
+        h, w = img.shape[:2]
         top_coordinate = self.__get_marker_mean(ids, corners, 1)
         bottom_coordinate = self.__get_marker_mean(ids, corners, 6)
         left_coordinate = self.__get_marker_mean(ids, corners, 3)
@@ -82,3 +82,43 @@ class Calibrator:
         trans_mat = cv2.getPerspectiveTransform(
             frame_coordinates, target_coordinates)
         return trans_mat, distance_from_center_52_5mm, height_offset_from_center
+
+    def calibrate(self):
+        """キャリブレーションを行い、結果をパラメータファイルとして出力する関数.
+
+        Raises:
+            RuntimeError: リアカメラの画像を取得できなかった際に発生する.
+        """
+        img = self.__camera_interface.capture_image()
+        if img is None:
+            raise RuntimeError("Could not capture camera image.")
+        trans_mat, distance_from_center_52_5mm, height_offset_from_center = self._calc_param(
+            img)
+        np.save(self.__trans_mat_file, trans_mat)
+        distance_data = {
+            "distance_from_center_52_5mm": distance_from_center_52_5mm,
+            "height_offset_from_center": height_offset_from_center
+        }
+        with open(self.__distance_file, mode="w") as fp:
+            json.dump(distance_data, fp)
+
+    def __get_marker_mean(self, ids: np.ndarray, corners: List[np.ndarray], target_id: int) -> Tuple[float, float]:
+        """指定したIDのArUcoマーカの中心座標を取得する関数.
+
+        Args:
+            ids (np.ndarray): cornersのデータに対応するArUcoマーカのID
+            corners (List[np.ndarray]): 検出したArUcoマーカの角座標 
+            target_id (int): ArUcoマーカのID
+
+        Raises:
+            ValueError: 指定したIDのArUcoマーカが存在しなかった場合に発生
+
+        Returns:
+            Tuple[float, float]: ArUcoマーカの中心座標[pix]
+        """
+        for i, id in enumerate(ids):
+            # マーカーのインデックス検索
+            if (id[0] == target_id):
+                v = np.mean(corners[i][0], axis=0)  # マーカーの四隅の座標から中心の座標を取得する
+                return v[0], v[1]
+        raise ValueError("Index(%d) not found")

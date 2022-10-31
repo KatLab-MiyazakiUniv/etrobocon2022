@@ -1,3 +1,9 @@
+"""LineAngleCalculatorクラスのテストを記述するモジュール.
+
+Calibratorクラスのパラメータファイルが正常に生成されているかのテストも一部兼ねている.
+
+@author: Takahiro55555
+"""
 
 import os
 import unittest
@@ -9,7 +15,8 @@ from rear_camera.line_angle_calculator import LineAngleCalculator
 
 class TestCalibrator(unittest.TestCase):
     def setUp(self) -> None:
-        # キャリブレーションを行う
+        """テストの下準備を行う関数."""
+        # キャリブレーションを行い、パラメータファイルを生成する
         calibration_fname = "tests/test_data/group-00-calibration-image-normal.png"
         self.__calibration_camera_interface = CameraInterface(
             calibration_fname)
@@ -23,30 +30,23 @@ class TestCalibrator(unittest.TestCase):
         self.__normal_camera_interface = CameraInterface(normal_fname)
 
     def doCleanups(self) -> None:
-        """後始末用関数."""
+        """テストの後始末を行う関数."""
         if os.path.isfile(self.__tmp_trans_mat_file):
             os.remove(self.__tmp_trans_mat_file)
         if os.path.isfile(self.__tmp_distance_file):
             os.remove(self.__tmp_distance_file)
 
     def test_calc_yaw_angle(self):
-        # テスト
+        """角度算出のテスト."""
         line_angle_calculator = LineAngleCalculator(
             self.__normal_camera_interface, self.__tmp_trans_mat_file, self.__tmp_distance_file, debug=True)
-        expected = 45
+        expected = -43
         actual = line_angle_calculator.calc_yaw_angle()
-        self.assertEqual(expected, actual)
-        contours, hierarchy = cv2.findContours(img_bin, 3, 1)
-
-    def calc_contour_area_mm2(self):
-        h, w = 100, 100
-        img = np.zeros((h, w, 1), np.uint8)
-        img[0:1, :] = 255  # 上辺を255にする
-        img[:, 0:1] = 255  # 左辺を255にする
-        img[:, w-1:w] = 255  # 右辺を255にする
-        img[h-1:h, :] = 255  # 右辺を255にする
+        # 期待値と実際の値がdelta以下であることを検証
+        self.assertAlmostEqual(expected, actual, delta=1.0)
 
     def test_mm_to_pix_2_pix_to_mm(self):
+        """pixからmmへの変換が行えるかを検証する."""
         line_angle_calculator = LineAngleCalculator(
             self.__normal_camera_interface, self.__tmp_trans_mat_file, self.__tmp_distance_file, debug=True)
         original = 10
@@ -65,6 +65,7 @@ class TestCalibrator(unittest.TestCase):
         self.assertAlmostEqual(original, mm)
 
     def test_pix_to_mm_2_mm_to_pix(self):
+        """mmからpixへの変換が行えるかを検証する."""
         line_angle_calculator = LineAngleCalculator(
             self.__normal_camera_interface, self.__tmp_trans_mat_file, self.__tmp_distance_file, debug=True)
         original = 10
