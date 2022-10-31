@@ -14,5 +14,5 @@ if args.calibrate:
     calibrator.calibrate()
     print("Calibrated")
 else:
-    lac = LineAngleCalculator()
+    lac = LineAngleCalculator(debug=True)
     print(lac.calc_yaw_angle())

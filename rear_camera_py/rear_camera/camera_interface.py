@@ -8,8 +8,8 @@ class CameraInterface:
         self.__camera_id = camera_id
 
     def capture_image(self) -> Union[np.ndarray, None]:
-        cap = cv2.VideoCapture(self.__camera_id)
-        ret, frame = cap.read()
-        if not ret:
-            return None
-        return frame
+        import subprocess
+        fname = 'input.png'
+        cmd = ["/usr/bin/libcamera-still", "-n", "--encoding",  "png", "--width", "3280", "--height", "2464", "-o", fname]
+        res = subprocess.call(cmd)
+        return cv2.imread(fname)
