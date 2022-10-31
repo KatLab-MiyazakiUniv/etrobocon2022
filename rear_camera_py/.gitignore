@@ -1,7 +1,7 @@
 #### general ####
 command_files/*
 *.png
-!tests/test_image.png
+!tests/test_data/*
 *.json
 *.npy
 
