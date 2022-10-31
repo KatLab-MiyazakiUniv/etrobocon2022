@@ -25,11 +25,14 @@ class LineAngleCalculator:
         """コンストラクタ.
 
         Args:
-            camera_interface (CameraInterface, optional): リアカメラ画像を取得するためのCameraInterfaceインスタンス. Defaults to CameraInterface().
+            camera_interface (CameraInterface, optional): リアカメラ画像を取得するためのCameraInterfaceインスタンス.
+                                                          Defaults to CameraInterface().
             trans_mat_file (str, optional): 射影変換用パラメータファイル名. Defaults to "rear_camera_param.npy".
-            distance_file (str, optional): 射影変換後の画像座標と走行体の中心からの距離等の関係を保持するパラメータファイル名. Defaults to "rear_camera_distance_param.json".
+            distance_file (str, optional): 射影変換後の画像座標と走行体の中心からの距離等の関係を保持するパラメータファイル名.
+                                           Defaults to "rear_camera_distance_param.json".
             debug (bool, optional): Trueに設定するとデバッグ用の画像ファイルが生成される. Defaults to False.
-            debug_dir (str, optional): デバッグ用の画像ファイルを生成するディレクトリ(存在しない場合は自動で生成される). Defaults to "debug".
+            debug_dir (str, optional): デバッグ用の画像ファイルを生成するディレクトリ(存在しない場合は自動で生成される).
+                                       Defaults to "debug".
 
         Raises:
             FileNotFoundError: 各種パラメータファイルが見つからない場合に発生.
@@ -69,11 +72,16 @@ class LineAngleCalculator:
             os.makedirs(debug_dir)
         self.__debug_dir = debug_dir
 
-    def calc_yaw_angle(self, contours_area_size_min_threshold_mm2: int = 9999, debug_img_fname_prefix: str = "angle") -> Union[float, None]:
+    def calc_yaw_angle(
+        self,
+        contours_area_size_min_threshold_mm2: int = 9999,
+        debug_img_fname_prefix: str = "angle"
+    ) -> Union[float, None]:
         """検出した直線と機体の中心線とのなす角を算出する.
 
         Args:
-            contours_area_size_min_threshold_mm2 (int, optional): ノイズとして排除する検出した直線の面積の閾値. Defaults to 9999.
+            contours_area_size_min_threshold_mm2 (int, optional): ノイズとして排除する検出した直線の面積の閾値.
+                                                                  Defaults to 9999.
             debug_img_fname_prefix (str, optional): デバッグ用画像の接頭辞. Defaults to "angle".
 
         Returns:
@@ -129,15 +137,16 @@ class LineAngleCalculator:
             cv2.imwrite(debug_img_path, debug_img)
         return float(angle_2_y)
 
-    def calc_contour_area_mm2(self, contour: np.ndarray, img_h: int, img_w: int) -> float:
-        tmp_img_for_calc_contour_area_mm2 = np.zeros(
-            (img_h, img_w, 1), np.uint8)
-        tmp_img_for_calc_contour_area_mm2 = cv2.drawContours(
-            tmp_img_for_calc_contour_area_mm2, [contour], 0, (1), -1)
-        contour_area_pix = np.sum(tmp_img_for_calc_contour_area_mm2)
+    # def calc_contour_area_mm2(self, contour: np.ndarray, img_h: int, img_w: int) -> float:
+    #     tmp_img_for_calc_contour_area_mm2 = np.zeros(
+    #         (img_h, img_w, 1), np.uint8)
+    #     tmp_img_for_calc_contour_area_mm2 = cv2.drawContours(
+    #         tmp_img_for_calc_contour_area_mm2, [contour], 0, (1), -1)
+    #     contour_area_pix = np.sum(tmp_img_for_calc_contour_area_mm2)
 
     def __calc_contour_score(self, contour: np.ndarray, img_h: int, img_w: int) -> float:
         """直線と機体のなす角を算出する際に採用する直線を決定するためのスコアを算出する関数.
+
         現状は、直線の中心と機体の中心間の距離を用いている.
 
         Args:
@@ -169,7 +178,12 @@ class LineAngleCalculator:
         x, y = mu["m10"]/mu["m00"], mu["m01"]/mu["m00"]
         return x, y
 
-    def calc_contour_runner_base_center_mm(self, contour: np.ndarray, img_h: int, img_w: int) -> Tuple[float, float]:
+    def calc_contour_runner_base_center_mm(
+        self,
+        contour: np.ndarray,
+        img_h: int,
+        img_w: int
+    ) -> Tuple[float, float]:
         """機体の中心を基準とした直線(の輪郭)の中心座標[mm]を算出する.
 
         Args:
@@ -210,7 +224,7 @@ class LineAngleCalculator:
         return pix * 52.5 / self.__distance_from_center_52_5mm
 
     def mm_to_pix(self, mm: Union[int, float]) -> float:
-        """mmをpixに変換する
+        """mmをpixに変換する.
 
         Args:
             mm (Union[int, float]): 変換したい値[mm]
@@ -238,10 +252,11 @@ class LineAngleCalculator:
         Returns:
             Tuple[float, float]: 変換後の座標(x, y)[mm].
         """
-
         distance_between_aruco_markers_center_and_runner_center_mm = 312.5
         img_x_axis_and_runner_x_axis_distance_mm = (
-            self.pix_to_mm(self.__height_offset_from_center) + distance_between_aruco_markers_center_and_runner_center_mm)
+            self.pix_to_mm(self.__height_offset_from_center) +
+            distance_between_aruco_markers_center_and_runner_center_mm
+        )
         img_h_mm = self.pix_to_mm(img_h)
         img_w_mm = self.pix_to_mm(img_w)
         runner_base_x_mm = self.pix_to_mm(img_x) - img_w_mm/2
@@ -271,7 +286,12 @@ class LineAngleCalculator:
         pix_y = self.__height_offset_from_center + 312.5 - self.mm_to_pix(ry)
         return pix_x, pix_y
 
-    def draw_detected_lines_on_the_image(self, img: np.ndarray, contour: np.ndarray, angle: float) -> np.ndarray:
+    def draw_detected_lines_on_the_image(
+        self,
+        img: np.ndarray,
+        contour: np.ndarray,
+        angle: float
+    ) -> np.ndarray:
         """検出した直線及び、その直線と機体の中心線のなす角を直線の検出用いた画像へ描画するデバッグ用関数.
 
         Args:

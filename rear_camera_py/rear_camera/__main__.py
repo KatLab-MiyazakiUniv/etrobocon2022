@@ -1,3 +1,11 @@
+"""mainモジュール.
+
+プロジェクトルートで、以下のコマンドを実行すると最初に呼び出されるファイル
+> python -m rear_camera
+
+必要最低限のコードのみを記述するようにする
+@author: Takahiro55555
+"""
 import argparse
 
 from rear_camera.calibrator import Calibrator

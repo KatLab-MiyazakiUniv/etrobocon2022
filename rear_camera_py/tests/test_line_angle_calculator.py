@@ -23,7 +23,10 @@ class TestCalibrator(unittest.TestCase):
         self.__tmp_trans_mat_file = "tmp_rear_camera_param.npy"
         self.__tmp_distance_file = "tmp_rear_camera_distance_param.json"
         calibrator = Calibrator(
-            self.__calibration_camera_interface, self.__tmp_trans_mat_file, self.__tmp_distance_file)
+            self.__calibration_camera_interface,
+            self.__tmp_trans_mat_file,
+            self.__tmp_distance_file
+        )
         calibrator.calibrate()
 
         normal_fname = "tests/test_data/group-00-game-image-normal-00.png"
@@ -39,7 +42,11 @@ class TestCalibrator(unittest.TestCase):
     def test_calc_yaw_angle(self):
         """角度算出のテスト."""
         line_angle_calculator = LineAngleCalculator(
-            self.__normal_camera_interface, self.__tmp_trans_mat_file, self.__tmp_distance_file, debug=True)
+            self.__normal_camera_interface,
+            self.__tmp_trans_mat_file,
+            self.__tmp_distance_file,
+            debug=True
+        )
         expected = -43
         actual = line_angle_calculator.calc_yaw_angle()
         # 期待値と実際の値がdelta以下であることを検証
@@ -48,7 +55,11 @@ class TestCalibrator(unittest.TestCase):
     def test_mm_to_pix_2_pix_to_mm(self):
         """pixからmmへの変換が行えるかを検証する."""
         line_angle_calculator = LineAngleCalculator(
-            self.__normal_camera_interface, self.__tmp_trans_mat_file, self.__tmp_distance_file, debug=True)
+            self.__normal_camera_interface,
+            self.__tmp_trans_mat_file,
+            self.__tmp_distance_file,
+            debug=True
+        )
         original = 10
         pix = line_angle_calculator.mm_to_pix(original)
         mm = line_angle_calculator.pix_to_mm(pix)
@@ -67,7 +78,11 @@ class TestCalibrator(unittest.TestCase):
     def test_pix_to_mm_2_mm_to_pix(self):
         """mmからpixへの変換が行えるかを検証する."""
         line_angle_calculator = LineAngleCalculator(
-            self.__normal_camera_interface, self.__tmp_trans_mat_file, self.__tmp_distance_file, debug=True)
+            self.__normal_camera_interface,
+            self.__tmp_trans_mat_file,
+            self.__tmp_distance_file,
+            debug=True
+        )
         original = 10
         mm = line_angle_calculator.pix_to_mm(original)
         pix = line_angle_calculator.mm_to_pix(mm)
