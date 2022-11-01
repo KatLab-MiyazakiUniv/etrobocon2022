@@ -8,8 +8,6 @@
 #include <gtest/gtest.h>
 #include <gtest/internal/gtest-port.h>
 
-#include "Logger.h"
-
 using namespace std;
 
 namespace etrobocon2022_test {

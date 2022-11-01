@@ -100,7 +100,12 @@ vector<Motion*> MotionParser::createMotions(const char* filePath, int targetBrig
     } else if(command == COMMAND::AF) {  // アームを下げる
       ArmFalling* af = new ArmFalling(atoi(params[1]), atoi(params[2]));
 
-      motionList.push_back(af);  // 動作リストに追加
+      motionList.push_back(af);          // 動作リストに追加
+    } else if(command == COMMAND::XR) {  // 角度補正回頭の追加
+      CorrectingRotation* xr = new CorrectingRotation(atoi(params[1]),   // 目標角度
+                                                      atoi(params[2]));  // PWM値
+
+      motionList.push_back(xr);  // 動作リストに追加
     } else {                     // 未定義のコマンドの場合
       snprintf(buf, BUF_SIZE, "%s:%d: '%s' is undefined command", filePath, lineNum, params[0]);
       logger.logWarning(buf);
@@ -136,6 +141,8 @@ COMMAND MotionParser::convertCommand(char* str)
     return COMMAND::AR;
   } else if(strcmp(str, "AF") == 0) {  // 文字列がAFの場合
     return COMMAND::AF;
+  } else if(strcmp(str, "XR") == 0) {  // 文字列がXRの場合
+    return COMMAND::XR;
   } else {  //想定していない文字列が来た場合
     return COMMAND::NONE;
   }
@@ -145,27 +152,13 @@ bool MotionParser::convertBool(char* command, char* binaryParameter)
 {
   Logger logger;
 
-  int endIndex;                       // binaryParameterの末尾のインデックス
-  int len = strlen(binaryParameter);  // 文字列長
-  if(len > 0) {
-    endIndex = len - 1;
-  } else {
-    logger.logWarning("The parameter passed to MotionParser::convertBool is empty");
-    return true;
-  }
-  // 末尾の改行コードを削除（LF,CR,CR+LF対応）
-  if(binaryParameter[endIndex] == 0x0a) {  // LFの場合
-    binaryParameter[endIndex] = 0x00;      // NULL文字に置き換える
-    endIndex--;  // CR+LFの時のためにインデックスを一つ戻す
-  }
-  if(binaryParameter[endIndex] == 0x0d) {  // CRの場合
-    binaryParameter[endIndex] = 0x00;      // NULL文字に置き換える
-  }
+  // 末尾の改行を削除
+  char* param = StringOperator::removeEOL(binaryParameter);
 
-  if(strcmp(command, "RT") == 0) {                   //  コマンドがRTの場合
-    if(strcmp(binaryParameter, "clockwise") == 0) {  // パラメータがclockwiseの場合
+  if(strcmp(command, "RT") == 0) {         //  コマンドがRTの場合
+    if(strcmp(param, "clockwise") == 0) {  // パラメータがclockwiseの場合
       return true;
-    } else if(strcmp(binaryParameter, "anticlockwise") == 0) {  // パラメータがanticlockwiseの場合
+    } else if(strcmp(param, "anticlockwise") == 0) {  // パラメータがanticlockwiseの場合
       return false;
     } else {  //想定していないパラメータが来た場合
       logger.logWarning("Parameter before conversion must be 'clockwise' or 'anticlockwise'");
@@ -173,10 +166,10 @@ bool MotionParser::convertBool(char* command, char* binaryParameter)
     }
   }
 
-  if(strcmp(command, "EC") == 0) {              //  コマンドがECの場合
-    if(strcmp(binaryParameter, "left") == 0) {  // パラメータがleftの場合
+  if(strcmp(command, "EC") == 0) {    //  コマンドがECの場合
+    if(strcmp(param, "left") == 0) {  // パラメータがleftの場合
       return true;
-    } else if(strcmp(binaryParameter, "right") == 0) {  // パラメータがrightの場合
+    } else if(strcmp(param, "right") == 0) {  // パラメータがrightの場合
       return false;
     } else {  //想定していないパラメータが来た場合
       logger.logWarning("Parameter before conversion must be 'left' or 'right'");
