@@ -1,6 +1,6 @@
 /**
  * @file   RotationTest.cpp
- * @brief  Roationクラスのテスト
+ * @brief  Rotationクラスのテスト
  * @author sugaken0528 KakinokiKanta mutotaka0426
  */
 
