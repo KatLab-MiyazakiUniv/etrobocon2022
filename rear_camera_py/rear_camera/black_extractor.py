@@ -21,9 +21,8 @@ class BlackExtractor:
         Returns:
             2値変換した画像データ: List[int]
         """
-        MIN_WHITE_VALUE = 80  # 白と識別するための最低明度
-        lower = np.array([0, 0, MIN_WHITE_VALUE])
-        upper = np.array([180, 255, 255])
+        lower = np.array([0, 0, 80])  # 白と識別するための最低HSV値
+        upper = np.array([180, 255, 255])  # 白と識別するための最高HSV値
 
         # BGR色空間からHSV色空間への変換
         hsv = cv2.cvtColor(rear_camera_img, cv2.COLOR_BGR2HSV)
