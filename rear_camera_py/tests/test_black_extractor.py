@@ -1,6 +1,6 @@
-"""ColorChangerクラスのテストコードを記述するモジュール.
+"""BlackExtractorクラスのテストコードを記述するモジュール.
 
-@author: kawanoichi
+@author: kodama0720
 """
 
 import unittest
