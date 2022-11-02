@@ -30,16 +30,3 @@ class BlackExtractor:
         binary_img = cv2.inRange(hsv, lower, upper)
 
         return binary_img
-
-
-if __name__ == "__main__":
-    read_path = "rear_camera1.png"
-    save_path = "binary_" + read_path
-    rear_camera_img = cv2.imread(read_path)
-
-    # 2値変換
-    result = BlackExtractor.extract_black(rear_camera_img)
-    # 2値画像を保存
-    cv2.imwrite(save_path, result)
-
-    print("black_extractor 終了")
