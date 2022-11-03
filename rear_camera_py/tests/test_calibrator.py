@@ -17,7 +17,7 @@ class TestCalibrator(unittest.TestCase):
         """キャリブレーション関数を正常に実行し、戻り値の型が期待通りかを検証する."""
         fname = "tests/test_data/group-00-calibration-image-normal.png"
         img = CameraInterface(fname).capture_image()
-        calibrator = Calibrator()
+        calibrator = Calibrator(CameraInterface())
         trans_mat, distance_from_center_52_5mm, height_offset_from_center = calibrator._calc_param(
             img)
         self.assertEqual(type(trans_mat), np.ndarray)
@@ -28,7 +28,7 @@ class TestCalibrator(unittest.TestCase):
         """キャリブレーション用ArUcoマーカを検出できない場合にエラーが発生するかを検証する."""
         fname = "tests/test_data/group-00-game-image-normal-00.png"
         img = CameraInterface(fname).capture_image()
-        calibrator = Calibrator()
+        calibrator = Calibrator(CameraInterface())
         with self.assertRaises(RuntimeError):
             calibrator._calc_param(img)
 

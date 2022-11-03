@@ -23,6 +23,7 @@ args = parser.parse_args()
 
 
 camera = CameraInterface(args.camera_num)
+camera.start_camera()
 
 if args.calibrate:
     calibrator = Calibrator(camera)

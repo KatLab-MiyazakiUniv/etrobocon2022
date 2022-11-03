@@ -36,14 +36,8 @@ class CameraInterface:
         self.__size = size
         self.__picam2 = None
 
-    @property
-    def _picam2(self) -> None:
-        """Getterを作成するために必要なやつ."""
-        pass
-
-    @_picam2.getter
-    def _picam2(self) -> Picamera2:
-        """Picamera2インスタンスのGetter、初期化もここで行う."""
+    def start_camera(self) -> Picamera2:
+        """Picamera2インスタンスの初期化を行う."""
         if self.__picam2 is None:
             picam2 = Picamera2(camera_num=self.__camera_id)
             conf = picam2.create_preview_configuration(
@@ -58,7 +52,7 @@ class CameraInterface:
 
         NOTE:
             最初に画像を取得する際、カメラの初期化処理等が行われるため処理時間が長くなる.
-            そのため、可能であればプログラムの初期化処理で1枚だけ試し撮り等をすると、それ以降この関数の処理時間が短くなる.
+            対策として予めstart_camera()関数をプログラムの初期化時等に呼び出しておくとよい.
 
         Returns:
             Union[np.ndarray, None]: カメラ画像データ
