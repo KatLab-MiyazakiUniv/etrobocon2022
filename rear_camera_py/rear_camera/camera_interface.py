@@ -36,7 +36,7 @@ class CameraInterface:
         self.__size = size
         self.__picam2 = None
 
-    def start_camera(self) -> Picamera2:
+    def start_camera(self) -> None:
         """Picamera2インスタンスの初期化を行う."""
         if self.__picam2 is None:
             picam2 = Picamera2(camera_num=self.__camera_id)
