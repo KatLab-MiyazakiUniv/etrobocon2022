@@ -49,6 +49,8 @@ class Calibrator:
             Tuple[np.ndarray, float, float]: 各種パラメータ(射影変換パラメータ、pixとmmの縮尺パラメータ、
                                                 画像中心点と4つのキャリブレーション用ArUcoマーカで結んだ中心点の距離[pix]).
         """
+        # 各マーカーの角4点を格納した二次元配列(corners)と、検出したマーカーIDを格納した1次元配列(ids)を取得
+        # idsマーカIDの並びはcornersのに格納されているマーカの座標の並びと一致する
         corners, ids, _ = aruco.detectMarkers(
             img, self.__aruco_dictionary)
         if ids is None:
