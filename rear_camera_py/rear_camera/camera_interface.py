@@ -50,11 +50,7 @@ class CameraInterface:
     def capture_image(self) -> Union[np.ndarray, None]:
         """カメラ画像を取得する関数.
 
-        NOTE:
-            最初に画像を取得する際、カメラの初期化処理等が行われるため処理時間が長くなる.
-            対策として予めstart_camera()関数をプログラムの初期化時等に呼び出しておくとよい.
-
         Returns:
             Union[np.ndarray, None]: カメラ画像データ
         """
-        return self._picam2.capture_array()
+        return self.__picam2.capture_array()
