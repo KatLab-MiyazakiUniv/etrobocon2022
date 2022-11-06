@@ -7,7 +7,7 @@ import unittest
 import numpy as np
 import cv2
 import os
-from camera_system.black_extractor import BlackExtractor
+from rear_camera.black_extractor import BlackExtractor
 
 
 class TestBlackExtractor(unittest.TestCase):
