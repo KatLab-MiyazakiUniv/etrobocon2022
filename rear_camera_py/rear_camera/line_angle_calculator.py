@@ -1,5 +1,6 @@
 """コースの直線に対する機体の角度算出するモジュール."""
 
+import datetime
 import json
 import os
 import time
@@ -71,6 +72,8 @@ class LineAngleCalculator:
         if not os.path.exists(debug_dir):
             os.makedirs(debug_dir)
         self.__debug_dir = debug_dir
+        now = datetime.datetime.now()
+        self.__debug_time = now.strftime("%Y-%m-%d_%H-%M-%S.%f")
 
     def calc_yaw_angle(
         self,
@@ -91,14 +94,12 @@ class LineAngleCalculator:
         if img is None:
             return None
 
-        if self.__debug:
-            debug_time = time.time()
-            img_fname = "%s_%f_captured.png" % (
-                debug_img_fname_prefix, debug_time)
-            debug_img_path = os.path.join(self.__debug_dir, img_fname)
-            cv2.imwrite(debug_img_path, img)
+        
+        self.__save_debug_img(img, debug_img_fname_prefix, "captured.png")
         img_transformed = self.get_transformed_image(img)
+        self.__save_debug_img(img_transformed, debug_img_fname_prefix, "transformed.png")
         img_bin = BlackExtractor.extract_black(img_transformed)
+        self.__save_debug_img(img_bin, debug_img_fname_prefix, "bin.png")
         contours, hierarchy = cv2.findContours(img_bin, 3, 1)
         max_area_threshold = cv2.contourArea(
             max(contours, key=lambda x: cv2.contourArea(x)))  # 画像の外周を除去
@@ -129,11 +130,23 @@ class LineAngleCalculator:
         if self.__debug:
             debug_img = self.draw_detected_lines_on_the_image(
                 img_transformed, cnt, angle_2_y)
-            img_fname = "%s_%f_detected.png" % (
-                debug_img_fname_prefix, debug_time)
-            debug_img_path = os.path.join(self.__debug_dir, img_fname)
-            cv2.imwrite(debug_img_path, debug_img)
+            self.__save_debug_img(debug_img, debug_img_fname_prefix, "detected.png")
         return float(angle_2_y)
+
+    def __save_debug_img(self, img: np.ndarray, prefix: str, suffix: str) -> None:
+        """デバッグ用に画像をファイルに保存する関数.
+
+        デバッグモードがFalseの場合は何も実行しない.
+
+        Args:
+            img (np.ndarray): 保存する画像データ
+            prefix (str): ファイル名の先頭文字列
+            suffix (str): 拡張子等を含めたファイル名の末尾
+        """
+        if self.__debug:
+            img_fname = "%s_%s_%s" % (prefix, self.__debug_time, suffix)
+            debug_img_path = os.path.join(self.__debug_dir, img_fname)
+            cv2.imwrite(debug_img_path, img)
 
     # def calc_contour_area_mm2(self, contour: np.ndarray, img_h: int, img_w: int) -> float:
     #     tmp_img_for_calc_contour_area_mm2 = np.zeros(
