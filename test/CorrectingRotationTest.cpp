@@ -24,13 +24,13 @@ namespace etrobocon2022_test {
     CorrectingRotation xRotation(targetAngle, pwm);
     Measurer measurer;
 
-    // rearCamera.shで-3.1を返すように書き換える
+    // rearCamera.shで-2.1を返すように書き換える
     system("echo \"#!/bin/bash\" > ./etrobocon2022/scripts/rear_camera.sh");
-    system("echo \"echo -3.1\" >> ./etrobocon2022/scripts/rear_camera.sh");
+    system("echo \"echo -2.1\" >> ./etrobocon2022/scripts/rear_camera.sh");
 
     // 期待する車輪ごとの回頭角度(時計回り)
-    double expectedLeft = 3;
-    double expectedRight = -3;
+    double expectedLeft = 2;
+    double expectedRight = -2;
 
     // 一回のsetPWM()でダミーのモータカウントに加算される値はpwm * 0.05
     double error = pwm * 0.05 * TRANSFORM;  // 許容誤差[deg]
@@ -180,13 +180,13 @@ namespace etrobocon2022_test {
     CorrectingRotation xRotation(targetAngle, pwm);
     Measurer measurer;
 
-    // rearCamera.shで86.9を返すように書き換える
+    // rearCamera.shで87.9を返すように書き換える
     system("echo \"#!/bin/bash\" > ./etrobocon2022/scripts/rear_camera.sh");
-    system("echo \"echo 86.9\" >> ./etrobocon2022/scripts/rear_camera.sh");
+    system("echo \"echo 87.9\" >> ./etrobocon2022/scripts/rear_camera.sh");
 
     // 期待する車輪ごとの回頭角度(時計回り)
-    double expectedLeft = 3;
-    double expectedRight = -3;
+    double expectedLeft = 2;
+    double expectedRight = -2;
 
     // 一回のsetPWM()でダミーのモータカウントに加算される値はpwm * 0.05
     double error = pwm * 0.05 * TRANSFORM;  // 許容誤差[deg]
@@ -258,9 +258,9 @@ namespace etrobocon2022_test {
     CorrectingRotation xRotation(targetAngle, pwm);
     Measurer measurer;
 
-    // rearCamera.shで-3.0を返すように書き換える
+    // rearCamera.shで-2.0を返すように書き換える
     system("echo \"#!/bin/bash\" > ./etrobocon2022/scripts/rear_camera.sh");
-    system("echo \"echo -3.0\" >> ./etrobocon2022/scripts/rear_camera.sh");
+    system("echo \"echo -2.0\" >> ./etrobocon2022/scripts/rear_camera.sh");
 
     // 期待する車輪ごとの回頭角度(時計回り)
     double expectedLeft = 0;
