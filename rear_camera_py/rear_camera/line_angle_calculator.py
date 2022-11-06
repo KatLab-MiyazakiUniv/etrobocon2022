@@ -8,8 +8,8 @@ from typing import Tuple, Union
 import cv2
 import numpy as np
 
+from rear_camera.black_extractor import BlackExtractor
 from rear_camera.camera_interface import CameraInterface
-
 
 class LineAngleCalculator:
     """コースの直線に対する機体の角度算出するクラス."""
@@ -98,9 +98,7 @@ class LineAngleCalculator:
             debug_img_path = os.path.join(self.__debug_dir, img_fname)
             cv2.imwrite(debug_img_path, img)
         img_transformed = self.get_transformed_image(img)
-        img_gray = cv2.cvtColor(img_transformed, cv2.COLOR_BGR2GRAY)
-        img_gray[0:1, :] = 255
-        img_bin = cv2.threshold(img_gray, 60, 255, cv2.THRESH_BINARY)[1]
+        img_bin = BlackExtractor.extract_black(img_transformed)
         contours, hierarchy = cv2.findContours(img_bin, 3, 1)
         max_area_threshold = cv2.contourArea(
             max(contours, key=lambda x: cv2.contourArea(x)))  # 画像の外周を除去
