@@ -9,7 +9,6 @@ import cv2
 import numpy as np
 
 ###
-from tqdm import tqdm
 from black_extractor import BlackExtractor
 # from rear_camera.camera_interface import CameraInterface
 # from camera_interface import CameraInterface
@@ -79,9 +78,6 @@ class LineAngleCalculator:
 
     def calc_yaw_angle(
         self,
-        course_path,
-        save_path,
-        save_path_finish,
         contours_area_size_min_threshold_mm2: int = 9999,
         debug_img_fname_prefix: str = "angle"
     ) -> Union[float, None]:
@@ -99,11 +95,11 @@ class LineAngleCalculator:
         # リアカメラで撮影した画像の取得
         ###
         # img = self.__camera_interface.capture_image()
-        img = cv2.imread(course_path)
+        # img = cv2.imread("course_img/course_img (3).png")
+        img = cv2.imread("course_img/course_img (19).png")
         ###
 
         if img is None:
-            print("入力画像がありません")
             return None
         # if self.__debug:
         #     debug_time = time.time()
@@ -114,28 +110,19 @@ class LineAngleCalculator:
         
         # 射影変換 
         img_transformed = self.get_transformed_image(img)
-        # cv2.imwrite("correct_line_img/trans_img.png", img_transformed)
-        
-        # 白黒画像に変換
-        # img_gray = cv2.cvtColor(img_transformed, cv2.COLOR_BGR2GRAY)
-        # cv2.imwrite("correct_line_img/img_gray1.png", img_gray)
-        # img_gray[0:1, :] = 255
-        # cv2.imwrite("correct_line_img/img_gray2.png", img_gray)
-        
-        # binary_img = BlackExtractor.extract_black(img_gray)
-        # cv2.imwrite("correct_line_img/binary_img.png", binary_img)
-        # img_bin = cv2.threshold(img_gray, 60, 255, cv2.THRESH_BINARY)[1] #2値化
-        # cv2.imwrite("correct_line_img/img_bin.png", img_bin)
 
-        # 画像補正
+        # mask画像の作成
         # """
-        correct_line_img = self.correct_course_line(img_transformed, save_path)
+        correct_line_img = self.get_mask_image(img_transformed)
+        cv2.imwrite("correct_line_img.png", correct_line_img)
+        
+        # 画像から黒線を抽出(白黒画像に変換)
         binary_img = BlackExtractor.extract_black(correct_line_img)
-        cv2.imwrite(save_path_finish, binary_img)
+        cv2.imwrite("binary_img.png", binary_img)
         # """
 
         # # 輪郭検出
-        # contours, hierarchy = cv2.findContours(img_bin, 3, 1)
+        # contours, hierarchy = cv2.findContours(binary_img, 3, 1)
         # max_area_threshold = cv2.contourArea(
         #     max(contours, key=lambda x: cv2.contourArea(x)))  # 画像の外周を除去
         # filtered_contours = list(
@@ -247,71 +234,58 @@ class LineAngleCalculator:
             img, self.__trans_mat, (img.shape[1], img.shape[0]), borderValue=borderValue)
 
     @staticmethod
-    def correct_course_line(img: np.ndarray, save_path: str):
-        """ゲームエリア四隅の交わっているラインを分断する.
-        
+    def get_mask_image(img: np.ndarray) -> np.ndarray:
+        """画像上の円(交点)を検出し、大きめの円で上書きする(マスク画像を作成).
+ 
+        四隅の交点周りのラインが交わっているため、補正する際に2本の線が1本として認識される.
+        円(交点)を大きな円で上書きすることで交わっている部分を隠す.
+
         Args:
             img (np.ndarray): 射影変換後の画像.
+
+        Returns:
+            img (np.ndarray): マスク画像.
         """
+        # 上書き用の画像を作成
+        mask_img = img.copy()
+
+        # グレースケース画像に変換
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        # print("img.shape", img.shape) # img.shape (1232, 1640, 3)
-        # cv2.imwrite("correct_line_img/img_gray1.png", img_gray)
         
-        circle_img = img.copy()
-        correct_line_img = img.copy()
-        # cv2.imwrite("correct_line_img/trans_img.png", img)
-
-        # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        # cv2.imwrite("correct_line_img/gray_trans_img.png", gray)
-
-        # """
-        # minRadius:半径の下限, maxRadius:半径の上限
-        # memo : 射影変換した際の交点の半径の大きさが35 ~ 39
+        # 画像上の円を検出　戻り値:[[[円の中心点のx座標, 円の中心点のy座標, 円の半径],...]]
         circles = cv2.HoughCircles(img_gray, cv2.HOUGH_GRADIENT, dp=1.2, minDist=100,
-                                param1=100, param2=40, minRadius=0, maxRadius=60)
+                                   param1=100, param2=40, minRadius=0, maxRadius=60)
+
+        # 画像上に円が見つからなかった場合
+        if circles is None:
+            return img
         
+        # 中心座標が、画像上側(７割)にある円は考慮しない
         thre = img.shape[0] * 0.7
-        
-        if not np.all(circles):
-            print("円が見つかりません")
-            cv2.imwrite(save_path, img)
+        circles = np.delete(circles[0], np.where(circles[0,:,1] < thre)[0], axis=0)
+
+        # 考慮する円がない場合
+        if len(circles) == 0:
             return img
 
-        else:
-            circles = np.uint16(np.around(circles))
-            # print(len(circles))
+        # 検出した円の半径から上書きする円の半径を決める
+        circles[:,2] *= 1.7
 
-            count = 0
-            for circle in circles[0,:]:
-                # print("円の半径 ", circle[2])
-                
-                if circle[1] > thre:
-                    count += 1
-                    print("円の中心座標 (%f,%f)" % (circle[0], circle[1]))
-                    print("円の半径 ", circle[2])
-                    # 補正範囲を定義
-                    circle[2] = circle[2] * 1.7
-                    # 円周を描画する ※引数 (画像, 中心座標, 半径,　輝度値(B,G,R), 線の太さ)
-                    cv2.circle(
-                        circle_img,
-                        center=(circle[0], circle[1]),
-                        radius=circle[2],
-                        color=(255, 255, 255),
-                        thickness=-1 # 線の太さ(負の値で内部塗りつぶし)
-                    )
-                
-                    # 円を描画する
-                    cv2.imwrite(save_path, circle_img)
+        # 整数値かつ16ビットにキャストする ※しないとcv2.circleでerrorが発生
+        circles = np.uint16(np.around(circles))
 
-                    # 円周を描画する
-                    # cv2.circle(correct_line_img, (circle[0], circle[1]), circle[2], (0, 165, 255), 5)
-                    # cv2.imwrite("correct_line_img/circle_line.png", correct_line_img)
-                
-            if count == 0:
-                cv2.imwrite(save_path, img)
-                print("円がありません Ver.2")
-                
-        return circle_img
+        # 画像上に円を見つけた場合、円の直径を拡大する
+        for circle in circles:
+            # 円を描画する
+            cv2.circle(
+                mask_img,
+                center=(circle[0], circle[1]),
+                radius=circle[2],
+                color=(255, 255, 255), 
+                thickness=-1 # 線の太さ(負の値で内部塗りつぶし)
+            )
+
+        return mask_img
 
     # def pix_to_mm(self, pix: Union[int, float]) -> float:
     #     """pixをmmに変換する.
@@ -416,12 +390,5 @@ class LineAngleCalculator:
 
 if __name__ == "__main__":
     lac = LineAngleCalculator()
-    # for i in tqdm(range(1,26)):
-    for i in range(1,26):
-        print("No.", i)
-        course_path = "course_img/course_img (" + str(i)+ ").png"
-        save_path = "correct_line_img/out_img (" + str(i)+ ").png"
-        save_path_finish = "finish_course/out_img (" + str(i)+ ").png"
-        lac.calc_yaw_angle(course_path, save_path, save_path_finish, 999)
-
+    lac.calc_yaw_angle(999)
     print("終了")
