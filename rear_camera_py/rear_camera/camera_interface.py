@@ -45,7 +45,6 @@ class CameraInterface:
             picam2.configure(conf)
             picam2.start()
             self.__picam2 = picam2
-        return self.__picam2
 
     def capture_image(self) -> Union[np.ndarray, None]:
         """カメラ画像を取得する関数.
