@@ -1,0 +1,86 @@
+name: RearCameraSystemTest
+
+on: [push]
+
+jobs:
+  RearCameraSystemTest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install poetry
+        run: pipx install poetry
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - run: poetry install
+        working-directory: ./rear_camera_py
+
+      - name: Install dependencies
+        run: poetry install --no-interaction --no-root
+        working-directory: ./rear_camera_py
+
+      - name: Test
+        run: poetry run python -m unittest
+        working-directory: ./rear_camera_py
+
+      - name: Generage coverage report
+        id: generate_coverage_report
+        run: |
+          poetry run python -m coverage run --source=rear_camera/ -m unittest discover
+          
+          # Job Summaries にカバレッジの概要を設定する
+          echo '## Coverage'                   >> ${GITHUB_STEP_SUMMARY}
+          echo '```'                           >> ${GITHUB_STEP_SUMMARY}
+          poetry run python -m coverage report >> ${GITHUB_STEP_SUMMARY}
+          echo '```'                           >> ${GITHUB_STEP_SUMMARY}
+
+          poetry run python -m coverage xml
+        working-directory: ./rear_camera_py
+
+      - name: Set Codecov link to Job Summaries
+        run: |
+          echo "## Coverage report on Codecov" >> ${GITHUB_STEP_SUMMARY}
+
+      - name: Format check
+        run: |
+          poetry run python -m pycodestyle rear_camera/ tests/
+          poetry run python -m pydocstyle rear_camera/ tests/
+        working-directory: ./rear_camera_py
+
+      # 参考資料
+      # - Slack が提供する GitHub Action "slack-send" を使って GitHub から Slack に通知する - Qiita
+      #     https://qiita.com/seratch/items/28d09eacada09134c96c
+      # - GitHub Actionsで1つ以上のジョブが失敗した場合にSlackに通知する
+      #     https://zenn.dev/ntoy/articles/3e7521cd39a75b
+      # NOTE:
+      #   "Repository: <${{ [以下略]"の部分は、良い感じに改行する方法を見つけられなかった...
+      - name: Failure Notification
+        if: failure()
+        uses: slackapi/slack-github-action@v1.21.0
+        with:
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":warning: CI結果: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ job.status }}>"
+                  }
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "Repository: <${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}>\nBranch: `${{ github.ref_name }}`\nWorkflow: `${{ github.workflow }}`\nAuthor: <https://github.com/${{ github.event.sender.login }}|@${{ github.event.sender.login }}>"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}

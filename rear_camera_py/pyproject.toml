@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "etrobocon2022"
+version = "0.1.0"
+description = ""
+authors = ["Takahiro55555 <31930148+Takahiro55555@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+opencv-contrib-python = "^4.6.0"
+
+[tool.poetry.dev-dependencies]
+autopep8 = "^1.7.0"
+pycodestyle = "^2.9.1"
+pydocstyle = "^6.1.1"
+coverage = "^6.4.4"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
