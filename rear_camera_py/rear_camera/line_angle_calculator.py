@@ -3,7 +3,6 @@
 import datetime
 import json
 import os
-import time
 from typing import Tuple, Union
 
 import cv2
