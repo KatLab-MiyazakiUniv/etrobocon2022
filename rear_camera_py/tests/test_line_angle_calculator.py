@@ -6,8 +6,8 @@ Calibratorクラスのパラメータファイルが正常に生成されてい�
 """
 
 import os
-import unittest
 import cv2
+import unittest
 
 from rear_camera.calibrator import Calibrator
 from tests.dummy.camera_interface import CameraInterface
@@ -54,7 +54,7 @@ class TestCalibrator(unittest.TestCase):
         expected = "numpy"
         for img in test_img:
             actual = type(LineAngleCalculator.get_mask_image(img)).__module__
-            self.assertTrue(expected=actual)
+            self.assertTrue(expected==actual)
 
     def test_calc_yaw_angle(self):
         """角度算出のテスト."""
