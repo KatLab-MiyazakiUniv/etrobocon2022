@@ -1,3 +1,5 @@
+"""AngleServerクラスのテストコード."""
+
 import unittest
 import subprocess
 import threading
@@ -6,10 +8,11 @@ import time
 
 from rear_camera.angle_server import AngleServer
 
+
 class TestCalibrator(unittest.TestCase):
     def test_server_command_only(self):
         server_ip = "127.0.0.1"
-        # NOTE: また、サーバを閉じてもデフォルトで60秒間はTIME_WAIT状態になり、
+        # NOTE: また、サーバを終了しても使用していたポートはデフォルトで60秒間はTIME_WAIT状態になり、
         #       使用できない(Linuxの場合).
         #       そこで、70秒周期でポートを使いまわすようにしている.
         server_port = 11338 + (int(time.time()) % 70)
@@ -39,8 +42,8 @@ class TestCalibrator(unittest.TestCase):
         linux_command = ['bash', '-c', 'echo %s | nc %s %d' % (command, server_ip, server_port)]
         try:
             result = subprocess.check_output(linux_command)
-        except:
-            pass  # あらゆるエラーを握りつぶす
+        except Exception:
+            pass  # エラーを握りつぶす
         expected = command
 
         # サーバへ終了コマンドを送信する
@@ -48,8 +51,8 @@ class TestCalibrator(unittest.TestCase):
         linux_command = ['bash', '-c', 'echo %s | nc %s %d' % (command, server_ip, server_port)]
         try:
             _ = subprocess.check_output(linux_command)
-        except:
-            pass  # あらゆるエラーを握りつぶす
+        except Exception:
+            pass  # エラーを握りつぶす
 
         # サーバが終了するまで待つ
         server_thread.join()
@@ -61,7 +64,7 @@ class TestCalibrator(unittest.TestCase):
         server_ip = "127.0.0.1"
         # NOTE: 上記のテストで使ったポートが解放されていない可能背があるため、
         #       同じポートは使いまわさない.
-        #       また、サーバを閉じてもデフォルトで60秒間はTIME_WAIT状態になり、
+        #       また、サーバを終了しても使用していたポートはデフォルトで60秒間はTIME_WAIT状態になり、
         #       使用できない(Linuxの場合).
         #       そこで、70秒周期でポートを使いまわすようにしている.
         server_port = 11438 + (int(time.time()) % 70)
@@ -91,8 +94,8 @@ class TestCalibrator(unittest.TestCase):
         linux_command = ['bash', '-c', 'echo %s | nc %s %d' % (command, server_ip, server_port)]
         try:
             result = subprocess.check_output(linux_command)
-        except:
-            pass  # あらゆるエラーを握りつぶす
+        except Exception:
+            pass  # エラーを握りつぶす
         expected = command
 
         # サーバへ終了コマンドを送信する
@@ -100,8 +103,8 @@ class TestCalibrator(unittest.TestCase):
         linux_command = ['bash', '-c', 'echo %s | nc %s %d' % (command, server_ip, server_port)]
         try:
             _ = subprocess.check_output(linux_command)
-        except:
-            pass  # あらゆるエラーを握りつぶす
+        except Exception:
+            pass  # エラーを握りつぶす
 
         # サーバが終了するまで待つ
         server_thread.join()
