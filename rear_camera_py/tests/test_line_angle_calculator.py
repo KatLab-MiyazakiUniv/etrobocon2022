@@ -49,12 +49,12 @@ class TestCalibrator(unittest.TestCase):
         test_img.append(cv2.imread("test_mask_image_lower_circle.png"))
         # 画像上に円がない場合
         test_img.append(cv2.imread("test_mask_image_no_circle.png"))
-    
+
         # numpy配列を返すかテストする
         expected = "numpy"
         for img in test_img:
             actual = type(LineAngleCalculator.get_mask_image(img)).__module__
-            self.assertEqual(expected, actual)
+            self.assertTrue(expected=actual)
 
     def test_calc_yaw_angle(self):
         """角度算出のテスト."""
