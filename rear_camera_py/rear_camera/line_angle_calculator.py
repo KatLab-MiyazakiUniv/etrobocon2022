@@ -92,7 +92,6 @@ class LineAngleCalculator:
         Returns:
             Union[float, None]: 検出した直線と機体の中心線とのなす角、直線を検出できなかった場合は`None`を返す.
         """
-
         # リアカメラで撮影した画像を取得
         img = self.__camera_interface.capture_image()
 
