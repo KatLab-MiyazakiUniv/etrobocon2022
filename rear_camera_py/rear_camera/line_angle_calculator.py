@@ -11,6 +11,7 @@ import numpy as np
 from rear_camera.black_extractor import BlackExtractor
 from rear_camera.camera_interface import CameraInterface
 
+
 class LineAngleCalculator:
     """コースの直線に対する機体の角度算出するクラス."""
 
@@ -93,7 +94,6 @@ class LineAngleCalculator:
         if img is None:
             return None
 
-        
         self.__save_debug_img(img, debug_img_fname_prefix, "captured.png")
         img_transformed = self.get_transformed_image(img)
         self.__save_debug_img(img_transformed, debug_img_fname_prefix, "transformed.png")
