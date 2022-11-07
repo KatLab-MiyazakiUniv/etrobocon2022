@@ -152,12 +152,12 @@ class LineAngleCalculator:
             cv2.imwrite(debug_img_path, debug_img)
         return float(angle_2_y)
 
-    def calc_contour_area_mm2(self, contour: np.ndarray, img_h: int, img_w: int) -> float:
-        tmp_img_for_calc_contour_area_mm2 = np.zeros(
-            (img_h, img_w, 1), np.uint8)
-        tmp_img_for_calc_contour_area_mm2 = cv2.drawContours(
-            tmp_img_for_calc_contour_area_mm2, [contour], 0, (1), -1)
-        contour_area_pix = np.sum(tmp_img_for_calc_contour_area_mm2)
+    # def calc_contour_area_mm2(self, contour: np.ndarray, img_h: int, img_w: int) -> float:
+    #     tmp_img_for_calc_contour_area_mm2 = np.zeros(
+    #         (img_h, img_w, 1), np.uint8)
+    #     tmp_img_for_calc_contour_area_mm2 = cv2.drawContours(
+    #         tmp_img_for_calc_contour_area_mm2, [contour], 0, (1), -1)
+    #     contour_area_pix = np.sum(tmp_img_for_calc_contour_area_mm2)
 
     def __calc_contour_score(self, contour: np.ndarray, img_h: int, img_w: int) -> float:
         """直線と機体のなす角を算出する際に採用する直線を決定するためのスコアを算出する関数.
