@@ -43,12 +43,11 @@ class LineAngleCalculator:
         self.__trans_mat_file = trans_mat_file
         self.__distance_file = distance_file
         self.__debug = debug
-        if not os.path.exists(debug_dir):
-            os.makedirs(debug_dir)
         self.__debug_dir = debug_dir
         now = datetime.datetime.now()
         self.__debug_time = now.strftime("%Y-%m-%d_%H-%M-%S.%f")
         self.load_params()
+        self.__create_debug_dir()
 
     def load_params(self) -> None:
         if not os.path.isfile(self.__trans_mat_file):
@@ -141,6 +140,12 @@ class LineAngleCalculator:
             self.__save_debug_img(debug_img, debug_img_fname_prefix, "detected.png")
         return float(angle_2_y)
 
+    def __create_debug_dir(self) -> None:
+        if not self.__debug:
+            return
+        if not os.path.exists(self.__debug_dir):
+            os.makedirs(self.__debug_dir)
+
     def __save_debug_img(self, img: np.ndarray, prefix: str, suffix: str) -> None:
         """デバッグ用に画像をファイルに保存する関数.
 
@@ -151,6 +156,7 @@ class LineAngleCalculator:
             prefix (str): ファイル名の先頭文字列
             suffix (str): 拡張子等を含めたファイル名の末尾
         """
+        self.__create_debug_dir()
         if self.__debug:
             img_fname = "%s_%s_%s" % (prefix, self.__debug_time, suffix)
             debug_img_path = os.path.join(self.__debug_dir, img_fname)
