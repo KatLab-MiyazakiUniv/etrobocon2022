@@ -1,22 +1,55 @@
-# @brief etrobocon2022のリアカメラシステムを起動するServiceファイル
+# @brief etrobocon2022のリアカメラシステムServiceのUnitファイル
 # @author Takahiro55555
-# NOTE: 以下、設定手順
-#       1. ファイルの配置先
+#
+# References:
+#   - [これからSystemd入門する - Qiita](https://qiita.com/bluesDD/items/eaf14408d635ffd55a18)
+#
+# WARNING: このServiceを動かす前にキャリブレーションを行わないと起動に失敗する.
+#          以下、キャリブレーション方法(カレントディレクトリ: /home/katlab/work/RasPike/sdk/workspace/etrobocon2022)
+#           $ ./scripts/start_rear_camera.sh --calibrate
+#
+# WARNING: このServiceが起動している最中に上記のコマンドでキャリブレーションを行おうとすると失敗する.
+#          以下、Service起動中のキャリブレーション方法(カレントディレクトリ: /home/katlab/work/RasPike/sdk/workspace/etrobocon2022)
+#           $ ./scripts/rear_camera.sh --calibrate
+#
+# NOTE: 以下、Serviceの登録手順(カレントディレクトリ: /home/katlab/work/RasPike/sdk/workspace/etrobocon2022/rear_camera_py)
+#       この手順をこなせば、再起動後も自動でServiceが起動してくれるため、再起動のたびにプログラムを起動する必要が無い
+#       1. ファイルの配置
 #           $ sudo cp rear-camera.service /etc/systemd/system/rear-camera.service
 #       2. Serviceの有効化
 #           $ sudo systemctl enable rear-camera.service
 #       3. Serviceの起動
 #           $ sudo systemctl start rear-camera.service
 #       4. Serviceの確認
-#           $ sudo systemctl status rear-camera.service
+#           $ sudo systemctl status rear-camera.service  # 下の行は実行例
+#             rear-camera.service - Rear camera system
+#               Loaded: loaded (/etc/systemd/system/rear-camera.service; enabled; vendor preset: enabled)
+#               Active: active (running) since Tue 2022-11-08 21:35:01 JST; 2min 31s ago [以下略]
+#               ^^^^^^^^^^^^^^^^^^^^^^^^
+#               このように、"active"と表示されていればとりあえず起動成功
 #
-#       - Serviceの停止
+# NOTE: リアカメラシステムのプログラムの変更を反映したい場合
+#       以下のコマンドを実行し、リアカメラシステムの再起動を行う(65秒間待機する必要がある)
+#           $ echo quit | nc 127.0.0.1 10338  # ポート番号(10338)はこのファイルで設定した値を利用すること
+#
+# NOTE: リアカメラシステムの開発をRasPike上で行いたい場合(サーバモードを使わずに角度算出処理を動かす)
+#       (カレントディレクトリ: /home/katlab/work/RasPike/sdk/workspace/etrobocon2022/rear_camera_py)
+#       1. Serviceの停止
 #           $ sudo systemctl stop rear-camera.service
-#       - Serviceファイル(このファイル)の更新
+#       2. 角度算出処理の実行
+#           $ make run
+#       3. Serviceの起動(作業終了後)
+#           $ sudo systemctl start rear-camera.service
+#
+# NOTE: 以下、Serviceファイルを更新したい場合
+#       作業用ディレクトリ(カレントディレクトリ)にある"rear-camera.service"ファイルを編集後反映することを想定
+#       (カレントディレクトリ: /home/katlab/work/RasPike/sdk/workspace/etrobocon2022/rear_camera_py)
+#       - Serviceファイル(このファイル)の更新方法
 #           $ sudo systemctl stop rear-camera.service  # 停止
-#           $ sudo cp rear-camera.service /etc/systemd/system/rear-camera.service  # ファイルの編集
+#           $ sudo cp rear-camera.service /etc/systemd/system/rear-camera.service  # ファイルの書き換え
 #           $ sudo systemctl daemon-reload  # ファイルの反映
 #           $ sudo systemctl start rear-camera.service  # 起動
+#           $ sudo systemctl status rear-camera.service  # 確認
 
 
 [Unit]
