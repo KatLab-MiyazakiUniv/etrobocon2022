@@ -40,11 +40,23 @@ class LineAngleCalculator:
             KeyError: 射影変換後の画像座標と走行体の中心からの距離等の関係を保持するパラメータファイルのデータが一部でも欠損している場合に発生.
         """
         self.__camera_interface = camera_interface
-        if not os.path.isfile(trans_mat_file):
-            raise FileNotFoundError("file name: '%s'" % trans_mat_file)
-        if not os.path.isfile(distance_file):
-            raise FileNotFoundError("file name: '%s'" % distance_file)
-        self.__trans_mat = np.load(trans_mat_file)
+        self.__trans_mat_file = trans_mat_file
+        self.__distance_file = distance_file
+        self.__debug = debug
+        if not os.path.exists(debug_dir):
+            os.makedirs(debug_dir)
+        self.__debug_dir = debug_dir
+        now = datetime.datetime.now()
+        self.__debug_time = now.strftime("%Y-%m-%d_%H-%M-%S.%f")
+        self.load_params()
+
+    def load_params(self) -> None:
+        if not os.path.isfile(self.__trans_mat_file):
+            raise FileNotFoundError("file name: '%s'" % self.__trans_mat_file)
+        if not os.path.isfile(self.__distance_file):
+            raise FileNotFoundError("file name: '%s'" % self.__distance_file)
+    
+        self.__trans_mat = np.load(self.__trans_mat_file)
 
         # NOTE: 射影変換後の画像において、4つのArUcoマーカの中心点と各辺の中点が一致する正方形を考える.
         # - distance_from_center_52_5mm
@@ -56,24 +68,18 @@ class LineAngleCalculator:
         #     105/2 + 40/2 + (301 - 122/2) = 312.5mm
         #  ただし、射影変換後の画像下部より更に下の部分に走行体の原点が存在することに留意すること.
         #  また、現実の座標系と画像の座標の差異にも留意すること.
-        with open(distance_file) as fp:
+        with open(self.__distance_file) as fp:
             distance_data = json.load(fp)
         key = "distance_from_center_52_5mm"
         if key not in distance_data:
             raise KeyError("key not found: '%s', file: %s" %
-                           (key, distance_file))
+                           (key, self.__distance_file))
         self.__distance_from_center_52_5mm = distance_data[key]
         key = "height_offset_from_center"
         if key not in distance_data:
             raise KeyError("key not found: '%s', file: %s" %
-                           (key, distance_file))
+                           (key, self.__distance_file))
         self.__height_offset_from_center = distance_data[key]
-        self.__debug = debug
-        if not os.path.exists(debug_dir):
-            os.makedirs(debug_dir)
-        self.__debug_dir = debug_dir
-        now = datetime.datetime.now()
-        self.__debug_time = now.strftime("%Y-%m-%d_%H-%M-%S.%f")
 
     def calc_yaw_angle(
         self,
@@ -90,6 +96,9 @@ class LineAngleCalculator:
         Returns:
             Union[float, None]: 検出した直線と機体の中心線とのなす角、直線を検出できなかった場合は`None`を返す.
         """
+        now = datetime.datetime.now()
+        self.__debug_time = now.strftime("%Y-%m-%d_%H-%M-%S.%f")
+
         img = self.__camera_interface.capture_image()
         if img is None:
             return None
