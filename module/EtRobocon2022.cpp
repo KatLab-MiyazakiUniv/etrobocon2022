@@ -29,32 +29,30 @@ void EtRobocon2022::start()
 
   // 角度算出用サーバを起動する
   char cmd[1024];
-  snprintf(cmd, 1024, "bash ./etrobocon2022/scripts/start_rear_camera.sh --server --port %d &", ANGLE_SERVER_PORT);
+  snprintf(cmd, 1024, "bash ./etrobocon2022/scripts/start_rear_camera.sh --server --port %d &",
+           ANGLE_SERVER_PORT);
   system(cmd);
 
   // キャリブレーションする
   calibrator.run();
-  isLeftCourse = calibrator.getIsLeftCourse();
-  isLeftEdge = isLeftCourse;
-  targetBrightness = calibrator.getTargetBrightness();
 
   // 合図を送るまで待機する
   calibrator.waitForStart();
 
-  // カメラシステムに開始合図を送る
-  system("bash ./etrobocon2022/scripts/start.sh");
+  for(int i = 0; i < 8; i++) {
+    // 回頭する
+    Rotation rt(45, 70, true);
+    rt.run();
 
-  // スタートのメッセージログを出す
-  const char* course = isLeftCourse ? "Left" : "Right";
-  snprintf(buf, BUF_SIZE, "\nRun on the %s Course\n", course);
-  logger.logHighlight(buf);
-
-  // ライントレースエリアを走行する
-  LineTraceArea::runLineTraceArea(isLeftCourse, isLeftEdge, targetBrightness);
-
-  // ゲームエリアを攻略する
-  GameArea::runGameArea(isLeftCourse, isLeftEdge, targetBrightness);
-
+    // 回頭補正を行う
+    if(i % 2 == 0) {
+      CorrectingRotation cr(0, 65);
+      cr.run();
+    } else {
+      CorrectingRotation cr(45, 65);
+      cr.run();
+    }
+  }
   // 走行終了のメッセージログを出す
   logger.logHighlight("The run has been completed\n");
 
@@ -73,5 +71,5 @@ void EtRobocon2022::sigint(int _)
   snprintf(cmd, 1024, "bash -c 'echo quit | nc 127.0.0.1 %d'", ANGLE_SERVER_PORT);
   system(cmd);
 
-  _exit(0);                           //システムコールで強制終了
+  _exit(0);  //システムコールで強制終了
 }

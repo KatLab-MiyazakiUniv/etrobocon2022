@@ -13,8 +13,8 @@ from rear_camera.black_extractor import BlackExtractor
 class TestBlackExtractor(unittest.TestCase):
     def test_black_extractor(self):
         be = BlackExtractor()
-        read_path = os.path.dirname(os.path.realpath(__file__)) + "/test_data/test_rear_image.png"
-        save_path = os.path.dirname(os.path.realpath(__file__)) + "/test_data/test_binary_image.png"
+        read_path = os.path.dirname(os.path.realpath(__file__)) + "/test_data/group-01-game-image-with-block-01.png"
+        save_path = os.path.dirname(os.path.realpath(__file__)) + "/test_data/group-01-game-image-with-block-01-bin.png"
         img = cv2.imread(read_path)
 
         # black_extractorモジュールのテスト(画像が生成されているか)
