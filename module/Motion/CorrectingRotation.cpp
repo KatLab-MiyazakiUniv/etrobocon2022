@@ -39,7 +39,9 @@ void CorrectingRotation::run()
    */
   FILE* fp = fopen("result.txt", "r");
   char output[8];  // rear_camera.shの出力結果を保持する領域
-  system("bash ./etrobocon2022/scripts/rear_camera.sh > result.txt");
+  char cmd[1024];
+  snprintf(cmd, 1024, "bash ./etrobocon2022/scripts/rear_camera.sh %d > result.txt", ANGLE_SERVER_PORT);
+  system(cmd);
   if((fp = fopen("result.txt", "r")) == NULL) {
     // コマンドを実行できなかった場合Warningを出して終了する
     logger.logWarning("Could not open \"./result.txt\"");
