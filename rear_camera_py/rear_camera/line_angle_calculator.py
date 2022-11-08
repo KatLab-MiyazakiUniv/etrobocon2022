@@ -109,10 +109,10 @@ class LineAngleCalculator:
         img_transformed = self.get_transformed_image(img)
 
         # mask画像の作成
-        mask_img = self.get_mask_image(img_transformed)
+        masked_img = self.get_masked_image(img_transformed)
 
         # 画像から黒線を抽出(白黒画像に変換)
-        binary_img = BlackExtractor.extract_black(mask_img)
+        binary_img = BlackExtractor.extract_black(masked_img)
 
         # 輪郭検出
         contours, hierarchy = cv2.findContours(binary_img, 3, 1)
@@ -227,7 +227,7 @@ class LineAngleCalculator:
             img, self.__trans_mat, (img.shape[1], img.shape[0]), borderValue=borderValue)
 
     @staticmethod
-    def get_mask_image(img: np.ndarray) -> np.ndarray:
+    def get_masked_image(img: np.ndarray) -> np.ndarray:
         """画像上の円(交点)を検出し、大きめの円で上書きする(マスク画像を作成).
 
         四隅の交点周りのラインが交わっているため、補正する際に2本の線が1本として認識される.
@@ -240,9 +240,9 @@ class LineAngleCalculator:
             img (np.ndarray): マスク画像.
         """
         # 上書き用の画像を作成
-        mask_img = img.copy()
+        masked_img = img.copy()
 
-        # グレースケース画像に変換
+        # グレースケール画像に変換
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         # 画像上の円を検出　戻り値:[[[円の中心点のx座標, 円の中心点のy座標, 円の半径],...]]
@@ -254,8 +254,8 @@ class LineAngleCalculator:
             return img
 
         # 中心座標が、画像上側(７割)にある円は考慮しない
-        thre = img.shape[0] * 0.7
-        circles = np.delete(circles[0], np.where(circles[0, :, 1] < thre)[0], axis=0)
+        ignore_border = img.shape[0] * 0.7
+        circles = np.delete(circles[0], np.where(circles[0, :, 1] < ignore_border)[0], axis=0)
 
         # 考慮する円がない場合
         if len(circles) == 0:
@@ -276,14 +276,14 @@ class LineAngleCalculator:
         for circle in circles:
             # 円を描画する
             cv2.circle(
-                mask_img,
+                masked_img,
                 center=(circle[0], circle[1]),
                 radius=circle[2],
                 color=(255, 255, 255),
                 thickness=-1  # 線の太さ(負の値で内部塗りつぶし)
             )
 
-        return mask_img
+        return masked_img
 
     def pix_to_mm(self, pix: Union[int, float]) -> float:
         """pixをmmに変換する.
