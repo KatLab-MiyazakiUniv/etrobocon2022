@@ -27,12 +27,6 @@ void EtRobocon2022::start()
   // サーバを起動する
   system("bash ./etrobocon2022/scripts/serve.sh &");
 
-  // 角度算出用サーバを起動する
-  char cmd[1024];
-  snprintf(cmd, 1024, "bash ./etrobocon2022/scripts/start_rear_camera.sh --server --port %d &",
-           ANGLE_SERVER_PORT);
-  system(cmd);
-
   // キャリブレーションする
   calibrator.run();
 
@@ -53,6 +47,7 @@ void EtRobocon2022::start()
       cr.run();
     }
   }
+
   // 走行終了のメッセージログを出す
   logger.logHighlight("The run has been completed\n");
 
@@ -65,11 +60,6 @@ void EtRobocon2022::sigint(int _)
   Logger logger;
   logger.log("Forced termination.");  // 強制終了のログを出力
   logger.outputToFile();              // ログファイルを生成
-
-  // 角度算出用サーバの停止
-  char cmd[1024];
-  snprintf(cmd, 1024, "bash -c 'echo quit | nc 127.0.0.1 %d'", ANGLE_SERVER_PORT);
-  system(cmd);
 
   _exit(0);  //システムコールで強制終了
 }
