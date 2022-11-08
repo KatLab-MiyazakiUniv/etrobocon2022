@@ -1,0 +1,39 @@
+# @brief etrobocon2022のリアカメラシステムを起動するServiceファイル
+# @author Takahiro55555
+# NOTE: 以下、設定手順
+#       1. ファイルの配置先
+#           $ sudo cp rear-camera.service /etc/systemd/system/rear-camera.service
+#       2. Serviceの有効化
+#           $ sudo systemctl enable rear-camera.service
+#       3. Serviceの起動
+#           $ sudo systemctl start rear-camera.service
+#       4. Serviceの確認
+#           $ sudo systemctl status rear-camera.service
+#
+#       - Serviceの停止
+#           $ sudo systemctl stop rear-camera.service
+#       - Serviceファイル(このファイル)の更新
+#           $ sudo systemctl stop rear-camera.service  # 停止
+#           $ sudo cp rear-camera.service /etc/systemd/system/rear-camera.service  # ファイルの編集
+#           $ sudo systemctl daemon-reload  # ファイルの反映
+#           $ sudo systemctl start rear-camera.service  # 起動
+
+
+[Unit]
+Description=Rear camera system
+After=network.target
+
+[Service]
+# 変数
+Environment=SCRIPT_PATH=/home/katlab/work/RasPike/sdk/workspace/etrobocon2022/scripts/start_rear_camera.sh
+Environment=PORT=10338
+
+# 実行コマンド
+ExecStart=/bin/bash -c "if [ -f ${SCRIPT_PATH} ]; then ${SCRIPT_PATH} --server --server-port ${PORT}; else echo 'Not found(${SCRIPT_PATH})'; fi"
+
+# 終了した場合は65秒ごとに再起動(TIME_WAITがLinuxではデフォルトで60秒に設定されているため)
+RestartSec=65
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
