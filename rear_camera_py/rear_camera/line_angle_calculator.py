@@ -1,4 +1,7 @@
-"""コースの直線に対する機体の角度算出するモジュール."""
+"""コースの直線に対する機体の角度算出するモジュール.
+
+@author: Takahiro55555 kawanoichi
+"""
 
 import json
 import os
@@ -8,6 +11,7 @@ from typing import Tuple, Union
 import cv2
 import numpy as np
 
+from rear_camera.black_extractor import BlackExtractor
 from rear_camera.camera_interface import CameraInterface
 
 
@@ -55,6 +59,7 @@ class LineAngleCalculator:
         #     105/2 + 40/2 + (301 - 122/2) = 312.5mm
         #  ただし、射影変換後の画像下部より更に下の部分に走行体の原点が存在することに留意すること.
         #  また、現実の座標系と画像の座標の差異にも留意すること.
+
         with open(distance_file) as fp:
             distance_data = json.load(fp)
         key = "distance_from_center_52_5mm"
@@ -87,7 +92,9 @@ class LineAngleCalculator:
         Returns:
             Union[float, None]: 検出した直線と機体の中心線とのなす角、直線を検出できなかった場合は`None`を返す.
         """
+        # リアカメラで撮影した画像を取得
         img = self.__camera_interface.capture_image()
+
         if img is None:
             return None
 
@@ -97,11 +104,18 @@ class LineAngleCalculator:
                 debug_img_fname_prefix, debug_time)
             debug_img_path = os.path.join(self.__debug_dir, img_fname)
             cv2.imwrite(debug_img_path, img)
+
+        # 射影変換
         img_transformed = self.get_transformed_image(img)
-        img_gray = cv2.cvtColor(img_transformed, cv2.COLOR_BGR2GRAY)
-        img_gray[0:1, :] = 255
-        img_bin = cv2.threshold(img_gray, 60, 255, cv2.THRESH_BINARY)[1]
-        contours, hierarchy = cv2.findContours(img_bin, 3, 1)
+
+        # mask画像の作成
+        masked_img = self.get_masked_image(img_transformed)
+
+        # 画像から黒線を抽出(白黒画像に変換)
+        binary_img = BlackExtractor.extract_black(masked_img)
+
+        # 輪郭検出
+        contours, hierarchy = cv2.findContours(binary_img, 3, 1)
         max_area_threshold = cv2.contourArea(
             max(contours, key=lambda x: cv2.contourArea(x)))  # 画像の外周を除去
         filtered_contours = list(
@@ -211,6 +225,65 @@ class LineAngleCalculator:
         """
         return cv2.warpPerspective(
             img, self.__trans_mat, (img.shape[1], img.shape[0]), borderValue=borderValue)
+
+    @staticmethod
+    def get_masked_image(img: np.ndarray) -> np.ndarray:
+        """画像上の円(交点)を検出し、大きめの円で上書きする(マスク処理を行った画像を作成).
+
+        四隅の交点周りのラインが交わっているため、補正する際に2本の線が1本として認識される.
+        円(交点)を大きな円で上書きすることで交わっている部分を隠す.
+
+        Args:
+            img (np.ndarray): 射影変換後の画像.
+
+        Returns:
+            img (np.ndarray): マスク処理を行った画像.
+        """
+        # 上書き用の画像を作成
+        masked_img = img.copy()
+
+        # グレースケール画像に変換
+        img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        # 画像上の円を検出　戻り値:[[[円の中心点のx座標, 円の中心点のy座標, 円の半径],...]]
+        circles = cv2.HoughCircles(img_gray, cv2.HOUGH_GRADIENT, dp=1.2, minDist=100,
+                                   param1=100, param2=40, minRadius=0, maxRadius=60)
+
+        # 画像上に円が見つからなかった場合
+        if circles is None:
+            return img
+
+        # 中心座標が、画像上側(７割)にある円は考慮しない
+        ignore_border = img.shape[0] * 0.7
+        circles = np.delete(circles[0], np.where(circles[0, :, 1] < ignore_border)[0], axis=0)
+
+        # 考慮する円がない場合
+        if len(circles) == 0:
+            return img
+
+        # 検出した円の半径から上書きする円の半径を決める
+        # NOTE:交点の半径3cm.
+        #      ラインが交わっている部分の長さ1.5cm
+        #      よって上書きする円の半径は、
+        #           検出した交点の半径×1.5
+        #      より大きな半径にする必要がある.
+        circles[:, 2] *= 1.7
+
+        # 整数値かつ16ビットにキャストする ※しないとcv2.circleでerrorが発生
+        circles = np.uint16(np.around(circles))
+
+        # 画像上に円を見つけた場合、円の直径を拡大する
+        for circle in circles:
+            # 円を描画する
+            cv2.circle(
+                masked_img,
+                center=(circle[0], circle[1]),
+                radius=circle[2],
+                color=(255, 255, 255),
+                thickness=-1  # 線の太さ(負の値で内部塗りつぶし)
+            )
+
+        return masked_img
 
     def pix_to_mm(self, pix: Union[int, float]) -> float:
         """pixをmmに変換する.

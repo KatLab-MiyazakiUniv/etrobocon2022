@@ -2,10 +2,11 @@
 
 Calibratorクラスのパラメータファイルが正常に生成されているかのテストも一部兼ねている.
 
-@author: Takahiro55555
+@author: Takahiro55555 kawanoichi
 """
 
 import os
+import cv2
 import unittest
 
 from rear_camera.calibrator import Calibrator
@@ -38,6 +39,22 @@ class TestCalibrator(unittest.TestCase):
             os.remove(self.__tmp_trans_mat_file)
         if os.path.isfile(self.__tmp_distance_file):
             os.remove(self.__tmp_distance_file)
+
+    def test_get_masked_image(self):
+        """mask画像を作成する関数のテスト."""
+        test_img = []
+        # 画像の上側に円がある場合
+        test_img.append(cv2.imread("tests/test_data/test_masked_image_upper_circle.png"))
+        # 画像の下側に円がある場合
+        test_img.append(cv2.imread("tests/test_data/test_masked_image_lower_circle.png"))
+        # 画像上に円がない場合
+        test_img.append(cv2.imread("tests/test_data/test_masked_image_no_circle.png"))
+
+        # numpy配列を返すかテストする
+        expected = "numpy"
+        for img in test_img:
+            actual = type(LineAngleCalculator.get_masked_image(img)).__module__
+            self.assertTrue(expected == actual)
 
     def test_calc_yaw_angle(self):
         """角度算出のテスト."""
