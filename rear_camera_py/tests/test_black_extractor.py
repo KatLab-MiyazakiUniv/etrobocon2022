@@ -4,7 +4,6 @@
 """
 
 import unittest
-import numpy as np
 import cv2
 import os
 from rear_camera.black_extractor import BlackExtractor
@@ -26,3 +25,6 @@ class TestBlackExtractor(unittest.TestCase):
         expected_exist = True
         actual_exist = os.path.exists(save_path)  # 画像が生成されているか確認(bool)
         self.assertEqual(expected_exist, actual_exist)
+
+        # テストで生成した画像を削除
+        os.remove(save_path)

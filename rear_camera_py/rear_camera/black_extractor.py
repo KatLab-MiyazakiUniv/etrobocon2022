@@ -15,7 +15,7 @@ class BlackExtractor:
         """画像から黒線を抽出する関数.
 
         Args:
-            rear_camera_img (cv2.Mat): リアカメラ画像
+            rear_camera_img (np.ndarray): リアカメラ画像
 
         Returns:
             np.ndarray: 2値変換した画像データ
