@@ -50,11 +50,17 @@ class LineAngleCalculator:
         self.__create_debug_dir()
 
     def load_params(self) -> None:
+        """パラメータファイルを読み込む.
+
+        Raises:
+            FileNotFoundError: パラメータファイルが見つからない場合に発生
+            KeyError: パラメータフィルの内容に期待するキーのデータが無い場合に発生
+        """
         if not os.path.isfile(self.__trans_mat_file):
             raise FileNotFoundError("file name: '%s'" % self.__trans_mat_file)
         if not os.path.isfile(self.__distance_file):
             raise FileNotFoundError("file name: '%s'" % self.__distance_file)
-    
+
         self.__trans_mat = np.load(self.__trans_mat_file)
 
         # NOTE: 射影変換後の画像において、4つのArUcoマーカの中心点と各辺の中点が一致する正方形を考える.
