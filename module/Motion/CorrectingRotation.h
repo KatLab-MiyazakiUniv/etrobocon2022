@@ -32,7 +32,7 @@ class CorrectingRotation : public Motion {
   void logRunning();
 
  private:
-  static constexpr int NO_CORRECTION_ANGLE = 3;  // 補正免除角度 TODO: 値を決定する
+  static constexpr int NO_CORRECTION_ANGLE = 2;  // 補正免除角度(deg)
   int targetAngle;                               // 目標角度(deg) 0~89
   int pwm;                                       // PWM値 0~100
 };
