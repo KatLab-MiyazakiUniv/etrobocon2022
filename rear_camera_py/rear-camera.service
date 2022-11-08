@@ -5,6 +5,7 @@
 #   - [これからSystemd入門する - Qiita](https://qiita.com/bluesDD/items/eaf14408d635ffd55a18)
 #
 # WARNING: このServiceを動かす前にキャリブレーションを行わないと起動に失敗する.
+#          具体的には、/home/katlab/work/RasPike/sdk/workspace/etrobocon2022/rear_camera_py ディレクトリ配下にパラメータファイルが存在しないと失敗する。
 #          以下、キャリブレーション方法(カレントディレクトリ: /home/katlab/work/RasPike/sdk/workspace/etrobocon2022)
 #           $ ./scripts/start_rear_camera.sh --calibrate
 #
