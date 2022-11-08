@@ -228,7 +228,7 @@ class LineAngleCalculator:
 
     @staticmethod
     def get_masked_image(img: np.ndarray) -> np.ndarray:
-        """画像上の円(交点)を検出し、大きめの円で上書きする(マスク画像を作成).
+        """画像上の円(交点)を検出し、大きめの円で上書きする(マスク処理を行った画像を作成).
 
         四隅の交点周りのラインが交わっているため、補正する際に2本の線が1本として認識される.
         円(交点)を大きな円で上書きすることで交わっている部分を隠す.
@@ -237,7 +237,7 @@ class LineAngleCalculator:
             img (np.ndarray): 射影変換後の画像.
 
         Returns:
-            img (np.ndarray): マスク画像.
+            img (np.ndarray): マスク処理を行った画像.
         """
         # 上書き用の画像を作成
         masked_img = img.copy()
