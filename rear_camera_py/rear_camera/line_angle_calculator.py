@@ -57,7 +57,7 @@ class LineAngleCalculator:
 
         Raises:
             FileNotFoundError: パラメータファイルが見つからない場合に発生
-            KeyError: パラメータフィルの内容に期待するキーのデータが無い場合に発生
+            KeyError: パラメータファイルの内容に期待するキーのデータが無い場合に発生
         """
         if not os.path.isfile(self.__trans_mat_file):
             raise FileNotFoundError("file name: '%s'" % self.__trans_mat_file)

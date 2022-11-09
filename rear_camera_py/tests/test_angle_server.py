@@ -12,7 +12,7 @@ from rear_camera.angle_server import AngleServer
 class TestCalibrator(unittest.TestCase):
     def test_server_command_only(self):
         server_ip = "127.0.0.1"
-        # NOTE: また、サーバを終了しても使用していたポートはデフォルトで60秒間はTIME_WAIT状態になり、
+        # NOTE: サーバを終了しても使用していたポートはデフォルトで60秒間はTIME_WAIT状態になり、
         #       使用できない(Linuxの場合).
         #       そこで、70秒周期でポートを使いまわすようにしている.
         server_port = 11338 + (int(time.time()) % 70)
@@ -62,7 +62,7 @@ class TestCalibrator(unittest.TestCase):
 
     def test_server_command_with_arguments(self):
         server_ip = "127.0.0.1"
-        # NOTE: 上記のテストで使ったポートが解放されていない可能背があるため、
+        # NOTE: 上記のテストで使ったポートが解放されていない可能性があるため、
         #       同じポートは使いまわさない.
         #       また、サーバを終了しても使用していたポートはデフォルトで60秒間はTIME_WAIT状態になり、
         #       使用できない(Linuxの場合).
