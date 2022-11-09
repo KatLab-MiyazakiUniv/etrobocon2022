@@ -95,15 +95,16 @@ class LineAngleCalculator:
 
         if detect_line is None:
             return None
-        
-        # 単位ベクトルに変換
-        a = np.array([detect_line[0]-detect_line[2], detect_line[1]-detect_line[3]]) #[x1-x2, y1-y2]
+
+        # 単位ベクトルに変換[x1-x2, y1-y2]
+        a = np.array([detect_line[0]-detect_line[2],
+                      detect_line[1] - detect_line[3]])
         x = np.linalg.norm(a)
         your_line = a / x
 
         # 走行体のベクトル
         y_axis = np.array([0, 1])
-        
+
         # 内積を求める
         dot_product = np.dot(y_axis, your_line)
 
@@ -112,7 +113,7 @@ class LineAngleCalculator:
 
         if angle_2_y > 90:
             angle_2_y -= 180
-        
+
         if self.__debug:
             # 各画像の保存
             debug_img = self.draw_detected_lines_on_the_image(
@@ -121,7 +122,7 @@ class LineAngleCalculator:
                 debug_img_fname_prefix, debug_time)
             debug_img_path = os.path.join(self.__debug_dir, img_fname)
             cv2.imwrite(debug_img_path, debug_img)
-        
+
         return float(angle_2_y)
 
     def get_transformed_image(self, img: np.ndarray, borderValue=(255, 255, 255)) -> np.ndarray:
@@ -154,13 +155,13 @@ class LineAngleCalculator:
         Returns:
             np.ndarray: 検出した線分及び、その線分と機体の中心線のなす角を描画した画像データ.
         """
-        # 検出した線分を描画 
-        cv2.line(img, 
-                (int(detect_line[0]),int(detect_line[1])), 
-                (int(detect_line[2]),int(detect_line[3])), 
-                (0,0,255),   #BGR
-                thickness=4) #描画する線分の太さ
-        
+        # 検出した線分を描画
+        cv2.line(img,
+                 (int(detect_line[0]), int(detect_line[1])),
+                 (int(detect_line[2]), int(detect_line[3])),
+                 (0, 0, 255),  # BGR
+                 thickness=4)  # 描画する線分の太さ
+
         # 線分の角度を描画
         tx, ty = int((detect_line[0]+detect_line[2])/2), int((detect_line[1]+detect_line[3])/2)
         cv2.putText(img, "%.2f" % angle, (tx, ty),
@@ -175,7 +176,7 @@ class LineAngleCalculator:
         distance_threshold: float = 1.41421356,
         canny_th1: int = 50,
         canny_th2: int = 50,
-        canny_aperture_size: int = 7, #3~7
+        canny_aperture_size: int = 7,  # 3~7
         do_merge: bool = False
     ) -> Union[np.ndarray, None]:
         """画像上の線分を検出する.
@@ -192,7 +193,7 @@ class LineAngleCalculator:
             canny_th2 (int): Cannyヒステリシス2
             canny_aperture_size (int): Cannyソベルオペレータ アパチャーサイズ
             do_merge (bool): 増分マージオプション
-            
+
         Returns:
             Union[np.ndarray, None]: 検出した線分、線分を検出できなかった場合は`None`を返す.
         """
@@ -204,14 +205,14 @@ class LineAngleCalculator:
             canny_th2,
             canny_aperture_size,
             do_merge
-            )
-        
+        )
+
         # 線分の2点座標を検出　※型:[[[x1,y1,x2,y2]],...]
         lines = fld.detect(img)
 
         # 画像上側7.5割の領域上にある線、もしくは、またがってる線分を削除
         ignore_border = int(img.shape[0] * 0.75)
-        lines = lines[np.where((lines[:,:,1]>ignore_border) | (lines[:,:,3]>ignore_border))]
+        lines = lines[np.where((lines[:, :, 1] > ignore_border) & (lines[:, :, 3] > ignore_border))]
 
         if len(lines) == 0:
             return None
@@ -219,35 +220,36 @@ class LineAngleCalculator:
         # 射影変換で得られたコース画像の両端と下の枠上に存在する点
         # NOTE: 枠(直線)を線分検出で実際に取得した座標を使用
         straight_line_right = np.array([1559.891,        0, 912.159, 1199.626])
-        straight_line_left  = np.array([ 758.320, 1204.827, 410.622,  559.664])
-        straight_line_lower = np.array([ 909.996, 1198.916, 759.986, 1204.6339])
+        straight_line_left = np.array([758.320, 1204.827, 410.622,  559.664])
+        straight_line_lower = np.array([909.996, 1198.916, 759.986, 1204.6339])
 
         # 画像の枠上(右左下)に線分があれば削除する
         delete_list = []
         for l in range(len(lines)):
             # 枠(直線)との距離が dis_from_edge_threshold より小さい座標を選別する
-            if LineAngleCalculator.cal_dis(straight_line_right, lines[l,0], lines[l,1]) < dis_from_edge_threshold\
-                and LineAngleCalculator.cal_dis(straight_line_right, lines[l,2], lines[l,3]) < dis_from_edge_threshold:
+            if LineAngleCalculator.cal_dis(straight_line_right, lines[l, 0], lines[l, 1]) < dis_from_edge_threshold\
+                    and LineAngleCalculator.cal_dis(straight_line_right, lines[l, 2], lines[l, 3]) < dis_from_edge_threshold:
                 delete_list.append(l)
                 continue
 
-            elif LineAngleCalculator.cal_dis(straight_line_left, lines[l,0], lines[l,1]) < dis_from_edge_threshold\
-                and LineAngleCalculator.cal_dis(straight_line_left, lines[l,2], lines[l,3]) < dis_from_edge_threshold:
+            elif LineAngleCalculator.cal_dis(straight_line_left, lines[l, 0], lines[l, 1]) < dis_from_edge_threshold\
+                    and LineAngleCalculator.cal_dis(straight_line_left, lines[l, 2], lines[l, 3]) < dis_from_edge_threshold:
                 delete_list.append(l)
                 continue
-            
-            elif LineAngleCalculator.cal_dis(straight_line_lower, lines[l,0], lines[l,1]) < dis_from_edge_threshold\
-                and LineAngleCalculator.cal_dis(straight_line_lower, lines[l,2], lines[l,3]) < dis_from_edge_threshold:
+
+            elif LineAngleCalculator.cal_dis(straight_line_lower, lines[l, 0], lines[l, 1]) < dis_from_edge_threshold\
+                    and LineAngleCalculator.cal_dis(straight_line_lower, lines[l, 2], lines[l, 3]) < dis_from_edge_threshold:
                 delete_list.append(l)
 
         if len(delete_list) != 0:
             lines = np.delete(lines, delete_list, 0)
             if len(lines) == 0:
                 return None
-    
+
         # 一番手前にある線分を抽出する(y軸最大値)
-        lines[:,0:4:2] = 0 # x座標部分に0を代入
-        return lines[np.unravel_index(np.argmax(lines), lines.shape)[0]]
+        cal_lines = lines.copy()  # x座標部分に0を代入
+        cal_lines[:, 0:4:2] = 0  # x座標部分に0を代入
+        return lines[np.unravel_index(np.argmax(cal_lines), lines.shape)[0]]
 
     @staticmethod
     def cal_dis(straight_line: np.ndarray, x: np.ndarray, y: np.ndarray) -> float:
