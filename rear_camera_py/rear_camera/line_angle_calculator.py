@@ -91,14 +91,14 @@ class LineAngleCalculator:
         binary_img = BlackExtractor.extract_black(img_transformed)
 
         # 線分を検出(線分上の2点座標[x1,y1,x2,y2])
-        detect_line = self.detect_line_segment(binary_img)
+        detected_line = self.detect_line_segment(binary_img)
 
-        if detect_line is None:
+        if detected_line is None:
             return None
 
         # 単位ベクトルに変換[x1-x2, y1-y2]
-        a = np.array([detect_line[0]-detect_line[2],
-                      detect_line[1] - detect_line[3]])
+        a = np.array([detected_line[0]-detected_line[2],
+                      detected_line[1] - detected_line[3]])
         x = np.linalg.norm(a)
         your_line = a / x
 
@@ -117,7 +117,7 @@ class LineAngleCalculator:
         if self.__debug:
             # 各画像の保存
             debug_img = self.draw_detected_lines_on_the_image(
-                img_transformed, detect_line, angle_2_y)
+                img_transformed, detected_line, angle_2_y)
             img_fname = "%s_%f_detected.png" % (
                 debug_img_fname_prefix, debug_time)
             debug_img_path = os.path.join(self.__debug_dir, img_fname)
@@ -141,15 +141,15 @@ class LineAngleCalculator:
     def draw_detected_lines_on_the_image(
         self,
         img: np.ndarray,
-        detect_line: np.ndarray,
+        detected_line: np.ndarray,
         angle: float
     ) -> np.ndarray:
         """検出した線分及び、その線分と機体の中心線のなす角を線分の検出用いた画像へ描画するデバッグ用関数.
-        np.array([detect_line[0]-detect_line[2], detect_line[1]-detect_line[3]])
+        np.array([detected_line[0]-detected_line[2], detected_line[1]-detected_line[3]])
 
         Args:
             img (np.ndarray): 線分の検出に用いた画像データ.
-            detect_line (np.ndarray): 描画する線分の座標 [x1,y1,x2,y2]
+            detected_line (np.ndarray): 描画する線分の座標 [x1,y1,x2,y2]
             angle (float): 検出した線分と機体の中心線とのなす角.
 
         Returns:
@@ -157,13 +157,13 @@ class LineAngleCalculator:
         """
         # 検出した線分を描画
         cv2.line(img,
-                 (int(detect_line[0]), int(detect_line[1])),
-                 (int(detect_line[2]), int(detect_line[3])),
+                 (int(detected_line[0]), int(detected_line[1])),
+                 (int(detected_line[2]), int(detected_line[3])),
                  (0, 0, 255),  # BGR
                  thickness=4)  # 描画する線分の太さ
 
         # 線分の角度を描画
-        tx, ty = int((detect_line[0]+detect_line[2])/2), int((detect_line[1]+detect_line[3])/2)
+        tx, ty = int((detected_line[0]+detected_line[2])/2), int((detected_line[1]+detected_line[3])/2)
         cv2.putText(img, "%.2f" % angle, (tx, ty),
                     cv2.FONT_HERSHEY_COMPLEX, 1.5, (0, 255, 0), thickness=2)
         return img
@@ -227,18 +227,18 @@ class LineAngleCalculator:
         delete_list = []
         for l in range(len(lines)):
             # 枠(直線)との距離が dis_from_edge_threshold より小さい座標を選別する
-            if LineAngleCalculator.cal_dis(straight_line_right, lines[l, 0], lines[l, 1]) < dis_from_edge_threshold\
-                    and LineAngleCalculator.cal_dis(straight_line_right, lines[l, 2], lines[l, 3]) < dis_from_edge_threshold:
+            if LineAngleCalculator.calc_distance(straight_line_right, lines[l, 0], lines[l, 1]) < dis_from_edge_threshold\
+                    and LineAngleCalculator.calc_distance(straight_line_right, lines[l, 2], lines[l, 3]) < dis_from_edge_threshold:
                 delete_list.append(l)
                 continue
 
-            elif LineAngleCalculator.cal_dis(straight_line_left, lines[l, 0], lines[l, 1]) < dis_from_edge_threshold\
-                    and LineAngleCalculator.cal_dis(straight_line_left, lines[l, 2], lines[l, 3]) < dis_from_edge_threshold:
+            elif LineAngleCalculator.calc_distance(straight_line_left, lines[l, 0], lines[l, 1]) < dis_from_edge_threshold\
+                    and LineAngleCalculator.calc_distance(straight_line_left, lines[l, 2], lines[l, 3]) < dis_from_edge_threshold:
                 delete_list.append(l)
                 continue
 
-            elif LineAngleCalculator.cal_dis(straight_line_lower, lines[l, 0], lines[l, 1]) < dis_from_edge_threshold\
-                    and LineAngleCalculator.cal_dis(straight_line_lower, lines[l, 2], lines[l, 3]) < dis_from_edge_threshold:
+            elif LineAngleCalculator.calc_distance(straight_line_lower, lines[l, 0], lines[l, 1]) < dis_from_edge_threshold\
+                    and LineAngleCalculator.calc_distance(straight_line_lower, lines[l, 2], lines[l, 3]) < dis_from_edge_threshold:
                 delete_list.append(l)
 
         if len(delete_list) != 0:
@@ -252,7 +252,7 @@ class LineAngleCalculator:
         return lines[np.unravel_index(np.argmax(cal_lines), lines.shape)[0]]
 
     @staticmethod
-    def cal_dis(straight_line: np.ndarray, x: float, y: float) -> float:
+    def calc_distance(straight_line: np.ndarray, x: float, y: float) -> float:
         """直線と座標の距離を計算する関数.
         Args:
             straight_line (float): 直線上の2点座標を格納した配列[x1, y1, x2, y2]
