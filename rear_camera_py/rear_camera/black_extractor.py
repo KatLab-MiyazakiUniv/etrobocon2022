@@ -25,23 +25,6 @@ class BlackExtractor:
 
         # BGR色空間からHSV色空間への変換
         hsv = cv2.cvtColor(rear_camera_img, cv2.COLOR_BGR2HSV)
-        # 2値変換
+        # 2値変換（条件を満たす画素が255となるため、255から引くことで反転させる）
         binary_img = 255 - cv2.inRange(hsv, black_lower, black_upper)
-        # 以下、テスト用
-        binary_img = np.array([binary_img.T[:,:],binary_img.T[:,:],binary_img.T[:,:]]).T
-        test_img = im_v = cv2.vconcat([binary_img, img])
-        return test_img
-        # 以上、テスト用
         return binary_img
-
-for i in range(1,21):
-    filename = "course_img (%d).png" % i
-    img = cv2.imread("test_image/%s" % filename)
-    binary_img = BlackExtractor.extract_black(img)
-    cv2.imwrite("result_image/%s" % filename, binary_img)
-
-for i in range(1,34):
-    filename = "trans_image (%d).png" % i
-    img = cv2.imread("test_image/%s" % filename)
-    binary_img = BlackExtractor.extract_black(img)
-    cv2.imwrite("result_image/%s" % filename, binary_img)
