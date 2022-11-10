@@ -50,7 +50,7 @@ class LineAngleCalculator:
         #     上記正方形の中心点のオフセット、
         #     0の場合上記正方形の中心点と射影変換後の画像の中心点が一致する(pix).
         # 4つのArUcoマーカの中心点と走行体の中心点(タイヤの軸の中点)の距離は以下のようになる.
-        # running_body_to_4_ArUco_center = 105/2 + 40/2 + (301 - 122/2) 
+        # running_body_to_4_ArUco_center = 105/2 + 40/2 + (301 - 122/2)
         #                                = 312.5mm
         # 　ただし、射影変換後の画像下部より更に下の部分に走行体の原点が存在することに留意すること.
         # 　また、現実の座標系と画像の座標の差異にも留意すること.
@@ -66,19 +66,19 @@ class LineAngleCalculator:
         #  jsonファイルの読み込み
         with open(distance_file) as fp:
             distance_data = json.load(fp)
-       
+
         key = "distance_from_center_52_5mm"
         if key not in distance_data:
             raise KeyError("key not found: '%s', file: %s" %
                            (key, distance_file))
         self.__distance_from_center_52_5mm = distance_data[key]
-        
+
         key = "height_offset_from_center"
         if key not in distance_data:
             raise KeyError("key not found: '%s', file: %s" %
                            (key, distance_file))
         self.__height_offset_from_center = distance_data[key]
-        
+
         self.__rbody_to_4Acenter = running_body_to_4_ArUco_center
 
         # デバックファイルがない場合は作成を行う
@@ -209,9 +209,10 @@ class LineAngleCalculator:
         lines = fld.detect(img)
 
         # 走行体からの距離(detect_dist_from_rbody(mm))までの間(画像に写る)の線分だけ残す
-        img_h, img_w= img.shape[:2]
-        detect_range_from_rbody = 181*2+90 # 検出する範囲 (交点toブロック置き場*2+補正値)
-        _, ignore_border = self.runner_base_coordinate_to_image_base_coordinate_pix(0, detect_range_from_rbody, img_h, img_w)
+        img_h, img_w = img.shape[:2]
+        detect_range_from_rbody = 181*2+90  # 検出する範囲 (交点toブロック置き場*2+補正値)
+        _, ignore_border = self.runner_base_coordinate_to_image_base_coordinate_pix(
+            0, detect_range_from_rbody, img_h, img_w)
         lines = lines[np.where((lines[:, :, 1] > ignore_border) & (lines[:, :, 3] > ignore_border))]
 
         if len(lines) == 0:
@@ -258,7 +259,6 @@ class LineAngleCalculator:
         angle: float
     ) -> np.ndarray:
         """検出した線分及び、その線分と機体の中心線のなす角を線分の検出用いた画像へ描画するデバッグ用関数.
-        np.array([detected_line[0]-detected_line[2], detected_line[1]-detected_line[3]])
 
         Args:
             img (np.ndarray): 線分の検出に用いた画像データ.
@@ -276,7 +276,8 @@ class LineAngleCalculator:
                  thickness=4)  # 描画する線分の太さ
 
         # 線分の角度を描画
-        tx, ty = int((detected_line[0]+detected_line[2])/2), int((detected_line[1]+detected_line[3])/2)
+        tx, ty = int((detected_line[0]+detected_line[2]) /
+                     2), int((detected_line[1]+detected_line[3])/2)
         cv2.putText(img, "%.2f" % angle, (tx, ty),
                     cv2.FONT_HERSHEY_COMPLEX, 1.5, (0, 255, 0), thickness=2)
         return img
@@ -284,10 +285,12 @@ class LineAngleCalculator:
     @staticmethod
     def calc_distance(straight_line: np.ndarray, x: float, y: float) -> float:
         """直線と座標の距離を計算する関数.
+
         Args:
             straight_line (float): 直線上の2点座標を格納した配列[x1, y1, x2, y2]
             x (float): 直線との距離を求めたい座標x
             y (float): 直線との距離を求めたい座標y
+
         Returns:
             float: 点と直線の距離.        
         """
@@ -303,27 +306,32 @@ class LineAngleCalculator:
         img_w: int
     ) -> Tuple[int, int]:
         """機体の中心を原点とした座標を画像座標に変換する.
+
         Args:
             rx (Union[int, float]): 走行体の中心を原点としたX座標[mm].
             ry (Union[int, float]): 走行体の中心を原点としたY座標[mm].
             img_h (int): 画像の縦幅[pix].
             img_w (int): 画像の横幅[pix].
+
         Returns:
             Tuple[int, int]: 変換後の座標(x, y)[pix].
         """
         # pix_xを求める
         pix_x = self.mm_to_pix(rx) + img_w/2
-        
+
         # pix_yを求める
-        running_body_to_image_lower = self.__rbody_to_4Acenter - self.pix_to_mm(img_h/2 - self.__height_offset_from_center)
+        running_body_to_image_lower = self.__rbody_to_4Acenter - \
+            self.pix_to_mm(img_h/2 - self.__height_offset_from_center)
         pix_y = img_h - self.mm_to_pix(ry - running_body_to_image_lower)
 
         return pix_x, pix_y
 
     def mm_to_pix(self, mm: Union[int, float]) -> float:
         """mmをpixに変換する.
+
         Args:
             mm (Union[int, float]): 変換したい値[mm]
+
         Returns:
             float: 変換結果[pix]
         """
@@ -331,8 +339,10 @@ class LineAngleCalculator:
 
     def pix_to_mm(self, pix: Union[int, float]) -> float:
         """pixをmmに変換する.
+
         Args:
             pix (Union[int, float]): 変換したい値[pix]
+
         Returns:
             float: 変換結果[mm]
         """
