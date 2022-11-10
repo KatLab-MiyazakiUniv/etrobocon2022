@@ -227,27 +227,27 @@ class LineAngleCalculator:
 
         # 画像の枠上(右左下)に線分があれば削除する
         delete_list = []
-        for l in range(len(lines)):
+        for i in range(len(lines)):
             # 枠(直線)との距離が length_threshold より小さい座標を除外する
             if LineAngleCalculator.calc_distance(
-                    straight_line_right, lines[l, 0], lines[l, 1]) < length_threshold\
+                    straight_line_right, lines[i, 0], lines[i, 1]) < length_threshold\
                     and LineAngleCalculator.calc_distance(
-                    straight_line_right, lines[l, 2], lines[l, 3]) < length_threshold:
-                delete_list.append(l)
+                    straight_line_right, lines[i, 2], lines[i, 3]) < length_threshold:
+                delete_list.append(i)
                 continue
 
             elif LineAngleCalculator.calc_distance(
-                    straight_line_left, lines[l, 0], lines[l, 1]) < length_threshold\
+                    straight_line_left, lines[i, 0], lines[i, 1]) < length_threshold\
                     and LineAngleCalculator.calc_distance(
-                    straight_line_left, lines[l, 2], lines[l, 3]) < length_threshold:
-                delete_list.append(l)
+                    straight_line_left, lines[i, 2], lines[i, 3]) < length_threshold:
+                delete_list.append(i)
                 continue
 
             elif LineAngleCalculator.calc_distance(
-                    straight_line_lower, lines[l, 0], lines[l, 1]) < length_threshold\
+                    straight_line_lower, lines[i, 0], lines[i, 1]) < length_threshold\
                     and LineAngleCalculator.calc_distance(
-                    straight_line_lower, lines[l, 2], lines[l, 3]) < length_threshold:
-                delete_list.append(l)
+                    straight_line_lower, lines[i, 2], lines[i, 3]) < length_threshold:
+                delete_list.append(i)
 
         if len(delete_list) != 0:
             lines = np.delete(lines, delete_list, 0)
