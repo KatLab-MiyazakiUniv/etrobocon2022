@@ -229,18 +229,24 @@ class LineAngleCalculator:
         delete_list = []
         for l in range(len(lines)):
             # 枠(直線)との距離が length_threshold より小さい座標を除外する
-            if LineAngleCalculator.calc_distance(straight_line_right, lines[l, 0], lines[l, 1]) < length_threshold\
-                    and LineAngleCalculator.calc_distance(straight_line_right, lines[l, 2], lines[l, 3]) < length_threshold:
+            if LineAngleCalculator.calc_distance(
+                    straight_line_right, lines[l, 0], lines[l, 1]) < length_threshold\
+                    and LineAngleCalculator.calc_distance(
+                    straight_line_right, lines[l, 2], lines[l, 3]) < length_threshold:
                 delete_list.append(l)
                 continue
 
-            elif LineAngleCalculator.calc_distance(straight_line_left, lines[l, 0], lines[l, 1]) < length_threshold\
-                    and LineAngleCalculator.calc_distance(straight_line_left, lines[l, 2], lines[l, 3]) < length_threshold:
+            elif LineAngleCalculator.calc_distance(
+                    straight_line_left, lines[l, 0], lines[l, 1]) < length_threshold\
+                    and LineAngleCalculator.calc_distance(
+                    straight_line_left, lines[l, 2], lines[l, 3]) < length_threshold:
                 delete_list.append(l)
                 continue
 
-            elif LineAngleCalculator.calc_distance(straight_line_lower, lines[l, 0], lines[l, 1]) < length_threshold\
-                    and LineAngleCalculator.calc_distance(straight_line_lower, lines[l, 2], lines[l, 3]) < length_threshold:
+            elif LineAngleCalculator.calc_distance(
+                    straight_line_lower, lines[l, 0], lines[l, 1]) < length_threshold\
+                    and LineAngleCalculator.calc_distance(
+                    straight_line_lower, lines[l, 2], lines[l, 3]) < length_threshold:
                 delete_list.append(l)
 
         if len(delete_list) != 0:
@@ -293,7 +299,7 @@ class LineAngleCalculator:
             y (float): 直線との距離を求めたい座標y
 
         Returns:
-            float: 点と直線の距離.        
+            float: 点と直線の距離
         """
         u = np.array([straight_line[2] - straight_line[0], straight_line[3] - straight_line[1]])
         v = np.array([x - straight_line[0], y - straight_line[1]])
