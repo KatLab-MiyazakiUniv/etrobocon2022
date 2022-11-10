@@ -206,6 +206,7 @@ class LineAngleCalculator:
         )
 
         # 線分の2点座標を検出　※型:[[[x1,y1,x2,y2]],...]
+        # print("あああ",img.shape)
         lines = fld.detect(img)
 
         # 走行体からの距離(detect_dist_from_rbody(mm))までの間(画像に写る)の線分だけ残す
