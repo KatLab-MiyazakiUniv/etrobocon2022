@@ -171,7 +171,6 @@ class LineAngleCalculator:
     def detect_line_segment(
         self,
         img,
-        dis_from_edge_threshold: int = 5,
         length_threshold: int = 50,
         distance_threshold: float = 1.41421356,
         canny_th1: int = 50,
@@ -183,11 +182,12 @@ class LineAngleCalculator:
 
         Args:
             img (np.ndarray): 射影変換後の画像.
-            dis_from_edge_threshold (int): 射影変換によってできた元画像の枠(直線)と同一とみなす距離
+            length_threshold (int): 射影変換によってできた元画像の枠(直線)と同一とみなす距離
 
             NOTE:以下の引数の詳細: https://emotionexplorer.blog.fc2.com/blog-entry-128.html
                                   https://nsr-9.hatenablog.jp/entry/2021/08/12/200000
-            length_threshold (int): 長さ閾値(これより短い線は除外)
+            length_threshold (int): 線分を検出する際の長さ閾値(これより短い線は除外)
+                                    射影変換によってできた元画像の枠(直線)と同一とみなす距離
             distance_threshold (float): 距離閾値(この値より遠い座標は、同一線ではない)
             canny_th1 (int): Cannyヒステリシス1
             canny_th2 (int): Cannyヒステリシス2
@@ -226,19 +226,19 @@ class LineAngleCalculator:
         # 画像の枠上(右左下)に線分があれば削除する
         delete_list = []
         for l in range(len(lines)):
-            # 枠(直線)との距離が dis_from_edge_threshold より小さい座標を選別する
-            if LineAngleCalculator.calc_distance(straight_line_right, lines[l, 0], lines[l, 1]) < dis_from_edge_threshold\
-                    and LineAngleCalculator.calc_distance(straight_line_right, lines[l, 2], lines[l, 3]) < dis_from_edge_threshold:
+            # 枠(直線)との距離が length_threshold より小さい座標を除外する
+            if LineAngleCalculator.calc_distance(straight_line_right, lines[l, 0], lines[l, 1]) < length_threshold\
+                    and LineAngleCalculator.calc_distance(straight_line_right, lines[l, 2], lines[l, 3]) < length_threshold:
                 delete_list.append(l)
                 continue
 
-            elif LineAngleCalculator.calc_distance(straight_line_left, lines[l, 0], lines[l, 1]) < dis_from_edge_threshold\
-                    and LineAngleCalculator.calc_distance(straight_line_left, lines[l, 2], lines[l, 3]) < dis_from_edge_threshold:
+            elif LineAngleCalculator.calc_distance(straight_line_left, lines[l, 0], lines[l, 1]) < length_threshold\
+                    and LineAngleCalculator.calc_distance(straight_line_left, lines[l, 2], lines[l, 3]) < length_threshold:
                 delete_list.append(l)
                 continue
 
-            elif LineAngleCalculator.calc_distance(straight_line_lower, lines[l, 0], lines[l, 1]) < dis_from_edge_threshold\
-                    and LineAngleCalculator.calc_distance(straight_line_lower, lines[l, 2], lines[l, 3]) < dis_from_edge_threshold:
+            elif LineAngleCalculator.calc_distance(straight_line_lower, lines[l, 0], lines[l, 1]) < length_threshold\
+                    and LineAngleCalculator.calc_distance(straight_line_lower, lines[l, 2], lines[l, 3]) < length_threshold:
                 delete_list.append(l)
 
         if len(delete_list) != 0:
