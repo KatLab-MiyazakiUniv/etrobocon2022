@@ -247,12 +247,12 @@ class LineAngleCalculator:
                 return None
 
         # 一番手前にある線分を抽出する(y軸最大値)
-        cal_lines = lines.copy()  # x座標部分に0を代入
+        cal_lines = lines.copy()  # 選別用
         cal_lines[:, 0:4:2] = 0  # x座標部分に0を代入
         return lines[np.unravel_index(np.argmax(cal_lines), lines.shape)[0]]
 
     @staticmethod
-    def cal_dis(straight_line: np.ndarray, x: np.ndarray, y: np.ndarray) -> float:
+    def cal_dis(straight_line: np.ndarray, x: float, y: float) -> float:
         """直線と座標の距離を計算する関数.
         Args:
             straight_line (float): 直線上の2点座標を格納した配列[x1, y1, x2, y2]
