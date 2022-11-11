@@ -61,9 +61,10 @@ class LineAngleCalculator:
             raise FileNotFoundError("file name: '%s'" % trans_mat_file)
         if not os.path.isfile(distance_file):
             raise FileNotFoundError("file name: '%s'" % distance_file)
-        self.__trans_mat = np.load(trans_mat_file)
 
-        #  jsonファイルの読み込み
+        #  リアカメラのキャリブレーション情報を読み込む
+        self.__trans_mat = np.load(trans_mat_file)
+        
         with open(distance_file) as fp:
             distance_data = json.load(fp)
 
