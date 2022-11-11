@@ -170,8 +170,8 @@ class LineAngleCalculator:
     def detect_line_segment(
         self,
         img,
-        length_threshold_mm: int = 50,
-        distance_threshold_mm: float = 1.41421356,
+        length_threshold_mm: int = 80,
+        distance_threshold: float = 1.41421356,
         canny_th1: int = 50,
         canny_th2: int = 50,
         canny_aperture_size: int = 7,  # 3~7
@@ -185,8 +185,11 @@ class LineAngleCalculator:
             NOTE:以下の引数の詳細: https://emotionexplorer.blog.fc2.com/blog-entry-128.html
                                   https://nsr-9.hatenablog.jp/entry/2021/08/12/200000
             length_threshold_mm (int): 線分を検出する際の長さ閾値(これより短い線は除外)
-                                    射影変換によってできた元画像の枠(直線)と同一とみなす距離
-            distance_threshold_mm (float): 距離閾値(この値より遠い座標は、同一線ではない)
+                                       検出したい線分の長さ = 交点to中点-ブロックの半径
+                                                          = 110 - 30
+                                                          = 80
+                                       射影変換によってできた元画像の枠(直線)と同一とみなす距離
+            distance_threshold (float): 距離閾値(この値より遠い座標は、同一線ではない)
             canny_th1 (int): Cannyヒステリシス1
             canny_th2 (int): Cannyヒステリシス2
             canny_aperture_size (int): Cannyソベルオペレータ アパチャーサイズ
@@ -195,10 +198,13 @@ class LineAngleCalculator:
         Returns:
             Union[np.ndarray, None]: 検出した線分、線分を検出できなかった場合は`None`を返す.
         """
+        # length_threshold_mmをpix値に変換(0.9倍補正)
+        length_threshold_pix = int(self.mm_to_pix(length_threshold_mm) * 0.9)
+
         # 線分検出モジュールのインスタンス化
         fld = cv2.ximgproc.createFastLineDetector(
-            length_threshold_mm,
-            distance_threshold_mm,
+            length_threshold_pix,
+            distance_threshold,
             canny_th1,
             canny_th2,
             canny_aperture_size,
@@ -227,25 +233,25 @@ class LineAngleCalculator:
         # 画像の枠上(右左下)に線分があれば削除する
         delete_list = []
         for i in range(len(lines)):
-            # 枠(直線)との距離が distance_threshold_mm より小さい座標を除外する
+            # 枠(直線)との距離が distance_threshold より小さい座標を除外する
             if LineAngleCalculator.calc_distance(
-                    straight_line_right, lines[i, 0], lines[i, 1]) < distance_threshold_mm\
+                    straight_line_right, lines[i, 0], lines[i, 1]) < distance_threshold\
                     and LineAngleCalculator.calc_distance(
-                    straight_line_right, lines[i, 2], lines[i, 3]) < distance_threshold_mm:
+                    straight_line_right, lines[i, 2], lines[i, 3]) < distance_threshold:
                 delete_list.append(i)
                 continue
 
             elif LineAngleCalculator.calc_distance(
-                    straight_line_left, lines[i, 0], lines[i, 1]) < distance_threshold_mm\
+                    straight_line_left, lines[i, 0], lines[i, 1]) < distance_threshold\
                     and LineAngleCalculator.calc_distance(
-                    straight_line_left, lines[i, 2], lines[i, 3]) < distance_threshold_mm:
+                    straight_line_left, lines[i, 2], lines[i, 3]) < distance_threshold:
                 delete_list.append(i)
                 continue
 
             elif LineAngleCalculator.calc_distance(
-                    straight_line_lower, lines[i, 0], lines[i, 1]) < distance_threshold_mm\
+                    straight_line_lower, lines[i, 0], lines[i, 1]) < distance_threshold\
                     and LineAngleCalculator.calc_distance(
-                    straight_line_lower, lines[i, 2], lines[i, 3]) < distance_threshold_mm:
+                    straight_line_lower, lines[i, 2], lines[i, 3]) < distance_threshold:
                 delete_list.append(i)
 
         if len(delete_list) != 0:
