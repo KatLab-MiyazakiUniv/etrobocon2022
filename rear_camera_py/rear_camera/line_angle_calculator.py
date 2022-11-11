@@ -126,7 +126,7 @@ class LineAngleCalculator:
             return None
 
         # 単位ベクトルに変換[x1-x2, y1-y2]
-        a = np.array([detected_line[0]-detected_line[2],
+        a = np.array([detected_line[0] - detected_line[2],
                       detected_line[1] - detected_line[3]])
         x = np.linalg.norm(a)
         your_line = a / x
@@ -190,6 +190,7 @@ class LineAngleCalculator:
                                                           = 80
                                        射影変換によってできた元画像の枠(直線)と同一とみなす距離
             distance_threshold (float): 距離閾値(この値より遠い座標は、同一線ではない)
+                                        1.41421356はcv2.ximgproc.createFastLineDetectorの規定値
             canny_th1 (int): Cannyヒステリシス1
             canny_th2 (int): Cannyヒステリシス2
             canny_aperture_size (int): Cannyソベルオペレータ アパチャーサイズ
@@ -214,11 +215,17 @@ class LineAngleCalculator:
         # 線分の2点座標を検出　※型:[[[x1,y1,x2,y2]],...]
         lines = fld.detect(img)
 
-        # 走行体からの距離(detect_dist_from_rbody(mm))までの間(画像に写る)の線分だけ残す
+        if lines is None:
+            return None
+
+        # 検出する範囲の境界線(ignore_border(pix))を、detect_range_from_rbody_mmから求める
+        # detect_range_from_rbody_mm: 線分検出したい範囲を走行体からの距離で指定する
         img_h, img_w = img.shape[:2]
-        detect_range_from_rbody_mm = 181*2+110  # 検出する範囲 (交点toブロック置き場*2+補正値)
+        detect_range_from_rbody_mm = 181*2+110  # 交点toブロック置き場*2+補正値 (mm)
         _, ignore_border = self.runner_base_coordinate_to_image_base_coordinate_pix(
             0, detect_range_from_rbody_mm, img_h, img_w)
+
+        # ignore_borderよりy座標が大きい線分だけ抽出する(pix) ※型:[[x1,y1,x2,y2],...]
         lines = lines[np.where((lines[:, :, 1] > ignore_border) & (lines[:, :, 3] > ignore_border))]
 
         if len(lines) == 0:
@@ -239,14 +246,12 @@ class LineAngleCalculator:
                     and LineAngleCalculator.calc_distance(
                     straight_line_right, lines[i, 2], lines[i, 3]) < distance_threshold:
                 delete_list.append(i)
-                continue
 
             elif LineAngleCalculator.calc_distance(
                     straight_line_left, lines[i, 0], lines[i, 1]) < distance_threshold\
                     and LineAngleCalculator.calc_distance(
                     straight_line_left, lines[i, 2], lines[i, 3]) < distance_threshold:
                 delete_list.append(i)
-                continue
 
             elif LineAngleCalculator.calc_distance(
                     straight_line_lower, lines[i, 0], lines[i, 1]) < distance_threshold\
@@ -288,8 +293,8 @@ class LineAngleCalculator:
                  thickness=4)  # 描画する線分の太さ
 
         # 線分の角度を描画
-        tx, ty = int((detected_line[0]+detected_line[2]) /
-                     2), int((detected_line[1]+detected_line[3])/2)
+        tx, ty = int((detected_line[0]+detected_line[2]) / 2), \
+            int((detected_line[1]+detected_line[3])/2)
         cv2.putText(img, "%.2f" % angle, (tx, ty),
                     cv2.FONT_HERSHEY_COMPLEX, 1.5, (0, 255, 0), thickness=2)
         return img
@@ -328,10 +333,10 @@ class LineAngleCalculator:
         Returns:
             Tuple[int, int]: 変換後の座標(x, y)[pix].
         """
-        # pix_xを求める
+        # 画像上のx座標(pix_x)を求める
         pix_x = self.mm_to_pix(rx) + img_w/2
 
-        # pix_yを求める
+        # 画像上のx座標(pix_y)を求める
         running_body_to_image_lower = self.__rbody_to_4Acenter - \
             self.pix_to_mm(img_h/2 - self.__height_offset_from_center)
         pix_y = img_h - self.mm_to_pix(ry - running_body_to_image_lower)
