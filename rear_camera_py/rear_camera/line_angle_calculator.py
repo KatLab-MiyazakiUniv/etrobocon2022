@@ -226,7 +226,7 @@ class LineAngleCalculator:
         _, ignore_border = self.runner_base_coordinate_to_image_base_coordinate_pix(
             0, detect_range_from_rbody_mm, img_h, img_w)
 
-        # ignore_borderよりy座標が大きい線分だけ抽出する(pix) ※型:[[x1,y1,x2,y2],...]
+        # 線分のy座標が2点とも境界線より大きい線分を取得(pix) ※型:[[x1,y1,x2,y2],...]
         lines = lines[np.where((lines[:, :, 1] > ignore_border) & (lines[:, :, 3] > ignore_border))]
 
         if len(lines) == 0:
