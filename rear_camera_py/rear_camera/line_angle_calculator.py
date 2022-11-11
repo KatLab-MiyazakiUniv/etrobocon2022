@@ -210,9 +210,9 @@ class LineAngleCalculator:
 
         # 走行体からの距離(detect_dist_from_rbody(mm))までの間(画像に写る)の線分だけ残す
         img_h, img_w = img.shape[:2]
-        detect_range_from_rbody = 181*2+110  # 検出する範囲 (交点toブロック置き場*2+補正値)
+        detect_range_from_rbody_mm = 181*2+110  # 検出する範囲 (交点toブロック置き場*2+補正値)
         _, ignore_border = self.runner_base_coordinate_to_image_base_coordinate_pix(
-            0, detect_range_from_rbody, img_h, img_w)
+            0, detect_range_from_rbody_mm, img_h, img_w)
         lines = lines[np.where((lines[:, :, 1] > ignore_border) & (lines[:, :, 3] > ignore_border))]
 
         if len(lines) == 0:
