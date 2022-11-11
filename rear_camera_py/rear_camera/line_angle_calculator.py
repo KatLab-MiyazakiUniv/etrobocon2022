@@ -64,7 +64,7 @@ class LineAngleCalculator:
 
         #  リアカメラのキャリブレーション情報を読み込む
         self.__trans_mat = np.load(trans_mat_file)
-        
+
         with open(distance_file) as fp:
             distance_data = json.load(fp)
 
@@ -337,7 +337,7 @@ class LineAngleCalculator:
         # 画像上のx座標(pix_x)を求める
         pix_x = self.mm_to_pix(rx) + img_w/2
 
-        # 画像上のx座標(pix_y)を求める
+        # 画像上のy座標(pix_y)を求める
         running_body_to_image_lower = self.__rbody_to_4Acenter - \
             self.pix_to_mm(img_h/2 - self.__height_offset_from_center)
         pix_y = img_h - self.mm_to_pix(ry - running_body_to_image_lower)
