@@ -170,8 +170,8 @@ class LineAngleCalculator:
     def detect_line_segment(
         self,
         img,
-        length_threshold: int = 50,
-        distance_threshold: float = 1.41421356,
+        length_threshold_mm: int = 50,
+        distance_threshold_mm: float = 1.41421356,
         canny_th1: int = 50,
         canny_th2: int = 50,
         canny_aperture_size: int = 7,  # 3~7
@@ -184,9 +184,9 @@ class LineAngleCalculator:
 
             NOTE:以下の引数の詳細: https://emotionexplorer.blog.fc2.com/blog-entry-128.html
                                   https://nsr-9.hatenablog.jp/entry/2021/08/12/200000
-            length_threshold (int): 線分を検出する際の長さ閾値(これより短い線は除外)
+            length_threshold_mm (int): 線分を検出する際の長さ閾値(これより短い線は除外)
                                     射影変換によってできた元画像の枠(直線)と同一とみなす距離
-            distance_threshold (float): 距離閾値(この値より遠い座標は、同一線ではない)
+            distance_threshold_mm (float): 距離閾値(この値より遠い座標は、同一線ではない)
             canny_th1 (int): Cannyヒステリシス1
             canny_th2 (int): Cannyヒステリシス2
             canny_aperture_size (int): Cannyソベルオペレータ アパチャーサイズ
@@ -197,8 +197,8 @@ class LineAngleCalculator:
         """
         # 線分検出モジュールのインスタンス化
         fld = cv2.ximgproc.createFastLineDetector(
-            length_threshold,
-            distance_threshold,
+            length_threshold_mm,
+            distance_threshold_mm,
             canny_th1,
             canny_th2,
             canny_aperture_size,
@@ -206,12 +206,11 @@ class LineAngleCalculator:
         )
 
         # 線分の2点座標を検出　※型:[[[x1,y1,x2,y2]],...]
-        # print("あああ",img.shape)
         lines = fld.detect(img)
 
         # 走行体からの距離(detect_dist_from_rbody(mm))までの間(画像に写る)の線分だけ残す
         img_h, img_w = img.shape[:2]
-        detect_range_from_rbody = 181*2+90  # 検出する範囲 (交点toブロック置き場*2+補正値)
+        detect_range_from_rbody = 181*2+110  # 検出する範囲 (交点toブロック置き場*2+補正値)
         _, ignore_border = self.runner_base_coordinate_to_image_base_coordinate_pix(
             0, detect_range_from_rbody, img_h, img_w)
         lines = lines[np.where((lines[:, :, 1] > ignore_border) & (lines[:, :, 3] > ignore_border))]
@@ -228,25 +227,25 @@ class LineAngleCalculator:
         # 画像の枠上(右左下)に線分があれば削除する
         delete_list = []
         for i in range(len(lines)):
-            # 枠(直線)との距離が length_threshold より小さい座標を除外する
+            # 枠(直線)との距離が distance_threshold_mm より小さい座標を除外する
             if LineAngleCalculator.calc_distance(
-                    straight_line_right, lines[i, 0], lines[i, 1]) < length_threshold\
+                    straight_line_right, lines[i, 0], lines[i, 1]) < distance_threshold_mm\
                     and LineAngleCalculator.calc_distance(
-                    straight_line_right, lines[i, 2], lines[i, 3]) < length_threshold:
+                    straight_line_right, lines[i, 2], lines[i, 3]) < distance_threshold_mm:
                 delete_list.append(i)
                 continue
 
             elif LineAngleCalculator.calc_distance(
-                    straight_line_left, lines[i, 0], lines[i, 1]) < length_threshold\
+                    straight_line_left, lines[i, 0], lines[i, 1]) < distance_threshold_mm\
                     and LineAngleCalculator.calc_distance(
-                    straight_line_left, lines[i, 2], lines[i, 3]) < length_threshold:
+                    straight_line_left, lines[i, 2], lines[i, 3]) < distance_threshold_mm:
                 delete_list.append(i)
                 continue
 
             elif LineAngleCalculator.calc_distance(
-                    straight_line_lower, lines[i, 0], lines[i, 1]) < length_threshold\
+                    straight_line_lower, lines[i, 0], lines[i, 1]) < distance_threshold_mm\
                     and LineAngleCalculator.calc_distance(
-                    straight_line_lower, lines[i, 2], lines[i, 3]) < length_threshold:
+                    straight_line_lower, lines[i, 2], lines[i, 3]) < distance_threshold_mm:
                 delete_list.append(i)
 
         if len(delete_list) != 0:
@@ -255,9 +254,9 @@ class LineAngleCalculator:
                 return None
 
         # 一番手前にある線分を抽出する(y軸最大値)
-        cal_lines = lines.copy()  # 選別用
-        cal_lines[:, 0:4:2] = 0  # x座標部分に0を代入
-        return lines[np.unravel_index(np.argmax(cal_lines), lines.shape)[0]]
+        calc_lines = lines.copy()  # 選別用
+        calc_lines[:, 0:4:2] = 0  # x座標部分に0を代入
+        return lines[np.unravel_index(np.argmax(calc_lines), lines.shape)[0]]
 
     def draw_detected_lines_on_the_image(
         self,
