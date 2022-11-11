@@ -20,12 +20,11 @@ class BlackExtractor:
         Returns:
             np.ndarray: 2値変換した画像データ
         """
-        lower = np.array([0, 0, 80])  # 白と識別するための最低HSV値
-        upper = np.array([180, 255, 255])  # 白と識別するための最高HSV値
+        black_lower = np.array([0, 0, 0])  # 黒と識別するための最低HSV値
+        black_upper = np.array([180, 100, 60])  # 黒と識別するための最高HSV値
 
         # BGR色空間からHSV色空間への変換
         hsv = cv2.cvtColor(rear_camera_img, cv2.COLOR_BGR2HSV)
-        # 2値変換
-        binary_img = cv2.inRange(hsv, lower, upper)
-
+        # 2値変換（条件を満たす画素が255となるため、255から引くことで反転させる）
+        binary_img = 255 - cv2.inRange(hsv, black_lower, black_upper)
         return binary_img
