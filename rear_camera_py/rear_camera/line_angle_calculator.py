@@ -59,6 +59,7 @@ class LineAngleCalculator:
 
     def load_params(self) -> None:
         """パラメータファイルを読み込む.
+
         Raises:
             FileNotFoundError: パラメータファイルが見つからない場合に発生
             KeyError: パラメータファイルの内容に期待するキーのデータが無い場合に発生
@@ -373,6 +374,7 @@ class LineAngleCalculator:
 
     def __save_debug_img(self, img: np.ndarray, prefix: str, suffix: str) -> None:
         """デバッグ用に画像をファイルに保存する関数.
+
         デバッグモードがFalseの場合は何も実行しない.
         Args:
             img (np.ndarray): 保存する画像データ
