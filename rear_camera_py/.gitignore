@@ -2,6 +2,7 @@
 command_files/*
 *.png
 !tests/test_data/*
+tests/test_data/test_binary_image.png
 *.json
 *.npy
 

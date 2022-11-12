@@ -3,9 +3,9 @@
 @author: Takahiro55555 kawanoichi
 """
 
+import datetime
 import json
 import os
-import time
 from typing import Tuple, Union
 import cv2
 import numpy as np
@@ -43,50 +43,56 @@ class LineAngleCalculator:
             FileNotFoundError: 各種パラメータファイルが見つからない場合に発生.
             KeyError: 射影変換後の画像座標と走行体の中心からの距離等の関係を保持するパラメータファイルのデータが一部でも欠損している場合に発生.
         """
+        self.__camera_interface = camera_interface
+        self.__rbody_to_4Acenter = running_body_to_4_ArUco_center
+
+        # リアカメラのキャリブレーション情報を読み込む
+        self.__trans_mat_file = trans_mat_file
+        self.__distance_file = distance_file
+        self.load_params()
+
+        # デバッグモード関連の設定
+        self.__debug = debug
+        self.__debug_dir = debug_dir
+        self.__update_debug_time()
+        self.__create_debug_dir()
+
+    def load_params(self) -> None:
+        """パラメータファイルを読み込む.
+
+        Raises:
+            FileNotFoundError: パラメータファイルが見つからない場合に発生
+            KeyError: パラメータファイルの内容に期待するキーのデータが無い場合に発生
+        """
+        if not os.path.isfile(self.__trans_mat_file):
+            raise FileNotFoundError("file name: '%s'" % self.__trans_mat_file)
+        if not os.path.isfile(self.__distance_file):
+            raise FileNotFoundError("file name: '%s'" % self.__distance_file)
+
+        self.__trans_mat = np.load(self.__trans_mat_file)
+
         # NOTE: 射影変換後の画像において、4つのArUcoマーカの中心点と各辺の中点が一致する正方形を考える.
         # - distance_from_center_52_5mm
         #     上記正方形の中心点と各辺の中点を結ぶ線分の距離(pix)、(105/2 mm).
         # - height_offset_from_center
         #     上記正方形の中心点のオフセット、
         #     0の場合上記正方形の中心点と射影変換後の画像の中心点が一致する(pix).
-        # 4つのArUcoマーカの中心点と走行体の中心点(タイヤの軸の中点)の距離は以下のようになる.
-        # running_body_to_4_ArUco_center = 105/2 + 40/2 + (301 - 122/2)
-        #                                = 312.5mm
-        # 　ただし、射影変換後の画像下部より更に下の部分に走行体の原点が存在することに留意すること.
-        # 　また、現実の座標系と画像の座標の差異にも留意すること.
-
-        self.__camera_interface = camera_interface
-
-        if not os.path.isfile(trans_mat_file):
-            raise FileNotFoundError("file name: '%s'" % trans_mat_file)
-        if not os.path.isfile(distance_file):
-            raise FileNotFoundError("file name: '%s'" % distance_file)
-
-        #  リアカメラのキャリブレーション情報を読み込む
-        self.__trans_mat = np.load(trans_mat_file)
-
-        with open(distance_file) as fp:
+        # 上記正方形の中心点と走行体の中心点(タイヤの軸の中点)の距離は以下のようになる.
+        #     105/2 + 40/2 + (301 - 122/2) = 312.5mm
+        #  ただし、射影変換後の画像下部より更に下の部分に走行体の原点が存在することに留意すること.
+        #  また、現実の座標系と画像の座標の差異にも留意すること.
+        with open(self.__distance_file) as fp:
             distance_data = json.load(fp)
-
         key = "distance_from_center_52_5mm"
         if key not in distance_data:
             raise KeyError("key not found: '%s', file: %s" %
-                           (key, distance_file))
+                           (key, self.__distance_file))
         self.__distance_from_center_52_5mm = distance_data[key]
-
         key = "height_offset_from_center"
         if key not in distance_data:
             raise KeyError("key not found: '%s', file: %s" %
-                           (key, distance_file))
+                           (key, self.__distance_file))
         self.__height_offset_from_center = distance_data[key]
-
-        self.__rbody_to_4Acenter = running_body_to_4_ArUco_center
-
-        # デバックファイルがない場合は作成を行う
-        self.__debug = debug
-        if not os.path.exists(debug_dir):
-            os.makedirs(debug_dir)
-        self.__debug_dir = debug_dir
 
     def calc_yaw_angle(
         self,
@@ -100,22 +106,19 @@ class LineAngleCalculator:
         Returns:
             Union[float, None]: 検出した直線と機体の中心線とのなす角、直線を検出できなかった場合は`None`を返す.
         """
-        # リアカメラで撮影した画像を取得
+        now = datetime.datetime.now()
+        self.__debug_time = now.strftime("%Y-%m-%d_%H-%M-%S.%f")
+
         img = self.__camera_interface.capture_image()
 
         if img is None:
             return None
 
-        if self.__debug:
-            # リアカメラで撮影した画像の保存
-            debug_time = time.time()
-            img_fname = "%s_%f_captured.png" % (
-                debug_img_fname_prefix, debug_time)
-            debug_img_path = os.path.join(self.__debug_dir, img_fname)
-            cv2.imwrite(debug_img_path, img)
+        self.__save_debug_img(img, debug_img_fname_prefix, "captured.png")
 
         # 射影変換
         img_transformed = self.get_transformed_image(img)
+        self.__save_debug_img(img_transformed, debug_img_fname_prefix, "transformed.png")
 
         # 画像から黒線を抽出(白黒画像に変換)
         binary_img = BlackExtractor.extract_black(img_transformed)
@@ -145,13 +148,10 @@ class LineAngleCalculator:
             angle_2_y -= 180
 
         if self.__debug:
-            # 各画像の保存
+            # 検出画像の保存
             debug_img = self.draw_detected_lines_on_the_image(
                 img_transformed, detected_line, angle_2_y)
-            img_fname = "%s_%f_detected.png" % (
-                debug_img_fname_prefix, debug_time)
-            debug_img_path = os.path.join(self.__debug_dir, img_fname)
-            cv2.imwrite(debug_img_path, debug_img)
+            self.__save_debug_img(debug_img, debug_img_fname_prefix, "detected.png")
 
         return float(angle_2_y)
 
@@ -213,7 +213,7 @@ class LineAngleCalculator:
             do_merge
         )
 
-        # 線分の2点座標を検出　※型:[[[x1,y1,x2,y2]],...]
+        # 線分の2点座標を検出 ※型:[[[x1,y1,x2,y2]],...]
         lines = fld.detect(img)
 
         if lines is None:
@@ -365,3 +365,31 @@ class LineAngleCalculator:
             float: 変換結果[mm]
         """
         return pix * 52.5 / self.__distance_from_center_52_5mm
+
+    def __create_debug_dir(self) -> None:
+        if not self.__debug:
+            return
+        if not os.path.exists(self.__debug_dir):
+            os.makedirs(self.__debug_dir)
+
+    def __save_debug_img(self, img: np.ndarray, prefix: str, suffix: str) -> None:
+        """デバッグ用に画像をファイルに保存する関数.
+
+        デバッグモードがFalseの場合は何も実行しない.
+        Args:
+            img (np.ndarray): 保存する画像データ
+            prefix (str): ファイル名の先頭文字列
+            suffix (str): 拡張子等を含めたファイル名の末尾
+        """
+        if not self.__debug:
+            return
+        self.__create_debug_dir()
+        img_fname = "%s_%s_%s" % (prefix, self.__debug_time, suffix)
+        debug_img_path = os.path.join(self.__debug_dir, img_fname)
+        cv2.imwrite(debug_img_path, img)
+
+    def __update_debug_time(self) -> None:
+        if not self.__debug:
+            return
+        now = datetime.datetime.now()
+        self.__debug_time = now.strftime("%Y-%m-%d_%H-%M-%S.%f")
