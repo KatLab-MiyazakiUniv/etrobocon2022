@@ -15,8 +15,6 @@ from rear_camera.line_angle_calculator import LineAngleCalculator
 
 
 parser = argparse.ArgumentParser(description="回頭補正用角度算出プログラム")
-parser.add_argument("--min-area-size", type=int, default=999,
-                    help="この値より小さな面積の黒線を無視する")
 parser.add_argument("--camera-num", type=int, default=0,
                     help="カメラID")
 parser.add_argument("--calibrate", action="store_true",
@@ -69,7 +67,7 @@ if args.server:
 
     angle_server.add_command(
         'angle',
-        lambda _: str(line_angle_calculator.calc_yaw_angle(args.min_area_size))
+        lambda _: str(line_angle_calculator.calc_yaw_angle())
     )
 
     angle_server.add_command(
@@ -79,4 +77,4 @@ if args.server:
     angle_server.run()
 else:
     line_angle_calculator = LineAngleCalculator(camera, debug=args.debug)
-    print(line_angle_calculator.calc_yaw_angle(args.min_area_size))
+    print(line_angle_calculator.calc_yaw_angle())
