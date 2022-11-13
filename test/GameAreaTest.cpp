@@ -18,6 +18,10 @@ namespace etrobocon2022_test {
     bool isLeftEdge = isLeftCourse;
     int targetBrightness = 45;
 
+    // 角度補正の線検出ができずWarningになるため、rearCamera.shで0を返すように書き換える
+    system("echo \"#!/bin/bash\" > ./etrobocon2022/scripts/rear_camera.sh");
+    system("echo \"echo 0\" >> ./etrobocon2022/scripts/rear_camera.sh");
+
     testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
     GameArea::runGameArea(isLeftCourse, isLeftEdge, targetBrightness);  // 実行
     string output = testing::internal::GetCapturedStdout();             // キャプチャ終了
@@ -33,6 +37,10 @@ namespace etrobocon2022_test {
     bool isLeftCourse = false;
     bool isLeftEdge = isLeftCourse;
     int targetBrightness = 45;
+
+    // 角度補正の線検出ができずWarningになるため、rearCamera.shで0を返すように書き換える
+    system("echo \"#!/bin/bash\" > ./etrobocon2022/scripts/rear_camera.sh");
+    system("echo \"echo 0\" >> ./etrobocon2022/scripts/rear_camera.sh");
 
     testing::internal::CaptureStdout();  // 標準出力キャプチャ開始
     GameArea::runGameArea(isLeftCourse, isLeftEdge, targetBrightness);  // 実行
