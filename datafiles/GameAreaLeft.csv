@@ -1,11 +1,12 @@
 SL,100,交点→ブロック置き場
 XR,0,47
 SL,100
+DS,12,70,20mm直進(縦調整)
+SL,100
 RT,28,70,anticlockwise
 SL,100
 XR,45,47
 SL,100
-DS,17,70,30mm直進(斜め調整)
 DS,132,70
 SL,100,ブロック置き場→交点
 RT,76,70,anticlockwise
