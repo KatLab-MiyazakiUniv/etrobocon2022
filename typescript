@@ -1,0 +1,223 @@
+Script started on 2022-11-16 15:02:57+09:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="112" LINES="7"]
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022 $[00m cd scripts
+[?2004l[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022/scripts[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022/scripts $[00m 
+[?2004l[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022/scripts[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022/scripts $[00m ls
+[?2004l[0m[01;32morganize_logfile.sh[0m  [01;32mrear_camera.sh[0m  [01;32mserve.sh[0m  [01;32mstart_rear_camera.sh[0m  [01;32mstart.sh[0m
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022/scripts[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022/scripts $[00m 
+[?2004l[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022/scripts[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022/scripts $[00m 
+[?2004l[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022/scripts[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022/scripts $[00m ./rear_camera.sh 
+[?2004l-83.08708712825151[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022/scripts[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022/scripts $[00m 
+[?2004l[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022/scripts[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022/scripts $[00m 
+[?2004l[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022/scripts[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022/scripts $[00m 
+[?2004l[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022/scripts[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022/scripts $[00m ./rear_camera.sh [K]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022/scripts[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022/scripts $[00m ./rear_camera.sh [K./rear_camera.sh ls[Kcd scripts[6Pexitcd scriptsls[K./rear_camera.sh [K./rear_camera.sh ls[Kcd scripts[6Pexitsudo systemctl stop rear-camera.service [A]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022/scripts[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022/scripts $[00m exit[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd scriptsls[K./rear_camera.sh [Kmake start./rear_camera.sh [7Pmake start
+[?2004lcat start.sh >start 
+chmod a+x start
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022/scripts[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022/scripts $[00m 
+[?2004l[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022/scripts[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022/scripts $[00m 
+[?2004l[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022/scripts[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022/scripts $[00m l[Kcd ../
+[?2004l[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022 $[00m ls
+[?2004lapp.cfg  app.h  CMakeLists.txt  Dockerfile  [0m[01;32mgtest_all.sh[0m  Makefile.inc  [01;34mmodule[0m     [01;34mrear_camera_py[0m  [01;34mtest[0m
+app.cpp  [01;34mbuild[0m  [01;34mdatafiles[0m       [01;34mdocs[0m        [01;34mlogfiles[0m      [01;32mmake.sh[0m       README.md  [01;34mscripts[0m         typescript
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace/etrobocon2022[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace/etrobocon2022 $[00m cd ../
+[?2004l[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m cd ../[4Plscd ../make start
+[?2004lchmod 777 etrobocon2022/datafiles/*.csv
+chmod 777 etrobocon2022/scripts/*.sh
+sudo env LD_PRELOAD=../common/setjmp/libssetjmp.so ./asp -d ../common/device_config.txt
+vdev initializer called
+initialize vdev
+DEVICE_CONFIG_VDEV_COM = SERIAL
+VDEV_SERIAL_DEV_NAME not found. Use default device name
+VDEV serial name=/dev/ttyAMA1
+Serial Opened fd=3
+DEVICE_CONFIG_VDEV_PROTOCOL = RASPIKE
+DEVICE_CONFIG_RESET_AREA_OFFSET=36
+DEVICE_CONFIG_RESET_AREA_SIZE=20
+
+TOPPERS/ASP3 Kernel Release 3.2.0 for RasPi (Nov 16 2022, 13:17:59)
+Copyright (C) 2000-2003 by Embedded and Real-Time Systems Laboratory
+                            Toyohashi Univ. of Technology, JAPAN
+Copyright (C) 2004-2017 by Embedded and Real-Time Systems Laboratory
+            Graduate School of Information Science, Nagoya Univ., JAPAN
+
+brick_dri initialized.
+   _____   ______ ___  ______
+  / __/ | / /_  // _ \/_  __/
+ / _/ | |/ //_ </ , _/ / /
+/___/ |___/____/_/|_| /_/
+ 
+====================>Beta 7<=
+ 
+Powered by TOPPERS/ASP3 RTOS of Hakoniwa
+Initialization is completed..
+System logging task is started.
+vdev initializer called
+[32mSPIKE voltage is 8.335[V] (max voltage: 8.393[V])
+[39m
+Select a Course
+>> Set Left Course
+[32m
+Will Run on the Left Course
+
+[39mPress the Center Button on the Black
+>> Black Brightness Value is 3
+Press the Center Button on the White
+>> White Brightness Value is 89
+
+Target Brightness is 46
+On standby.
+
+Signal within 5cm from Sonar Sensor.
+[32m
+Run on the Left Course
+
+[39m[32m
+Run the commands in 'etrobocon2022/datafiles/LineTraceAreaLeft.csv'
+
+[39mRun DistanceLineTracing (targetDistance: 1100.00, targetBrightness: 46, pwm: 70, gain: (0.18,0.04,0.03), isLeftEdge: true)
+Run DistanceLineTracing (targetDistance: 410.00, targetBrightness: 46, pwm: 40, gain: (0.60,0.25,0.06), isLeftEdge: true)
+Run DistanceLineTracing (targetDistance: 300.00, targetBrightness: 46, pwm: 70, gain: (0.15,0.12,0.12), isLeftEdge: true)
+Run DistanceLineTracing (targetDistance: 1040.00, targetBrightness: 46, pwm: 80, gain: (0.10,0.04,0.03), isLeftEdge: true)
+Run DistanceLineTracing (targetDistance: 310.00, targetBrightness: 46, pwm: 70, gain: (0.15,0.12,0.12), isLeftEdge: true)
+Run DistanceLineTracing (targetDistance: 400.00, targetBrightness: 46, pwm: 38, gain: (0.60,0.15,0.12), isLeftEdge: true)
+Run DistanceLineTracing (targetDistance: 630.00, targetBrightness: 46, pwm: 70, gain: (0.15,0.12,0.12), isLeftEdge: true)
+Run ColorLineTracing (targetColor: BLUE, targetBrightness: 46, pwm: 50, gain: (0.15,0.12,0.12), isLeftEdge: true)
+Run DistanceLineTracing (targetDistance: 150.00, targetBrightness: 48, pwm: 50, gain: (0.15,0.12,0.12), isLeftEdge: true)
+Run Sleeping
+[32m
+Run the commands in 'etrobocon2022/datafiles/ToEndPointLeft.csv'
+
+[39mRun DistanceLineTracing (targetDistance: 450.00, targetBrightness: 46, pwm: 55, gain: (0.38,0.21,0.06), isLeftEdge: true)
+Run ColorLineTracing (targetColor: BLUE, targetBrightness: 46, pwm: 60, gain: (0.15,0.12,0.12), isLeftEdge: true)
+Run DistanceLineTracing (targetDistance: 130.00, targetBrightness: 50, pwm: 70, gain: (0.15,0.12,0.12), isLeftEdge: true)
+Run DistanceLineTracing (targetDistance: 700.00, targetBrightness: 46, pwm: 70, gain: (0.15,0.12,0.12), isLeftEdge: true)
+Run ColorLineTracing (targetColor: GREEN, targetBrightness: 46, pwm: 40, gain: (0.15,0.12,0.12), isLeftEdge: true)
+Run Sleeping
+Run DistanceTurning (targetDistance: 80.00, leftPwm: -1, rightPwm: 60)
+Run EdgeChanging (isLeftEdge: true, nextEdge: false)
+Run ColorLineTracing (targetColor: RED, targetBrightness: 46, pwm: 40, gain: (0.15,0.12,0.12), isLeftEdge: false)
+[32m
+Run the commands in 'etrobocon2022/datafiles/CarryBonusLeft.csv'
+
+[39mRun DistanceStraight (targetDistance: 180.00, pwm: 70)
+Run Sleeping
+Run Rotation (angle: 76, pwm: 70, isClockwise: false)
+Run Sleeping
+Run CorrectingRotation (targetAngle: 0, pwm: 59)
+Run Sleeping
+Run ColorStraight (targetColor: BLACK, pwm: 80)
+Run DistanceStraight (targetDistance: 12.00, pwm: 70)
+Run ColorStraight (targetColor: BLACK, pwm: 50)
+Run DistanceStraight (targetDistance: 12.00, pwm: 70)
+Run Sleeping
+Run Rotation (angle: 76, pwm: 70, isClockwise: true)
+Run Sleeping
+Run ColorLineTracing (targetColor: GREEN, targetBrightness: 46, pwm: 60, gain: (0.10,0.08,0.08), isLeftEdge: false)
+Run DistanceStraight (targetDistance: 12.00, pwm: 70)
+Run DistanceStraight (targetDistance: 35.00, pwm: 70)
+Run Sleeping
+Run Rotation (angle: 20, pwm: 70, isClockwise: true)
+Run Sleeping
+Run DistanceStraight (targetDistance: 22.00, pwm: 70)
+Run ArmRising (angle: 50, pwm: 40)
+Run DistanceStraight (targetDistance: 20.00, pwm: -70)
+Run ArmFalling (angle: 50, pwm: 40)
+Run Sleeping
+Run Rotation (angle: 20, pwm: 70, isClockwise: true)
+Run Sleeping
+Run Rotation (angle: 20, pwm: 70, isClockwise: true)
+Run Sleeping
+Run CorrectingRotation (targetAngle: 0, pwm: 47)
+7 degree angle correction
+Run Sleeping
+Run EdgeChanging (isLeftEdge: false, nextEdge: true)
+Run ColorStraight (targetColor: GREEN, pwm: -60)
+Run DistanceStraight (targetDistance: 40.00, pwm: -70)
+Run DistanceStraight (targetDistance: 40.00, pwm: -70)
+Run ColorLineTracing (targetColor: GREEN, targetBrightness: 46, pwm: -35, gain: (0.15,0.12,0.08), isLeftEdge: true)
+Run DistanceStraight (targetDistance: 15.00, pwm: 70)
+[32m
+Run the commands in 'etrobocon2022/datafiles/GameAreaLeft.csv'
+
+[39mRun Sleeping
+Run Rotation (angle: 72, pwm: 70, isClockwise: true)
+Run Sleeping
+Run CorrectingRotation (targetAngle: 0, pwm: 47)
+[36mWarning: Could not recognize black line
+[39mRun Sleeping
+Run DistanceStraight (targetDistance: 12.00, pwm: 70)
+Run Sleeping
+Run Rotation (angle: 28, pwm: 70, isClockwise: true)
+Run Sleeping
+Run CorrectingRotation (targetAngle: 45, pwm: 47)
+2 degree angle correction
+Run Sleeping
+Run DistanceStraight (targetDistance: 132.00, pwm: 70)
+Run Sleeping
+Run CorrectingRotation (targetAngle: 45, pwm: 59)
+-4 degree angle correction
+Run Sleeping
+Run ColorStraight (targetColor: YELLOW, pwm: 70)
+Run DistanceStraight (targetDistance: 42.00, pwm: 70)
+Run Sleeping
+Run Rotation (angle: 31, pwm: 70, isClockwise: false)
+Run Sleeping
+Run CorrectingRotation (targetAngle: 0, pwm: 59)
+Run Sleeping
+Run ArmRising (angle: 50, pwm: 40)
+Run EdgeChanging (isLeftEdge: true, nextEdge: true)
+Run DistanceStraight (targetDistance: 50.00, pwm: -40)
+Run ArmFalling (angle: 50, pwm: 40)
+Run DistanceLineTracing (targetDistance: 50.00, targetBrightness: 46, pwm: -40, gain: (0.10,0.08,0.08), isLeftEdge: true)
+Run Sleeping
+Run Rotation (angle: 72, pwm: 70, isClockwise: true)
+Run Sleeping
+Run CorrectingRotation (targetAngle: 0, pwm: 47)
+-4 degree angle correction
+Run Sleeping
+Run DistanceStraight (targetDistance: 12.00, pwm: 70)
+Run DistanceStraight (targetDistance: 71.00, pwm: 70)
+Run Sleeping
+Run Rotation (angle: 31, pwm: 70, isClockwise: true)
+Run Sleeping
+Run ColorStraight (targetColor: YELLOW, pwm: 70)
+Run DistanceStraight (targetDistance: 42.00, pwm: 70)
+Run Sleeping
+Run Rotation (angle: 31, pwm: 70, isClockwise: false)
+Run Sleeping
+Run CorrectingRotation (targetAngle: 0, pwm: 59)
+[36mWarning: Could not recognize black line
+[39mRun Sleeping
+Run ArmRising (angle: 50, pwm: 40)
+Run EdgeChanging (isLeftEdge: true, nextEdge: true)
+Run DistanceStraight (targetDistance: 50.00, pwm: -40)
+Run ArmFalling (angle: 50, pwm: 40)
+Run DistanceLineTracing (targetDistance: 50.00, targetBrightness: 46, pwm: -40, gain: (0.10,0.08,0.08), isLeftEdge: true)
+Run Sleeping
+Run Rotation (angle: 72, pwm: 70, isClockwise: true)
+Run Sleeping
+Run DistanceStraight (targetDistance: 12.00, pwm: 70)
+Run DistanceStraight (targetDistance: 71.00, pwm: 70)
+Run Sleeping
+Run Rotation (angle: 31, pwm: 70, isClockwise: true)
+Run Sleeping
+Run ColorStraight (targetColor: RED, pwm: 70)
+Forced termination.
+
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m ^C[?2004l[?2004h[?2004l
+[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m [K]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m [K]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m 
+[?2004l[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m 
+[?2004l[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/workspace $[00m 
+[?2004l[?2004h]0;katlab@katlab-et-pi4b8gb-02: ~/work/RasPike/sdk/workspace[01;32mkatlab@katlab-et-pi4b8gb-02[00m:[01;34m~/work/RasPike/sdk/
